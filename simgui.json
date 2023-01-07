@@ -1,0 +1,144 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/DriveSubsystem": "Subsystem",
+      "/LiveWindow/SwerveModuleSparkMax": "Subsystem",
+      "/LiveWindow/SwerveModuleSparkMax4201": "Subsystem",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[5]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[7]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[8]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/SmartDashboard/Auto Selector": "String Chooser",
+      "/SmartDashboard/BACK_LEFT": "Mechanism2d",
+      "/SmartDashboard/BACK_RIGHT": "Mechanism2d",
+      "/SmartDashboard/FRONT_LEFT": "Mechanism2d",
+      "/SmartDashboard/FRONT_RIGHT": "Mechanism2d",
+      "/SmartDashboard/Field2d": "Field2d",
+      "/SmartDashboard/ResetPose": "Command",
+      "/SmartDashboard/Scheduler": "Scheduler"
+    },
+    "windows": {
+      "/SmartDashboard/Auto Selector": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field2d": {
+        "Robot": {
+          "image": "resources/images/robot.png",
+          "length": 0.6850000023841858,
+          "width": 0.5
+        },
+        "Swerve Modules": {
+          "image": "resources/images/swerve_module.png",
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
+        },
+        "image": "resources/images/field22.png",
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Scheduler": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Shuffleboard": {
+      "Drivetrain": {
+        "BACK_LEFT": {
+          "open": true
+        },
+        "BACK_LEFT Drive": {
+          "open": true
+        },
+        "BACK_LEFT Turn": {
+          "open": true
+        },
+        "BACK_RIGHT": {
+          "open": true
+        },
+        "BACK_RIGHT Drive": {
+          "open": true
+        },
+        "FRONT_LEFT Drive": {
+          "open": true
+        },
+        "FRONT_RIGHT Drive": {
+          "open": true
+        },
+        "FRONT_RIGHT Turn": {
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "SmartDashboard": {
+      "ResetPose": {
+        "open": true
+      },
+      "Scheduler": {
+        "open": true
+      },
+      "open": true
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "height": -26,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Drivetrain/BACK_LEFT Turn/Act Ang Deg 2"
+            }
+          ]
+        },
+        {
+          "height": -26,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Drivetrain/BACK_LEFT Turn/Turn Setpoint Degrees 2"
+            }
+          ]
+        },
+        {
+          "height": -26,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Drivetrain/BACK_LEFT Drive/Drive Speed MPS 2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
