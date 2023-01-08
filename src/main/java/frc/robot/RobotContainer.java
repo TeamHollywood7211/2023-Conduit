@@ -4,145 +4,90 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.DriveConstants.ModulePosition;
-import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ToggleFieldOriented;
-import frc.robot.commands.auto.DriveForward;
-import frc.robot.commands.auto.FiveBallAuto;
-import frc.robot.commands.swerve.JogDriveModule;
-import frc.robot.commands.swerve.JogTurnModule;
-import frc.robot.commands.swerve.PositionTurnModule;
-import frc.robot.commands.swerve.SetSwerveDrive;
-import frc.robot.simulation.FieldSim;
-import frc.robot.subsystems.DriveSubsystem;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
-/*
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
+/**
+ * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems
-  final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  // The robot's subsystems and commands are defined here...
+  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
-  public final FieldSim m_fieldSim = new FieldSim(m_robotDrive);
-
-  private final SendableChooser<Command> m_autoChooser = new SendableChooser<Command>();
-
-  // The driver's controller
-
-  static Joystick leftJoystick = new Joystick(OIConstants.kDriverControllerPort);
-
-  private XboxController m_coDriverController = new XboxController(OIConstants.kCoDriverControllerPort);
-
-  final GamepadButtons driver = new GamepadButtons(m_coDriverController, true);
+  private final XboxController m_controller = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Preferences.removeAll();
-    Pref.deleteUnused();
-    Pref.addMissing();
-    SmartDashboard.putData("Scheduler", CommandScheduler.getInstance());
+    // Set up the default command for the drivetrain.
+    // The controls are for field-oriented driving:
+    // Left stick Y axis -> forward and backwards movement
+    // Left stick X axis -> left and right movement
+    // Right stick X axis -> rotation
+    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+            m_drivetrainSubsystem,
+            () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    ));
+
     // Configure the button bindings
-
-    m_fieldSim.initSim();
-    initializeAutoChooser();
-    // sc.showAll();
-    // Configure default commands
-   // m_robotDrive.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        // new SetSwerveDrive(
-        // m_robotDrive,
-
-        // () -> -m_coDriverController.getRawAxis(1),
-        // () -> -m_coDriverController.getRawAxis(0),
-        // () -> -m_coDriverController.getRawAxis(4)));
-        m_robotDrive.setDefaultCommand(
-        new SetSwerveDrive(
-            m_robotDrive,
-            () -> -leftJoystick.getRawAxis(1),
-            () -> -leftJoystick.getRawAxis(0),
-            () -> -leftJoystick.getRawAxis(4)));
-
-    driver.leftTrigger.whileHeld(new JogTurnModule(
-        m_robotDrive,
-        () -> -m_coDriverController.getRawAxis(1),
-        () -> m_coDriverController.getRawAxis(0),
-        () -> m_coDriverController.getRawAxis(2),
-        () -> m_coDriverController.getRawAxis(3)));
-
-    // individual modules
-    driver.leftBumper.whileHeld(new JogDriveModule(
-        m_robotDrive,
-        () -> -m_coDriverController.getRawAxis(1),
-        () -> m_coDriverController.getRawAxis(0),
-        () -> m_coDriverController.getRawAxis(2),
-        () -> m_coDriverController.getRawAxis(3),
-        true));
-
-    // all modules
-    driver.rightBumper.whileHeld(new JogDriveModule(
-        m_robotDrive,
-        () -> -m_coDriverController.getRawAxis(1),
-        () -> m_coDriverController.getRawAxis(0),
-        () -> m_coDriverController.getRawAxis(2),
-        () -> m_coDriverController.getRawAxis(3),
-        false));
-
-
-        JoystickButton button_8 = new JoystickButton(leftJoystick,8);
-        JoystickButton button_7 = new JoystickButton(leftJoystick, 7);       
-
-        button_8.whenPressed(new ToggleFieldOriented(m_robotDrive));
-    // position turn modules individually
-    // driver.X_button.whenPressed(new PositionTurnModule(m_robotDrive,
-    // ModulePosition.FRONT_LEFT));
-    // driver.A_button.whenPressed(new PositionTurnModule(m_robotDrive,
-    // ModulePosition.FRONT_RIGHT));
-    // driver.B_button.whenPressed(new PositionTurnModule(m_robotDrive,
-    // ModulePosition.BACK_LEFT));
-    // driver.Y_button.whenPressed(new PositionTurnModule(m_robotDrive,
-    // ModulePosition.BACK_RIGHT));
-
+    configureButtonBindings();
   }
 
-  private void initializeAutoChooser() {
-    m_autoChooser.setDefaultOption("Do Nothing", new WaitCommand(0));
-    m_autoChooser.addOption("Drive Forward", new DriveForward(m_robotDrive));
-    m_autoChooser.addOption("5 Ball Auto", new FiveBallAuto(m_robotDrive));
-
-    SmartDashboard.putData("Auto Selector", m_autoChooser);
-
+  /**
+   * Use this method to define your button->command mappings. Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   */
+  private void configureButtonBindings() {
+    // Back button zeros the gyroscope
+    new Button(m_controller::getBackButton)
+            // No requirements because we don't need to interrupt anything
+            .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
   }
 
-  public void simulationPeriodic() {
-    m_fieldSim.periodic();
-    periodic();
-  }
-
-  public void periodic() {
-    m_fieldSim.periodic();
-  }
-
-  public double getThrottle() {
-    return -leftJoystick.getThrottle();
-  }
-
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoChooser.getSelected();
+    return new InstantCommand();
   }
 
+  private static double deadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
+  }
+
+  private static double modifyAxis(double value) {
+    // Deadband
+    value = deadband(value, 0.05);
+
+    // Square the axis
+    value = Math.copySign(value * value, value);
+
+    return value;
+  }
 }
