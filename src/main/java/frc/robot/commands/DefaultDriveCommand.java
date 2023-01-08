@@ -28,6 +28,7 @@ public class DefaultDriveCommand extends CommandBase {
     }
     @Override
     public void initialize(){
+        SmartDashboard.putBoolean("iscal", false);
         m_drivetrainSubsystem.calibrateGyro();
     }
 
@@ -35,6 +36,11 @@ public class DefaultDriveCommand extends CommandBase {
     public void execute() {
         // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
         m_drivetrainSubsystem.drive(
+                // new ChassisSpeeds(
+                //     m_translationXSupplier.getAsDouble(), 
+                //     m_translationYSupplier.getAsDouble(), 
+                //     m_rotationSupplier.getAsDouble()
+                // )
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                         m_translationXSupplier.getAsDouble(),
                         m_translationYSupplier.getAsDouble(),

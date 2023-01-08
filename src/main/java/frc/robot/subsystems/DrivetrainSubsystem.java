@@ -105,7 +105,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
                 Mk4ModuleConfiguration moduleConfig = new Mk4ModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(40);
-                moduleConfig.setSteerCurrentLimit(25);
+                moduleConfig.setSteerCurrentLimit(20);
                 moduleConfig.setNominalVoltage(12);
 
                 m_frontLeftModule = Mk4iSwerveModuleHelper.createNeo(
@@ -150,10 +150,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
          */
         public void zeroGyroscope() {
                 // FIXME Remove if you are using a Pigeon
-                // m_pigeon.setFusedHeading(0.0);
-
-                // FIXME Uncomment if you are using a NavX
                 gyro.zeroYaw();
+                // FIXME Uncomment if you are using a NavX
         }
 
         public void calibrateGyro(){
@@ -165,16 +163,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
 
         public Rotation2d getGyroscopeRotation() {
-                // FIXME Remove if you are using a Pigeon
-                // return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
-                // FIXME Uncomment if you are using a NavX
-                if (gyro.isMagnetometerCalibrated()) {
-                // We will only get valid fused headings if the magnetometer is calibrated
-                System.out.print("magnometer is calibrated");
-                return Rotation2d.fromDegrees(gyro.getFusedHeading());
-                }
-                // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
-                return Rotation2d.fromDegrees(360.0 - gyro.getYaw());
+                return Rotation2d.fromDegrees(gyro.getYaw());
         }
 
         public void drive(ChassisSpeeds chassisSpeeds) {
@@ -184,7 +173,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         @Override
         public void periodic() {
                 SmartDashboard.putNumber("Gyroscope Position from Swerve", 0);
-                SmartDashboard.putNumber("Gyroscope Position from Swerve", gyro.getFusedHeading());
+                SmartDashboard.putNumber("Gyroscope Position from Swerve", gyro.getYaw());
                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
                 //SwerveDriveKinematics.normalizeWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states,MAX_VELOCITY_METERS_PER_SECOND);
