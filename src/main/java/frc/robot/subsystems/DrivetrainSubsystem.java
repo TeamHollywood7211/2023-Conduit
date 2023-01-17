@@ -27,7 +27,7 @@ import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-        public static final double MAX_VOLTAGE = 12.0;
+        public static final double MAX_VOLTAGE = 11.0;
         // FIXME Measure the drivetrain's maximum velocity or calculate the theoretical.
         //  The formula for calculating the theoretical maximum velocity is:
         //   <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
@@ -104,9 +104,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 gyro = new AHRS(SPI.Port.kMXP);
 
                 Mk4ModuleConfiguration moduleConfig = new Mk4ModuleConfiguration();
-                moduleConfig.setDriveCurrentLimit(40);
+                moduleConfig.setDriveCurrentLimit(20);
                 moduleConfig.setSteerCurrentLimit(20);
-                moduleConfig.setNominalVoltage(12);
+                moduleConfig.setNominalVoltage(11);
 
                 m_frontLeftModule = Mk4iSwerveModuleHelper.createNeo(
                         moduleConfig, //tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0)
