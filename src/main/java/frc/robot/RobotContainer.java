@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
@@ -21,10 +23,20 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
-
+  // The robot's controller(s)
   private final XboxController m_controller = new XboxController(0);
+  // The robot's subsystems
+  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+
+  //The robot's commands
+  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_controller);
+  private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
+    m_drivetrainSubsystem, 
+    () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+  );
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -35,12 +47,7 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-            m_drivetrainSubsystem,
-            () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    ));
+    m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -55,8 +62,22 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Back button zeros the gyroscope
     new Button(m_controller::getBackButton)
-            // No requirements because we don't need to interrupt anything
-            .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
+      .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
+    
+    /*
+    these three buttons do the same thing because in the command it checks to see which button is pressed 
+    to do a thing. These buttons set the arm to different positions: Y-high X-mid A-low
+    */
+    new Button(m_controller::getYButton)
+      .whenPressed(m_armCommand);
+    new Button(m_controller::getXButton)
+      .whenPressed(m_armCommand);
+    new Button(m_controller::getAButton)
+      .whenPressed(m_armCommand);
+    
+    //when pressed, the start button should toggle field orientation on and off
+    new Button(m_controller::getStartButton)
+      .whenPressed(m_driveCommand::toggleFieldOriented);
   }
 
   /**
