@@ -16,13 +16,20 @@ public class CounterweightSubsystem extends SubsystemBase {
   private double newkP = counterweightkP;
   private double newkI = counterweightkI;
   private double newkD = counterweightkD;
+  private ArmSubsystem m_armSubsystem;
+  
+  
+  //set enum for states
+  //enum changes based on arm local
 
-  public CounterweightSubsystem() {
+  public CounterweightSubsystem(ArmSubsystem armSubsystem) {
     counterweightMotor = new CANSparkMax(COUNTERWEIGHT_MOTOR_ID, MotorType.kBrushless);
     counterweightPID = counterweightMotor.getPIDController();
     counterweightPID.setP(counterweightkP);
     counterweightPID.setI(counterweightkI);
     counterweightPID.setD(counterweightkD);
+
+    m_armSubsystem = armSubsystem;
 
     SmartDashboard.putNumber("counterweight P", counterweightkP);
     SmartDashboard.putNumber("counterweight I", counterweightkI);

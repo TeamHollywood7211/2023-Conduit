@@ -48,6 +48,8 @@ public class ArmSubsystem extends SubsystemBase {
   //this sets the arm to the high position, or top nodes
   public void setArmHigh(){
     armPID.setReference(armHighTarget, ControlType.kPosition);
+
+
   }
 
   //this sets the arm to the mid position, or middle nodes
@@ -59,6 +61,8 @@ public class ArmSubsystem extends SubsystemBase {
   public void setArmLow(){
     armPID.setReference(armLowTarget, ControlType.kPosition);
   }
+
+
 
   //this configures the motor controllers for the arm
   public void configureMotorControllers(){

@@ -60,7 +60,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
         public DrivetrainSubsystem() {
-                ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+                ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain"); //Shuffleboard = the panel that appears when driving with values and stuff
 
                 gyro = new AHRS(SPI.Port.kMXP);
 
