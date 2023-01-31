@@ -2,31 +2,31 @@ package frc.robot;
 public final class Constants {
 //========DRIVETRAIN CONSTANTS=======================================================================================
 
-    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 24.0;
+    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 26.0;
         //The left-to-right distance between the drivetrain wheels should be measured from center to center.
         //The front-to-back distance between the drivetrain wheels should be measured from center to center.
 
-    public static final double DRIVETRAIN_WHEELBASE_METERS = 26.0;
+    public static final double DRIVETRAIN_WHEELBASE_METERS = 32.0;
 
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1; // FIXME Set front left module drive motor ID
     public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 2; // FIXME Set front left module steer motor ID
     public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 3; // FIXME Set front left steer encoder ID
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(85); // 85.25
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(177.626); // 85.25 for practice bot
 
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 11; // FIXME Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12; // FIXME Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13; // FIXME Set front right steer encoder ID
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(26); // 25.92
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(11.953); // 25.92 for practice bot
 
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 21; // FIXME Set back left drive motor ID
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 22; // FIXME Set back left steer motor ID
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23; // FIXME Set back left steer encoder ID
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(57.21); // 57.21
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(252.333); // 57.21 for practice bot
 
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 31; // FIXME Set back right drive motor ID
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 32; // FIXME Set back right steer motor ID
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 33; // FIXME Set back right steer encoder ID
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(160); // 159.61
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-87.515); // 159.61 for practice bot
 
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 20;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;

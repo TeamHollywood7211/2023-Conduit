@@ -8,23 +8,27 @@ import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.ArmSubsystem.armStates; //imports
 
 public class CounterweightSubsystem extends SubsystemBase {
 
-  private CANSparkMax counterweightMotor;
-  private SparkMaxPIDController counterweightPID;
-  private double newkP = counterweightkP;
-  private double newkI = counterweightkI;
-  private double newkD = counterweightkD;
+  private CANSparkMax counterweightMotor; //assigns counterweight motor
+  private SparkMaxPIDController counterweightPID; //assigns PID
+  private double newkP = counterweightkP; //sets da p
+  private double newkI = counterweightkI; //sets da i
+  private double newkD = counterweightkD; //sets da D 
+  private ArmSubsystem m_armSubsystem; //pulls the armsubsystem stuff
 
-  public CounterweightSubsystem() {
-    counterweightMotor = new CANSparkMax(COUNTERWEIGHT_MOTOR_ID, MotorType.kBrushless);
-    counterweightPID = counterweightMotor.getPIDController();
-    counterweightPID.setP(counterweightkP);
-    counterweightPID.setI(counterweightkI);
-    counterweightPID.setD(counterweightkD);
+  public CounterweightSubsystem(ArmSubsystem armSubsystem) {
+    counterweightMotor = new CANSparkMax(COUNTERWEIGHT_MOTOR_ID, MotorType.kBrushless); //sets the motor to the cansparkmax motor
+    counterweightPID = counterweightMotor.getPIDController(); //gets the PID controller
+    counterweightPID.setP(counterweightkP); //actuallys sets da P
+    counterweightPID.setI(counterweightkI); //actually sets da i
+    counterweightPID.setD(counterweightkD); //actually sets da D
 
-    SmartDashboard.putNumber("counterweight P", counterweightkP);
+    m_armSubsystem = armSubsystem; //sets armSubsystem to something we can talk to
+
+    SmartDashboard.putNumber("counterweight P", counterweightkP); 
     SmartDashboard.putNumber("counterweight I", counterweightkI);
     SmartDashboard.putNumber("counterweight D", counterweightkD);
   }
@@ -32,7 +36,7 @@ public class CounterweightSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     //this is run once every scheduler run
-    
+
     //sets constants to numbers from the dashboard
     newkP = SmartDashboard.getNumber("counterweight P", counterweightkP);
     newkI = SmartDashboard.getNumber("counterweight I", counterweightkI);
@@ -41,6 +45,16 @@ public class CounterweightSubsystem extends SubsystemBase {
     counterweightPID.setP(newkP);
     counterweightPID.setI(newkI);
     counterweightPID.setD(newkD);
+
+    if (m_armSubsystem.armState == armStates.HIGH){
+      setCounterweightHigh();
+    }
+    if (m_armSubsystem.armState == armStates.MID){
+      setCounterweightMid();
+    }
+    if (m_armSubsystem.armState == armStates.LOW){
+      setCounterweightLow();
+    }
   }
 
   @Override

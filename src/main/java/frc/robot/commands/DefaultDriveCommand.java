@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import java.util.function.DoubleSupplier;
@@ -14,8 +13,6 @@ public class DefaultDriveCommand extends CommandBase {
     private final DoubleSupplier m_translationXSupplier;
     private final DoubleSupplier m_translationYSupplier;
     private final DoubleSupplier m_rotationSupplier;
-
-    private boolean isFieldOriented = true;
 
     public DefaultDriveCommand(DrivetrainSubsystem drivetrainSubsystem,
                                DoubleSupplier translationXSupplier,
@@ -37,7 +34,7 @@ public class DefaultDriveCommand extends CommandBase {
     @Override
     public void execute() {
         // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
-        if(isFieldOriented){
+        if(m_drivetrainSubsystem.isFieldOriented){
             m_drivetrainSubsystem.drive(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                         m_translationXSupplier.getAsDouble(),
@@ -46,7 +43,7 @@ public class DefaultDriveCommand extends CommandBase {
                         m_drivetrainSubsystem.getGyroscopeRotation()
                 ));
         }
-        if(isFieldOriented == false){
+        if(m_drivetrainSubsystem.isFieldOriented == false){
             m_drivetrainSubsystem.drive(
                 new ChassisSpeeds(
                     m_translationXSupplier.getAsDouble(), 
@@ -59,9 +56,5 @@ public class DefaultDriveCommand extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         m_drivetrainSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-    }
-
-    public void toggleFieldOriented(){
-        isFieldOriented = !isFieldOriented;
     }
 }

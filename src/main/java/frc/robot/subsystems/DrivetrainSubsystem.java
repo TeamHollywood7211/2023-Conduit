@@ -5,10 +5,7 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.swervedrivespecialties.swervelib.*;
-import com.swervedrivespecialties.swervelib.rev.NeoSteerControllerFactoryBuilder.ControllerImplementation;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -20,14 +17,14 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-        public static final double MAX_VOLTAGE = 11.0;
+        public static final double MAX_VOLTAGE = 9.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
         /**
         * The maximum angular velocity of the robot in radians per second.
@@ -59,9 +56,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
+        public boolean isFieldOriented = true;
+        
         public DrivetrainSubsystem() {
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
                 gyro = new AHRS(SPI.Port.kMXP);
 
                 Mk4ModuleConfiguration moduleConfig = new Mk4ModuleConfiguration();
@@ -70,7 +68,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 moduleConfig.setNominalVoltage(NOMINAL_DRIVE_VOLTAGE);
 
                 m_frontLeftModule = Mk4iSwerveModuleHelper.createNeo(
-                        moduleConfig, //tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0)
+                        tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),
+                        moduleConfig,
                         com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio.L1, 
                         FRONT_LEFT_MODULE_DRIVE_MOTOR, 
                         FRONT_LEFT_MODULE_STEER_MOTOR, 
@@ -79,7 +78,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 );
 
                 m_frontRightModule = Mk4iSwerveModuleHelper.createNeo(
-                        moduleConfig, //tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0)
+                        tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),
+                        moduleConfig,
                         com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio.L1, 
                         FRONT_RIGHT_MODULE_DRIVE_MOTOR, 
                         FRONT_RIGHT_MODULE_STEER_MOTOR, 
@@ -88,7 +88,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 );
                 
                 m_backLeftModule = Mk4iSwerveModuleHelper.createNeo(
-                        moduleConfig, //tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0)
+                        tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),
+                        moduleConfig,
                         com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio.L1, 
                         BACK_LEFT_MODULE_DRIVE_MOTOR, 
                         BACK_LEFT_MODULE_STEER_MOTOR, 
@@ -97,7 +98,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 );
 
                 m_backRightModule = Mk4iSwerveModuleHelper.createNeo(
-                        moduleConfig, //tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0)
+                        tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0),
+                        moduleConfig,
                         com.swervedrivespecialties.swervelib.Mk4iSwerveModuleHelper.GearRatio.L1, 
                         BACK_RIGHT_MODULE_DRIVE_MOTOR, 
                         BACK_RIGHT_MODULE_STEER_MOTOR, 
@@ -131,6 +133,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 m_chassisSpeeds = chassisSpeeds;
         }
 
+        public void toggleFieldOriented(){
+                isFieldOriented = !isFieldOriented;
+        }
 
 
         @Override

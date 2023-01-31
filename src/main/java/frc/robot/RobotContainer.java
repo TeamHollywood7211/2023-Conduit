@@ -6,14 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 /**
@@ -28,9 +29,10 @@ public class RobotContainer {
   // The robot's subsystems
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-
-  //The robot's commands
-  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_controller);
+  //private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem(m_armSubsystem);
+  
+  //The robot's commands 
+  //private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_controller);
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
     m_drivetrainSubsystem, 
     () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
@@ -64,20 +66,21 @@ public class RobotContainer {
     new Button(m_controller::getBackButton)
       .whenPressed(m_drivetrainSubsystem::zeroGyroscope);
     
+    
     /*
     these three buttons do the same thing because in the command it checks to see which button is pressed 
     to do a thing. These buttons set the arm to different positions: Y-high X-mid A-low
     */
-    new Button(m_controller::getYButton)
-      .whenPressed(m_armCommand);
-    new Button(m_controller::getXButton)
-      .whenPressed(m_armCommand);
-    new Button(m_controller::getAButton)
-      .whenPressed(m_armCommand);
+    // new Button(m_controller::getYButton)
+    //   .whenPressed(m_armCommand);
+    // new Button(m_controller::getXButton)
+    //   .whenPressed(m_armCommand);
+    // new Button(m_controller::getAButton)
+    //   .whenPressed(m_armCommand);
     
-    //when pressed, the start button should toggle field orientation on and off
+    // //when pressed, the start button should toggle field orientation on and off
     new Button(m_controller::getStartButton)
-      .whenPressed(m_driveCommand::toggleFieldOriented);
+      .whenPressed(m_drivetrainSubsystem::toggleFieldOriented);
   }
 
   /**
