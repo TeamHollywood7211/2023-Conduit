@@ -17,14 +17,13 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-        public static final double MAX_VOLTAGE = 9.0;
+        public static final double MAX_VOLTAGE = 12.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
         /**
         * The maximum angular velocity of the robot in radians per second.
@@ -126,7 +125,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
 
         public Rotation2d getGyroscopeRotation() {
-                return Rotation2d.fromDegrees(gyro.getYaw());
+                return Rotation2d.fromDegrees(360 - gyro.getYaw());
         }
 
         public void drive(ChassisSpeeds chassisSpeeds) {
@@ -142,6 +141,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public void periodic() {
                 SmartDashboard.putNumber("Gyroscope Position from Swerve", 0);
                 SmartDashboard.putNumber("Gyroscope Position from Swerve", gyro.getYaw());
+                SmartDashboard.putBoolean("fieldoriented", isFieldOriented);
                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
                 //SwerveDriveKinematics.normalizeWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states,MAX_VELOCITY_METERS_PER_SECOND);
