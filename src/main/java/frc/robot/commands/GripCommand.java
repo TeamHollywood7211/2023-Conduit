@@ -22,15 +22,16 @@ public class GripCommand extends CommandBase {
   @Override
   public void execute() {
     if(m_controller.getRightTriggerAxis() > triggerDeadzone){
-      //THIS PUSHES OUT
+      //THIS PUSHES IN
       //m_armSubsystem.setGripCone();
-      m_armSubsystem.runGripOut();
-    } else if(m_controller.getLeftTriggerAxis() > triggerDeadzone){
-      //THIS SETS IN
-      //m_armSubsystem.setGripCube();
       m_armSubsystem.runGripIn();
-    }else if(m_controller.button(6).getAsBoolean()){
-      m_armSubsystem.runGripInPrecise(-0.25);
+    } else if(m_controller.getLeftTriggerAxis() > triggerDeadzone){
+      //THIS SETS OUT
+      //m_armSubsystem.setGripCube();
+      m_armSubsystem.runGripOut();
+    }
+    else if(m_controller.button(6).getAsBoolean()){
+      m_armSubsystem.runGripInPrecise();
     } else{
       m_armSubsystem.stopGrip();
       //m_armSubsystem.setGripOut();

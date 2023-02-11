@@ -33,15 +33,15 @@ public class InitializeCommand extends CommandBase {
     // m_counterweightSubsystem.configureCounterweightMotor();
     // m_solenoidSubsystem.enableAnalogCompressor();
 
-    // if(toggleInit && m_controller.back().getAsBoolean()){
-    //   toggleInit = false;
-    //   m_counterweightSubsystem.initializeCounterweightMotor();
-    //   m_armSubsystem.initializeArmMotor();
-    // } else if(!m_controller.back().getAsBoolean()){
-    //   toggleInit = true;
-    // }
-    m_counterweightSubsystem.initializeCounterweightMotor();
-    m_armSubsystem.initializeArmMotor();
+    if(toggleInit && m_controller.back().getAsBoolean()){
+      toggleInit = false;
+      m_counterweightSubsystem.initializeCounterweightMotor();
+      m_armSubsystem.initializeArmMotor();
+    } else if(!m_controller.back().getAsBoolean()){
+      toggleInit = true;
+    }
+    // m_counterweightSubsystem.initializeCounterweightMotor();
+    // m_armSubsystem.initializeArmMotor();
   }
 
   // Called once the command ends or is interrupted.

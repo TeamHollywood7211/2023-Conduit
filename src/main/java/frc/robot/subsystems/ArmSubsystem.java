@@ -100,7 +100,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void manualArmAdjust(double input){
-    double alteredInput = input*MANUAL_ARM_ADJUST_POWER_MULTIPLIER;
+    double alteredInput = -input*MANUAL_ARM_ADJUST_POWER_MULTIPLIER;
     double currentPos = armEncoder.getPosition();
     armPID.setReference(currentPos+alteredInput, ControlType.kPosition);
   }
@@ -134,15 +134,15 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(){
-    gripMotor.set(1);
+    gripMotor.set(0.5);
   }
 
   public void runGripIn(){
-    gripMotor.set(-1);
+    gripMotor.set(-0.5);
   }
 
-  public void runGripInPrecise(double adj){
-    gripMotor.set(adj);
+  public void runGripInPrecise(){
+    gripMotor.set(-0.25);
   }
 
   public void stopGrip(){
@@ -155,7 +155,7 @@ public class ArmSubsystem extends SubsystemBase {
    * @return true when the arm is outside frame perimeter false when it's inside
    */
   public boolean armOutsideFramePerim(int offset){
-    if(getAnglePos() > armLowTarget+offset){
+    if(getAnglePos() > 33+offset){
       return true;
     }
     return false;

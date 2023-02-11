@@ -107,11 +107,11 @@ public class RobotContainer {
 
     //back button rezeros the arm subsystem and the counterweight subsystem
     new Trigger(m_operatorController.back())
-      .debounce(0.5, DebounceType.kBoth).onTrue(m_InitializeCommand);
+      .onTrue(m_InitializeCommand);
 
     //left trigger toggles the wrist solenoid
     new Trigger(m_operatorController.button(5))
-      .debounce(0.5, DebounceType.kBoth).onTrue(m_armCommand);
+      .onTrue(m_armCommand);
 
     //right trigger grips carefully
     new Trigger(m_operatorController.button(6))

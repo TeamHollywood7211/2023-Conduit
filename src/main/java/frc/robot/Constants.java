@@ -38,20 +38,20 @@ public final class Constants {
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 106;
-    public static final double armMidTarget = 85;
-    public static final double armLowTarget = 30;
+    public static final double armHighTarget = 120;
+    public static final double armMidTarget = 101.145;
+    public static final double armLowTarget = 36;
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
 
     public static final int ARM_MOTOR_CURRENT_LIMIT = 20;
-    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 40;
+    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 20;
 
     public static final double ARM_MOTOR_INIT_VELOCITY_MIN = 0.1;
 
     public static final double MANUAL_ARM_ADJUST_DEADZONE = 0.1;
-    public static final double MANUAL_ARM_ADJUST_POWER_MULTIPLIER = 1;
+    public static final double MANUAL_ARM_ADJUST_POWER_MULTIPLIER = 2.2;
 
 //====GRIP CONSTANTS===============================================================================================
     

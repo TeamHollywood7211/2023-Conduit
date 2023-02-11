@@ -87,22 +87,21 @@ public class ArmCommand extends CommandBase {
         }
 
         if(m_controller.getLeftY() > MANUAL_ARM_ADJUST_DEADZONE || m_controller.getLeftY() < -MANUAL_ARM_ADJUST_DEADZONE){
-            //m_armSubsystem.manualArmAdjust(m_controller.getLeftY());
-            m_armSubsystem.driveArmBack();
+            m_armSubsystem.manualArmAdjust(m_controller.getLeftY());
         }
 
         if(m_controller.button(5).getAsBoolean()){
-            m_solenoidSubsystem.toggleWrist();
-            // if(toggleIntake && m_controller.button(5).getAsBoolean()){
-            //     toggleIntake = false;
-            //     if(m_solenoidSubsystem.getWristSolenoidState()){
-            //         m_solenoidSubsystem.retractWrist();
-            //     } else{
-            //         m_solenoidSubsystem.extendWrist();
-            //     }
-            // } else if(!m_controller.button(5).getAsBoolean()){
-            //     toggleIntake = true;
-            // }
+            if(toggleIntake && m_controller.button(5).getAsBoolean()){
+                toggleIntake = false;
+                if(m_solenoidSubsystem.getWristSolenoidState()){
+                    m_solenoidSubsystem.retractWrist();
+                } else{
+                    m_solenoidSubsystem.extendWrist();
+                }
+            } 
+        }
+        if(!m_controller.button(5).getAsBoolean()){
+            toggleIntake = true;
         }
     }
 
