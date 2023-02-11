@@ -36,12 +36,12 @@ public class RobotContainer {
   // The robot's subsystems
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
-  public final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
+  private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
-  public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_solenoidSubsystem);
+  public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_operatorController);
   private final GripCommand m_gripCommand = new GripCommand(m_armSubsystem, m_operatorController);
   private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_driverController);
   private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
@@ -105,12 +105,13 @@ public class RobotContainer {
     new Trigger(m_operatorController.leftStick())
       .onTrue(m_armCommand);
 
+    //back button rezeros the arm subsystem and the counterweight subsystem
     new Trigger(m_operatorController.back())
-      .onTrue(m_InitializeCommand);
+      .debounce(0.5, DebounceType.kBoth).onTrue(m_InitializeCommand);
 
     //left trigger toggles the wrist solenoid
     new Trigger(m_operatorController.button(5))
-      .onTrue(m_armCommand);
+      .debounce(0.5, DebounceType.kBoth).onTrue(m_armCommand);
 
     //right trigger grips carefully
     new Trigger(m_operatorController.button(6))

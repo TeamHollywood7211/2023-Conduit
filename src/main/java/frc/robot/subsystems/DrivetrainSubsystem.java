@@ -142,7 +142,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
 
         public void untipBot(){
-                
+                double untip = tipPID.calculate(gyro.getPitch(), 0);
+                drive(new ChassisSpeeds(untip, 0, 0));
         }
 
 

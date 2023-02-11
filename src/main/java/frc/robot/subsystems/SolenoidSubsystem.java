@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SolenoidSubsystem extends SubsystemBase {
+  boolean toggleIntake = true;
   private boolean armSolenoidState;
   private boolean wristSolenoidState;
   /** Creates a new ExampleSubsystem. */

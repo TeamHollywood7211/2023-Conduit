@@ -46,7 +46,7 @@ public final class Constants {
     public static final int ARM_MOTOR_ID = 41;
 
     public static final int ARM_MOTOR_CURRENT_LIMIT = 20;
-    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 50;
+    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 40;
 
     public static final double ARM_MOTOR_INIT_VELOCITY_MIN = 0.1;
 

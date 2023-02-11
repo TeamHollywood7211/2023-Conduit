@@ -54,8 +54,7 @@ public class CounterweightSubsystem extends SubsystemBase {
     public void initializeCounterweightMotor(){
       counterweightMotor.set(0.5);
       if(counterweightMotor.getOutputCurrent() >= COUNTERWEIGHT_INIT_CURRENT_LIMIT){
-        //counterweightMotor.stopMotor();
-        counterweightMotor.set(0);
+        counterweightMotor.stopMotor();
         counterweightEncoder.setPosition(0);  
       }
     }

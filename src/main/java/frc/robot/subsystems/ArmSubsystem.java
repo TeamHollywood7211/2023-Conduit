@@ -105,6 +105,10 @@ public class ArmSubsystem extends SubsystemBase {
     armPID.setReference(currentPos+alteredInput, ControlType.kPosition);
   }
 
+  public void driveArmBack(){
+    armMotor.set(-.20);
+  }
+
   public double getAnglePos(){
     return armMotor.getEncoder().getPosition();
   }
@@ -186,7 +190,7 @@ public class ArmSubsystem extends SubsystemBase {
    */
   //FIXME
   public void initializeArmMotor(){
-    armMotor.set(-0.30);
+    armMotor.set(-0.20);
     if(armMotor.getOutputCurrent() >= ARM_MOTOR_INIT_CURRENT_LIMIT){
         armMotor.stopMotor();
         armEncoder.setPosition(0);
