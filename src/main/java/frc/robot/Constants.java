@@ -13,10 +13,17 @@ public final class Constants {
     public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 3; // FIXME Set front left steer encoder ID
     public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(85); // 85.25
 
+<<<<<<< Updated upstream
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 11; // FIXME Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12; // FIXME Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13; // FIXME Set front right steer encoder ID
     public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(26); // 25.92
+=======
+    public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 11;  
+    public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12;  
+    public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13;
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(11.953); // 25.92 for practice bot 11.953 for new
+>>>>>>> Stashed changes
 
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 21; // FIXME Set back left drive motor ID
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 22; // FIXME Set back left steer motor ID

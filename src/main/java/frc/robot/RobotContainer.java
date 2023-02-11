@@ -10,7 +10,13 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+<<<<<<< Updated upstream
 import edu.wpi.first.wpilibj2.command.button.Button;
+=======
+//import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+>>>>>>> Stashed changes
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.ArmSubsystem;
@@ -28,9 +34,21 @@ public class RobotContainer {
   // The robot's subsystems
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+<<<<<<< Updated upstream
 
   //The robot's commands
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_controller);
+=======
+  public final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
+  private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
+  
+  
+  //The robot's commands 
+  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_controller);
+  public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_solenoidSubsystem);
+  private final GripCommand m_gripCommand = new GripCommand(m_armSubsystem, m_controller);
+  private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_controller);
+>>>>>>> Stashed changes
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
     m_drivetrainSubsystem, 
     () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
@@ -75,9 +93,17 @@ public class RobotContainer {
     new Button(m_controller::getAButton)
       .whenPressed(m_armCommand);
     
+<<<<<<< Updated upstream
     //when pressed, the start button should toggle field orientation on and off
     new Button(m_controller::getStartButton)
       .whenPressed(m_driveCommand::toggleFieldOriented);
+=======
+
+
+    // //when pressed, the start button should toggle field orientation on and off
+    new Trigger(m_controller.start())
+      .onTrue(m_toggleCommand);
+>>>>>>> Stashed changes
   }
 
   /**

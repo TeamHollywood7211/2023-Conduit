@@ -1,6 +1,10 @@
 plugins {
     id "java"
+<<<<<<< Updated upstream
     id "edu.wpi.first.GradleRIO" version "2022.4.1"
+=======
+    id "edu.wpi.first.GradleRIO" version "2023.2.1"
+>>>>>>> Stashed changes
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
