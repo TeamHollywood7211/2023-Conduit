@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -14,20 +15,15 @@ public class CounterweightSubsystem extends SubsystemBase {
 
   private CANSparkMax counterweightMotor; //assigns counterweight motor
   private SparkMaxPIDController counterweightPID; //assigns PID
-  private double newkP = counterweightkP; //sets da p
-  private double newkI = counterweightkI; //sets da i
-  private double newkD = counterweightkD; //sets da D 
+  private RelativeEncoder counterweightEncoder;
 
   public CounterweightSubsystem() {
     counterweightMotor = new CANSparkMax(COUNTERWEIGHT_MOTOR_ID, MotorType.kBrushless); //sets the motor to the cansparkmax motor
+    counterweightEncoder = counterweightMotor.getEncoder();
     counterweightPID = counterweightMotor.getPIDController(); //gets the PID controller
     counterweightPID.setP(counterweightkP); //actuallys sets da P
     counterweightPID.setI(counterweightkI); //actually sets da i
     counterweightPID.setD(counterweightkD); //actually sets da D
-
-    SmartDashboard.putNumber("counterweight P", counterweightkP); 
-    SmartDashboard.putNumber("counterweight I", counterweightkI);
-    SmartDashboard.putNumber("counterweight D", counterweightkD);
   }
 
     //this sets the weight to the high position (as in when the arm is reaching for high things)
@@ -50,9 +46,31 @@ public class CounterweightSubsystem extends SubsystemBase {
       counterweightPID.setReference(counterweightLowTarget, ControlType.kPosition);
     }
 
+    /**
+    * Initializes the counterweight motor.
+    * Runs the motor until it's all the way closed, then once current spikes above 
+    */
+    //FIXME
+    public void initializeCounterweightMotor(){
+      counterweightMotor.set(0.5);
+      if(counterweightMotor.getOutputCurrent() >= COUNTERWEIGHT_INIT_CURRENT_LIMIT){
+        //counterweightMotor.stopMotor();
+        counterweightMotor.set(0);
+        counterweightEncoder.setPosition(0);  
+      }
+    }
+
+    /**
+     * Allows for manual control of the counterweight for weight balance testing
+     */
+    public void manualCounterweightAdjust(double increment){
+      double currentPos = counterweightEncoder.getPosition();
+      counterweightPID.setReference(currentPos+increment, ControlType.kPosition);
+    }
+
     public void configureCounterweightMotor(){
       counterweightMotor.restoreFactoryDefaults();
-      counterweightMotor.setSmartCurrentLimit(counterweightCurrentLimit);
+      counterweightMotor.setSmartCurrentLimit(COUNTERWEIGHT_CURRENT_LIMIT);
       counterweightMotor.setIdleMode(IdleMode.kBrake);
     }
 
@@ -60,15 +78,7 @@ public class CounterweightSubsystem extends SubsystemBase {
     public void periodic() {
       //this is run once every scheduler run
       SmartDashboard.putNumber("Counterweight Motor Position", counterweightMotor.getEncoder().getPosition());
-  
-      //sets constants to numbers from the dashboard
-      // newkP = SmartDashboard.getNumber("counterweight P", counterweightkP);
-      // newkI = SmartDashboard.getNumber("counterweight I", counterweightkI);
-      // newkD = SmartDashboard.getNumber("counterweight D", counterweightkD);
-  
-      // counterweightPID.setP(newkP);
-      // counterweightPID.setI(newkI);
-      // counterweightPID.setD(newkD);
+      SmartDashboard.putNumber("Counterweight Current", counterweightMotor.getOutputCurrent());
     }
   
     @Override

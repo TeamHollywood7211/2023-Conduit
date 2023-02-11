@@ -38,32 +38,44 @@ public final class Constants {
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 96;
+    public static final double armHighTarget = 106;
     public static final double armMidTarget = 85;
-    public static final double armLowTarget = 23.6;
+    public static final double armLowTarget = 30;
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
-    public static final int GRIP_MOTOR_ID = 42;
-    public static final int LEFT_GRIP_WHEELS_MOTOR_ID = 44;
-    public static final int RIGHT_GRIP_WHEELS_MOTOR_ID = 45;
 
     public static final int ARM_MOTOR_CURRENT_LIMIT = 20;
-    public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
-    public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
+    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 50;
+
+    public static final double ARM_MOTOR_INIT_VELOCITY_MIN = 0.1;
+
+    public static final double MANUAL_ARM_ADJUST_DEADZONE = 0.1;
+    public static final double MANUAL_ARM_ADJUST_POWER_MULTIPLIER = 1;
+
 //====GRIP CONSTANTS===============================================================================================
     
+    public static final int GRIP_MOTOR_ID = 42;
+
+    public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 45;
+    public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
+
+    public static final double GRIP_MOTOR_INIT_VELOCITY_MIN = 0.1;
+
     public static final double gripkP = 0.2;
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 18;
-    public static final double gripCubeTarget = 0;
+    public static final double gripConeTarget = 6;
+    public static final double gripCubeTarget = 10;
     public static final double gripOutTarget = 0;
+
+    public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
 
 //====COUNTERWEIGHT CONSTANTS======================================================================================
 
     public static final int COUNTERWEIGHT_MOTOR_ID = 43;
+
     public static final double counterweightkP = 0.1;
     public static final double counterweightkI = 0;
     public static final double counterweightkD = 0;
@@ -72,11 +84,19 @@ public final class Constants {
     public static final double counterweightMidTarget = -50.893;
     public static final double counterweightLowTarget = 0;
 
-    public static final int counterweightCurrentLimit = 20;
+    public static final int COUNTERWEIGHT_CURRENT_LIMIT = 20;
+    public static final int COUNTERWEIGHT_INIT_CURRENT_LIMIT = 15;
+
+    public static final double MANUAL_COUNTERWEIGHT_ADJUST_POWER_MULTIPLER = 1;
+
+//====ANTI TIP CONSTANTS===========================================================================================
+
+    public static final double tipkP = 1;
+    public static final double tipkI = 0;
+    public static final double tipkD = 0;
 
 //====OTHER CONSTANTS==============================================================================================
 
     public static final int LED_PWM_PORT = 30; //plz change later, not actual value, thx :)
     public static final double triggerDeadzone = 0.5;
-
 }

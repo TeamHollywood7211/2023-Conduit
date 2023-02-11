@@ -4,20 +4,18 @@
 
 package frc.robot;
 
-import java.util.function.BooleanSupplier;
-
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
+import frc.robot.commands.ManualCounterweightCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
@@ -33,7 +31,8 @@ import frc.robot.subsystems.SolenoidSubsystem;
 public class RobotContainer {
   // The robot's controller(s)
   //private final XboxController m_controller = new XboxController(0);
-  private final CommandXboxController m_controller = new CommandXboxController(0);
+  private final CommandXboxController m_driverController = new CommandXboxController(0);
+  private final CommandXboxController m_operatorController = new CommandXboxController(1);
   // The robot's subsystems
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
@@ -41,15 +40,16 @@ public class RobotContainer {
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
   
   //The robot's commands 
-  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_controller);
+  private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
   public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_solenoidSubsystem);
-  private final GripCommand m_gripCommand = new GripCommand(m_armSubsystem, m_controller);
-  private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_controller);
+  private final GripCommand m_gripCommand = new GripCommand(m_armSubsystem, m_operatorController);
+  private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_driverController);
+  private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
     m_drivetrainSubsystem, 
-    () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-    () -> -modifyAxis(m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-    () -> -modifyAxis(m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    () -> -modifyAxis(m_driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(m_driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(m_driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
   );
 
   /**
@@ -75,31 +75,52 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Back button zeros the gyroscope
-    new Trigger(m_controller.back())
+    new Trigger(m_driverController.back())
       .onTrue(m_toggleCommand);
-    
+
+    // //when pressed, the start button should toggle field orientation on and off
+    new Trigger(m_driverController.start())
+      .onTrue(m_toggleCommand);
+
+    //triggers that allow for manual control of the counterweight, mostly for testing of center of grav
+    new Trigger(m_driverController.povDown())
+      .whileTrue(m_manualCounterweightCommand);
+    new Trigger(m_driverController.povUp())
+      .whileTrue(m_manualCounterweightCommand);
+  
     
     /*
     these three buttons do the same thing because in the command it checks to see which button is pressed 
     to do a thing. These buttons set the arm to different positions: Y-high X-mid A-low
     */
-    new Trigger(m_controller.y())
+    new Trigger(m_operatorController.y())
       .onTrue(m_armCommand);
-    new Trigger(m_controller.x())
+    new Trigger(m_operatorController.x())
       .onTrue(m_armCommand);
-    new Trigger(m_controller.a())
+    new Trigger(m_operatorController.a())
       .onTrue(m_armCommand);
-    new Trigger(m_controller.b())
+    new Trigger(m_operatorController.b())
       .onTrue(m_armCommand);
 
-    new Trigger(m_controller.rightTrigger(0.1))
+    new Trigger(m_operatorController.leftStick())
+      .onTrue(m_armCommand);
+
+    new Trigger(m_operatorController.back())
+      .onTrue(m_InitializeCommand);
+
+    //left trigger toggles the wrist solenoid
+    new Trigger(m_operatorController.button(5))
+      .onTrue(m_armCommand);
+
+    //right trigger grips carefully
+    new Trigger(m_operatorController.button(6))
       .onTrue(m_gripCommand);
-    new Trigger(m_controller.leftTrigger(0.1))
+
+    //creates the triggers on the operator controller to make them open and close the gripper
+    new Trigger(m_operatorController.rightTrigger(0.1))
       .onTrue(m_gripCommand);
-    
-    // //when pressed, the start button should toggle field orientation on and off
-    new Trigger(m_controller.start())
-      .onTrue(m_toggleCommand);
+    new Trigger(m_operatorController.leftTrigger(0.1))
+      .onTrue(m_gripCommand);
   }
 
   /**

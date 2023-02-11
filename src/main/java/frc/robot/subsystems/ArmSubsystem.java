@@ -1,11 +1,9 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.CANCoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.MotorFeedbackSensor;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import static frc.robot.Constants.*;
 
@@ -21,7 +19,9 @@ public class ArmSubsystem extends SubsystemBase {
   //private  angleCanCoder;
 
   private CANSparkMax armMotor;
+  private RelativeEncoder armEncoder;
   private CANSparkMax gripMotor;
+  private RelativeEncoder gripEncoder;
   // private CANSparkMax leftGripWheelsMotor;
   // private CANSparkMax rightGripWheelsMotor;
   private SparkMaxPIDController armPID;
@@ -34,9 +34,9 @@ public class ArmSubsystem extends SubsystemBase {
   private double newArmkI = armkI;
   private double newArmkD = armkD;
 
-  private double newGripkP = gripkP;
-  private double newGripkI = gripkI;
-  private double newGripkD = gripkD;
+  // private double newGripkP = gripkP;
+  // private double newGripkI = gripkI;
+  // private double newGripkD = gripkD;
 
   public ArmSubsystem() {
     armState = armStates.LOW;
@@ -44,6 +44,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     gripMotor = new CANSparkMax(GRIP_MOTOR_ID, MotorType.kBrushless);
     gripPID = gripMotor.getPIDController();
+    gripEncoder = gripMotor.getEncoder();
 
     //angleCanCoder = new CANCoder(52);
 
@@ -52,6 +53,7 @@ public class ArmSubsystem extends SubsystemBase {
     
     armMotor = new CANSparkMax(ARM_MOTOR_ID, MotorType.kBrushless);
     armPID = armMotor.getPIDController();
+    armEncoder = armMotor.getEncoder();
 
     //set angle arm pid constants
     armPID.setP(armkP);
@@ -97,9 +99,16 @@ public class ArmSubsystem extends SubsystemBase {
     armState = armStates.STORED;
   }
 
+  public void manualArmAdjust(double input){
+    double alteredInput = input*MANUAL_ARM_ADJUST_POWER_MULTIPLIER;
+    double currentPos = armEncoder.getPosition();
+    armPID.setReference(currentPos+alteredInput, ControlType.kPosition);
+  }
+
   public double getAnglePos(){
     return armMotor.getEncoder().getPosition();
   }
+
 
   public void setGripCone(){
     gripPID.setReference(gripConeTarget, ControlType.kPosition);
@@ -120,20 +129,29 @@ public class ArmSubsystem extends SubsystemBase {
     return gripMotor.getEncoder().getPosition();
   }
 
-  public void runGripIn(){
-    gripMotor.set(.5);
+  public void runGripOut(){
+    gripMotor.set(1);
   }
 
-  public void runGripOut(){
-    gripMotor.set(-.5);
+  public void runGripIn(){
+    gripMotor.set(-1);
+  }
+
+  public void runGripInPrecise(double adj){
+    gripMotor.set(adj);
   }
 
   public void stopGrip(){
     gripMotor.set(0);
   }
 
+  /**
+   * 
+   * @param offset from the frame perimeter, pos number makes it further out, negative makes it closer
+   * @return true when the arm is outside frame perimeter false when it's inside
+   */
   public boolean armOutsideFramePerim(int offset){
-    if(getAnglePos() > armLowTarget-1+offset){
+    if(getAnglePos() > armLowTarget+offset){
       return true;
     }
     return false;
@@ -144,7 +162,37 @@ public class ArmSubsystem extends SubsystemBase {
   //   rightGripWheelsMotor.set(0.5);
   // }
 
-  //this configures the motor controllers for the arm
+  /**
+   * Initializes the grip motor.
+   * Runs the motor until it's all the way closed.
+   * Once current spikes above a specified amount, and velocity drops below a specified amount, set zero.
+   */
+  public void initializeGripMotor(){
+    gripMotor.set(-1);
+    if(
+        (gripEncoder.getVelocity() <= GRIP_MOTOR_INIT_VELOCITY_MIN) 
+        && 
+        (gripMotor.getOutputCurrent() >= GRIP_MOTOR_INIT_CURRENT_LIMIT)
+      ){
+        gripMotor.set(0);
+        gripEncoder.setPosition(0);
+    }
+  }
+
+  /**
+   * Initializes the arm motor.
+   * Runs the motor until it's pushing against the robot.
+   * Once it surpasses some current and velocity limits, stop and set zero. 
+   */
+  //FIXME
+  public void initializeArmMotor(){
+    armMotor.set(-0.30);
+    if(armMotor.getOutputCurrent() >= ARM_MOTOR_INIT_CURRENT_LIMIT){
+        armMotor.stopMotor();
+        armEncoder.setPosition(0);
+    }
+  }
+
   public void configureMotorControllers(){
     armMotor.restoreFactoryDefaults();
     gripMotor.restoreFactoryDefaults();
@@ -173,28 +221,28 @@ public class ArmSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("ANGLE POS", getAnglePos());
-    SmartDashboard.putNumber("GRIP POS", getGripPos());
     SmartDashboard.putBoolean("is outside frame", armOutsideFramePerim(0));
     
     // This method will be called once per scheduler run
 
     //gets the constants from the dashboard
-    // newArmkP = SmartDashboard.getNumber("arm P", armkP);
-    // newArmkI = SmartDashboard.getNumber("arm I", armkI);
-    // newArmkD = SmartDashboard.getNumber("arm D", armkD);
-    SmartDashboard.putNumber("Grip Current", gripMotor.getOutputCurrent());
+    newArmkP = SmartDashboard.getNumber("arm P", armkP);
+    newArmkI = SmartDashboard.getNumber("arm I", armkI);
+    newArmkD = SmartDashboard.getNumber("arm D", armkD);
 
-    newGripkP = SmartDashboard.getNumber("grip P", gripkP);
-    newGripkI = SmartDashboard.getNumber("grip I", gripkI);
-    newGripkD = SmartDashboard.getNumber("grip D", gripkD);
+    SmartDashboard.putNumber("Arm Current", armMotor.getOutputCurrent());
 
-    // armPID.setP(newArmkP);
-    // armPID.setI(newArmkI);
-    // armPID.setD(newArmkD);
+    // newGripkP = SmartDashboard.getNumber("grip P", gripkP);
+    // newGripkI = SmartDashboard.getNumber("grip I", gripkI);
+    // newGripkD = SmartDashboard.getNumber("grip D", gripkD);
 
-    gripPID.setP(newGripkP);
-    gripPID.setI(newGripkI);
-    gripPID.setD(newGripkD);
+    armPID.setP(newArmkP);
+    armPID.setI(newArmkI);
+    armPID.setD(newArmkD);
+
+    // gripPID.setP(newGripkP);
+    // gripPID.setI(newGripkI);
+    // gripPID.setD(newGripkD);
   }
 
   @Override

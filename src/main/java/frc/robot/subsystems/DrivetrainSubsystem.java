@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.*;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -50,6 +51,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private final SwerveModule m_backLeftModule;
         private final SwerveModule m_backRightModule;
 
+        private PIDController tipPID;
 
         private AHRS gyro;
 
@@ -60,6 +62,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public DrivetrainSubsystem() {
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
                 gyro = new AHRS(SPI.Port.kMXP);
+
+                tipPID = new PIDController(tipkP, tipkI, tipkD);
+                tipPID.setTolerance(10);
 
                 Mk4ModuleConfiguration moduleConfig = new Mk4ModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
@@ -134,6 +139,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         public void toggleFieldOriented(){
                 isFieldOriented = !isFieldOriented;
+        }
+
+        public void untipBot(){
+                
         }
 
 

@@ -4,13 +4,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
+import static frc.robot.Constants.*;
 
 /** An example command that uses an example subsystem. */
 public class ArmCommand extends CommandBase {
@@ -19,13 +18,13 @@ public class ArmCommand extends CommandBase {
     private final CommandXboxController m_controller;
     private final SolenoidSubsystem m_solenoidSubsystem;
     private final CounterweightSubsystem m_counterweightSubsystem;
-
-    private boolean isDone;
-
     /**
-     * Creates a new ExampleCommand.
+     * Creates a new ArmCommand.
      *
-     * @param subsystem The subsystem used by this command.
+     * @param armSubsystem The subsystem used by this command.
+     * @param solenoidSubsystem
+     * @param counterweightSubsystem
+     * @param controller
      */
     public ArmCommand(ArmSubsystem armSubsystem, SolenoidSubsystem solenoidSubsystem, CounterweightSubsystem counterweightSubsystem, CommandXboxController controller) {
         m_solenoidSubsystem = solenoidSubsystem;
@@ -39,7 +38,6 @@ public class ArmCommand extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        isDone = false;
         //m_solenoidSubsystem.retractArm();
         //m_solenoidSubsystem.retractWrist();
     }
@@ -56,9 +54,6 @@ public class ArmCommand extends CommandBase {
             }
             m_counterweightSubsystem.setCounterweightHigh();
             m_armSubsystem.setArmHigh();
-            if(m_solenoidSubsystem.getWristSolenoidState()){
-                isDone = true;
-            }
         }
         if(m_controller.x().getAsBoolean()){
             if(m_solenoidSubsystem.getArmSolenoidState()){
@@ -67,24 +62,18 @@ public class ArmCommand extends CommandBase {
             if(!m_solenoidSubsystem.getWristSolenoidState() && m_armSubsystem.armOutsideFramePerim(0)){
                 m_solenoidSubsystem.extendWrist();
             }
-            m_counterweightSubsystem.setCounterweightMid();
+            m_counterweightSubsystem.setCounterweightHigh();
             m_armSubsystem.setArmMid();
-            if(m_solenoidSubsystem.getWristSolenoidState()){
-                isDone = true;
-            }
         }
         if(m_controller.a().getAsBoolean()){
             if(m_solenoidSubsystem.getArmSolenoidState()){
                 m_solenoidSubsystem.retractArm();
             }
-            if(!m_solenoidSubsystem.getWristSolenoidState() && m_armSubsystem.armOutsideFramePerim(-4)){
+            if(!m_solenoidSubsystem.getWristSolenoidState() && m_armSubsystem.armOutsideFramePerim(0)){
                 m_solenoidSubsystem.extendWrist();
             }
-            m_counterweightSubsystem.setCounterweightLow();
+            m_counterweightSubsystem.setCounterweightMid();
             m_armSubsystem.setArmLow();
-            if(m_solenoidSubsystem.getWristSolenoidState()){
-                isDone = true;
-            }
         }
         if(m_controller.b().getAsBoolean()){
             if(m_solenoidSubsystem.getArmSolenoidState()){
@@ -93,9 +82,15 @@ public class ArmCommand extends CommandBase {
             m_solenoidSubsystem.retractWrist();
             m_counterweightSubsystem.setCounterweightStored();
             m_armSubsystem.setArmStored();
-            isDone = true;
         }
-        SmartDashboard.putBoolean("ran arm", true);
+
+        if(m_controller.getLeftY() > MANUAL_ARM_ADJUST_DEADZONE){
+            m_armSubsystem.manualArmAdjust(m_controller.getLeftY());
+        }
+
+        if(m_controller.button(5).getAsBoolean()){
+            m_solenoidSubsystem.toggleWrist();
+        }
     }
 
     // Called once the command ends or is interrupted.
@@ -106,9 +101,6 @@ public class ArmCommand extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(isDone){
-            return true;
-        }
         return false;
     }
 }
