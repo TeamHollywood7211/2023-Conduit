@@ -9,23 +9,18 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
-import frc.robot.commands.LedCommand;
 import frc.robot.commands.ManualCounterweightCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
-import frc.robot.subsystems.LedSubsystem;
-
-
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -37,16 +32,12 @@ public class RobotContainer {
   // The robot's controller(s)
   //private final XboxController m_controller = new XboxController(0);
   private final CommandXboxController m_driverController = new CommandXboxController(0);
-  private final CommandXboxController m_operatorController = new CommandXboxController(1); 
-  private final CommandGenericHID m_coolBoard = new CommandGenericHID(0); //TEMP
-
+  private final CommandXboxController m_operatorController = new CommandXboxController(1);
   // The robot's subsystems
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   public final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
-  private final LedSubsystem m_LedSubsystem = new LedSubsystem();
-
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
@@ -60,7 +51,7 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
     () -> -modifyAxis(m_driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
   );
-  private final LedCommand m_ledCommand = new LedCommand(m_LedSubsystem, m_coolBoard);
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -130,8 +121,6 @@ public class RobotContainer {
       .onTrue(m_gripCommand);
     new Trigger(m_operatorController.leftTrigger(0.1))
       .onTrue(m_gripCommand);
-    new Trigger(m_coolBoard.button(12))
-      .whileTrue(m_ledCommand);
   }
 
   /**
