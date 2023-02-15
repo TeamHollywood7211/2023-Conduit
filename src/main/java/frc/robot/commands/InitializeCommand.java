@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
-import frc.robot.subsystems.SolenoidSubsystem;
 
 public class InitializeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
@@ -32,7 +31,7 @@ public class InitializeCommand extends CommandBase {
     // m_armSubsystem.configureMotorControllers();
     // m_counterweightSubsystem.configureCounterweightMotor();
     // m_solenoidSubsystem.enableAnalogCompressor();
-
+    SmartDashboard.putBoolean("toggleInit", toggleInit);
     if(toggleInit && m_controller.back().getAsBoolean()){
       toggleInit = false;
       m_counterweightSubsystem.initializeCounterweightMotor();

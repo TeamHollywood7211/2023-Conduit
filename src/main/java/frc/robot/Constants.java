@@ -38,15 +38,15 @@ public final class Constants {
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 120;
-    public static final double armMidTarget = 101.145;
+    public static final double armHighTarget = 105.45;
+    public static final double armMidTarget = 94.88;
     public static final double armLowTarget = 36;
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
 
     public static final int ARM_MOTOR_CURRENT_LIMIT = 20;
-    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 20;
+    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 0;
 
     public static final double ARM_MOTOR_INIT_VELOCITY_MIN = 0.1;
 
@@ -57,7 +57,7 @@ public final class Constants {
     
     public static final int GRIP_MOTOR_ID = 42;
 
-    public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 45;
+    public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 0;
     public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
 
     public static final double GRIP_MOTOR_INIT_VELOCITY_MIN = 0.1;
@@ -66,8 +66,8 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 6;
-    public static final double gripCubeTarget = 10;
+    public static final double gripConeTarget = -6;
+    public static final double gripCubeTarget = -10;
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;

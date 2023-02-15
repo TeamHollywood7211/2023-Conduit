@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SolenoidSubsystem extends SubsystemBase {
@@ -74,8 +73,6 @@ public class SolenoidSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //SmartDashboard.putBoolean("Compressor State", m_robotCompressor.isEnabled());
-    SmartDashboard.putBoolean("wrist solenoid state", getWristSolenoidState());
-    SmartDashboard.putBoolean("armSolenoid State", getArmSolenoidState());
   }
 
   @Override

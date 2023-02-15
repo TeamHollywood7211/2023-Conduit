@@ -26,6 +26,8 @@ public class CameraSubsystem extends SubsystemBase {
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);
     area = ta.getDouble(0.0);
+
+    System.out.print(x + y + area);
     // This method will be called once per scheduler run
   }
 

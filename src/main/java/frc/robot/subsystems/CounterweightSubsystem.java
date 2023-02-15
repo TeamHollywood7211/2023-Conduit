@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import static frc.robot.Constants.*;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CounterweightSubsystem extends SubsystemBase {
@@ -46,6 +45,14 @@ public class CounterweightSubsystem extends SubsystemBase {
       counterweightPID.setReference(counterweightLowTarget, ControlType.kPosition);
     }
 
+    public double getCounterweightCurrent(){
+      return counterweightMotor.getOutputCurrent();
+    }
+
+    public double getCounterweightPos(){
+      return counterweightEncoder.getPosition();
+    }
+
     /**
     * Initializes the counterweight motor.
     * Runs the motor until it's all the way closed, then once current spikes above 
@@ -76,8 +83,6 @@ public class CounterweightSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
       //this is run once every scheduler run
-      SmartDashboard.putNumber("Counterweight Motor Position", counterweightMotor.getEncoder().getPosition());
-      SmartDashboard.putNumber("Counterweight Current", counterweightMotor.getOutputCurrent());
     }
   
     @Override

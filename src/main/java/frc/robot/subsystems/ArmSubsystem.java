@@ -113,6 +113,10 @@ public class ArmSubsystem extends SubsystemBase {
     return armMotor.getEncoder().getPosition();
   }
 
+  public double getArmCurrent(){
+    return armMotor.getOutputCurrent();
+  }
+
 
   public void setGripCone(){
     gripPID.setReference(gripConeTarget, ControlType.kPosition);
@@ -134,11 +138,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(){
-    gripMotor.set(0.5);
+    gripMotor.set(0.35);
   }
 
   public void runGripIn(){
-    gripMotor.set(-0.5);
+    gripMotor.set(-0.35);
   }
 
   public void runGripInPrecise(){
@@ -147,6 +151,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void stopGrip(){
     gripMotor.set(0);
+  }
+
+  public double getGripCurrent(){
+    return gripMotor.getOutputCurrent();
   }
 
   /**
@@ -171,6 +179,10 @@ public class ArmSubsystem extends SubsystemBase {
    * Runs the motor until it's all the way closed.
    * Once current spikes above a specified amount, and velocity drops below a specified amount, set zero.
    */
+  //FIXME
+  /*Heres the idea, write code in the periodic section to check if the arm/counterweight motors have breached their current limit amt and the init button has been pressed in a certain time.
+   * write the code in robotcontainer (boolean that returns true if a timer that is started when you press the init button is less than a certain amount) init motors button should set the motors backwards at a particular speed so we know the current limit to set
+   */
   public void initializeGripMotor(){
     gripMotor.set(-1);
     if(
@@ -192,8 +204,8 @@ public class ArmSubsystem extends SubsystemBase {
   public void initializeArmMotor(){
     armMotor.set(-0.20);
     if(armMotor.getOutputCurrent() >= ARM_MOTOR_INIT_CURRENT_LIMIT){
-        armMotor.stopMotor();
-        armEncoder.setPosition(0);
+      armMotor.stopMotor();
+      armEncoder.setPosition(0);
     }
   }
 
@@ -224,8 +236,6 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ANGLE POS", getAnglePos());
-    SmartDashboard.putBoolean("is outside frame", armOutsideFramePerim(0));
     
     // This method will be called once per scheduler run
 
@@ -233,8 +243,6 @@ public class ArmSubsystem extends SubsystemBase {
     newArmkP = SmartDashboard.getNumber("arm P", armkP);
     newArmkI = SmartDashboard.getNumber("arm I", armkI);
     newArmkD = SmartDashboard.getNumber("arm D", armkD);
-
-    SmartDashboard.putNumber("Arm Current", armMotor.getOutputCurrent());
 
     // newGripkP = SmartDashboard.getNumber("grip P", gripkP);
     // newGripkI = SmartDashboard.getNumber("grip I", gripkI);
