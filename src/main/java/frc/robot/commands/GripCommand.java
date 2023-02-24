@@ -21,16 +21,13 @@ public class GripCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_controller.getRightTriggerAxis() > triggerDeadzone){
+    if(m_controller.getRightTriggerAxis() > gripTriggerDeadzone){
       m_armSubsystem.runGripIn();
       //m_armSubsystem.setGripCone();
-    } else if(m_controller.getLeftTriggerAxis() > triggerDeadzone){
+    } else if(m_controller.getLeftTriggerAxis() > gripTriggerDeadzone){
       m_armSubsystem.runGripOut();
       //m_armSubsystem.setGripCube();
     }
-    else if(m_controller.button(6).getAsBoolean()){
-      m_armSubsystem.runGripInPrecise();
-    } 
     else{
       //m_armSubsystem.setGripOut();
       m_armSubsystem.stopGrip();
