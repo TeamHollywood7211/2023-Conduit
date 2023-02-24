@@ -182,14 +182,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 SmartDashboard.putNumber("Gyroscope Position from Swerve", gyro.getYaw());
                 SmartDashboard.putBoolean("fieldoriented", isFieldOriented);
                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
-                swerveModulePositions = new SwerveModulePosition[]{
-                        new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle),
-                        new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle),
-                        new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle),
-                        new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle)
-                };
+                // swerveModulePositions = new SwerveModulePosition[]{
+                //         new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle),
+                //         new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle),
+                //         new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle),
+                //         new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle)
+                // };
 
-                m_odometry.update(getGyroscopeRotation(), swerveModulePositions);
+                // m_odometry.update(getGyroscopeRotation(), swerveModulePositions);
                 //SwerveDriveKinematics.normalizeWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states,MAX_VELOCITY_METERS_PER_SECOND);
 

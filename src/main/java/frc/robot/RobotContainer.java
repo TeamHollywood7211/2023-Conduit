@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.FireFlipperAuton;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
 import frc.robot.commands.ManualCounterweightCommand;
@@ -62,6 +63,8 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
   );
 
+  private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
+
   public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getOdometry, 
     m_drivetrainSubsystem::resetOdometry, 
@@ -83,7 +86,7 @@ public class RobotContainer {
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
-    autonChooser.addOption("Fire Cylinder", null); //FIXME add the pneumaticfiring
+    autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
     SmartDashboard.putData(autonChooser);
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
 
@@ -149,7 +152,7 @@ public class RobotContainer {
   }
 
   public void configureAutons(){
-
+    autonEventMap.put("fireFlipperSolenoid", m_fireFlipperAuton);
   }
 
   /**
