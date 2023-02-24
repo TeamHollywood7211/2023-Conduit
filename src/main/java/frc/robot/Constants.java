@@ -45,8 +45,8 @@ public final class Constants {
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 105.45;
-    public static final double armMidTarget = 94.88;
+    public static final double armHighTarget = 99.95;
+    public static final double armMidTarget = 85.98;
     public static final double armLowTarget = 30;
     public static final double armStoredTarget = 0;
 
