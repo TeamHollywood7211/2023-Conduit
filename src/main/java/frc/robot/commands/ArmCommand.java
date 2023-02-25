@@ -18,6 +18,7 @@ public class ArmCommand extends CommandBase {
     private final CommandXboxController m_controller;
     private final SolenoidSubsystem m_solenoidSubsystem;
     private final CounterweightSubsystem m_counterweightSubsystem;
+    private boolean toggleIntake;
     /**
      * Creates a new ArmCommand.
      *
@@ -31,6 +32,7 @@ public class ArmCommand extends CommandBase {
         m_armSubsystem = armSubsystem;
         m_counterweightSubsystem = counterweightSubsystem;
         m_controller = controller;
+        toggleIntake = true;
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(armSubsystem);
     }
@@ -84,12 +86,22 @@ public class ArmCommand extends CommandBase {
             m_armSubsystem.setArmStored();
         }
 
-        if(m_controller.getLeftY() > MANUAL_ARM_ADJUST_DEADZONE){
+        if(m_controller.getLeftY() > MANUAL_ARM_ADJUST_DEADZONE || m_controller.getLeftY() < -MANUAL_ARM_ADJUST_DEADZONE){
             m_armSubsystem.manualArmAdjust(m_controller.getLeftY());
         }
 
         if(m_controller.button(5).getAsBoolean()){
-            m_solenoidSubsystem.toggleWrist();
+            if(toggleIntake && m_controller.button(5).getAsBoolean()){
+                toggleIntake = false;
+                if(m_solenoidSubsystem.getWristSolenoidState()){
+                    m_solenoidSubsystem.retractWrist();
+                } else{
+                    m_solenoidSubsystem.extendWrist();
+                }
+            } 
+        }
+        if(!m_controller.button(5).getAsBoolean()){
+            toggleIntake = true;
         }
     }
 

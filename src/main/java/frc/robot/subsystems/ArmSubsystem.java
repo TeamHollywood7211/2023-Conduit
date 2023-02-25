@@ -100,13 +100,21 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void manualArmAdjust(double input){
-    double alteredInput = input*MANUAL_ARM_ADJUST_POWER_MULTIPLIER;
+    double alteredInput = -input*MANUAL_ARM_ADJUST_POWER_MULTIPLIER;
     double currentPos = armEncoder.getPosition();
     armPID.setReference(currentPos+alteredInput, ControlType.kPosition);
   }
 
+  public void driveArmBack(){
+    armMotor.set(-.20);
+  }
+
   public double getAnglePos(){
     return armMotor.getEncoder().getPosition();
+  }
+
+  public double getArmCurrent(){
+    return armMotor.getOutputCurrent();
   }
 
 
@@ -130,19 +138,23 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(){
-    gripMotor.set(1);
+    gripMotor.set(0.5);
   }
 
   public void runGripIn(){
-    gripMotor.set(-1);
+    gripMotor.set(-0.5);
   }
 
-  public void runGripInPrecise(double adj){
-    gripMotor.set(adj);
+  public void runGripInPrecise(){
+    gripMotor.set(-0.25);
   }
 
   public void stopGrip(){
     gripMotor.set(0);
+  }
+
+  public double getGripCurrent(){
+    return gripMotor.getOutputCurrent();
   }
 
   /**
@@ -151,7 +163,7 @@ public class ArmSubsystem extends SubsystemBase {
    * @return true when the arm is outside frame perimeter false when it's inside
    */
   public boolean armOutsideFramePerim(int offset){
-    if(getAnglePos() > armLowTarget+offset){
+    if(getAnglePos() > 33+offset){
       return true;
     }
     return false;
@@ -166,6 +178,10 @@ public class ArmSubsystem extends SubsystemBase {
    * Initializes the grip motor.
    * Runs the motor until it's all the way closed.
    * Once current spikes above a specified amount, and velocity drops below a specified amount, set zero.
+   */
+  //FIXME
+  /*Heres the idea, write code in the periodic section to check if the arm/counterweight motors have breached their current limit amt and the init button has been pressed in a certain time.
+   * write the code in robotcontainer (boolean that returns true if a timer that is started when you press the init button is less than a certain amount) init motors button should set the motors backwards at a particular speed so we know the current limit to set
    */
   public void initializeGripMotor(){
     gripMotor.set(-1);
@@ -186,10 +202,10 @@ public class ArmSubsystem extends SubsystemBase {
    */
   //FIXME
   public void initializeArmMotor(){
-    armMotor.set(-0.30);
+    armMotor.set(-0.20);
     if(armMotor.getOutputCurrent() >= ARM_MOTOR_INIT_CURRENT_LIMIT){
-        armMotor.stopMotor();
-        armEncoder.setPosition(0);
+      armMotor.stopMotor();
+      armEncoder.setPosition(0);
     }
   }
 
@@ -220,25 +236,22 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("ANGLE POS", getAnglePos());
-    SmartDashboard.putBoolean("is outside frame", armOutsideFramePerim(0));
     
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Arm Pos", getAnglePos());
 
     //gets the constants from the dashboard
-    newArmkP = SmartDashboard.getNumber("arm P", armkP);
-    newArmkI = SmartDashboard.getNumber("arm I", armkI);
-    newArmkD = SmartDashboard.getNumber("arm D", armkD);
-
-    SmartDashboard.putNumber("Arm Current", armMotor.getOutputCurrent());
+    // newArmkP = SmartDashboard.getNumber("arm P", armkP);
+    // newArmkI = SmartDashboard.getNumber("arm I", armkI);
+    // newArmkD = SmartDashboard.getNumber("arm D", armkD);
 
     // newGripkP = SmartDashboard.getNumber("grip P", gripkP);
     // newGripkI = SmartDashboard.getNumber("grip I", gripkI);
     // newGripkD = SmartDashboard.getNumber("grip D", gripkD);
 
-    armPID.setP(newArmkP);
-    armPID.setI(newArmkI);
-    armPID.setD(newArmkD);
+    // armPID.setP(newArmkP);
+    // armPID.setI(newArmkI);
+    // armPID.setD(newArmkD);
 
     // gripPID.setP(newGripkP);
     // gripPID.setI(newGripkI);

@@ -1,19 +1,22 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
-import frc.robot.subsystems.SolenoidSubsystem;
 
 public class InitializeCommand extends CommandBase {
   private ArmSubsystem m_armSubsystem;
   private CounterweightSubsystem m_counterweightSubsystem;
-  private SolenoidSubsystem m_solenoidSubsystem;
+  private CommandXboxController m_controller;
+  private boolean toggleInit;
 
-  public InitializeCommand(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, SolenoidSubsystem solenoidSubsystem) {
+  public InitializeCommand(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, CommandXboxController controller) {
     m_armSubsystem = armSubsystem;
     m_counterweightSubsystem = counterweightSubsystem;
-    m_solenoidSubsystem = solenoidSubsystem;
+    m_controller = controller;
+    toggleInit = true;
     addRequirements(armSubsystem, counterweightSubsystem);
   }
 
@@ -28,8 +31,16 @@ public class InitializeCommand extends CommandBase {
     // m_armSubsystem.configureMotorControllers();
     // m_counterweightSubsystem.configureCounterweightMotor();
     // m_solenoidSubsystem.enableAnalogCompressor();
-    m_counterweightSubsystem.initializeCounterweightMotor();
-    m_armSubsystem.initializeArmMotor();
+    SmartDashboard.putBoolean("toggleInit", toggleInit);
+    if(toggleInit && m_controller.back().getAsBoolean()){
+      toggleInit = false;
+      m_counterweightSubsystem.initializeCounterweightMotor();
+      m_armSubsystem.initializeArmMotor();
+    } else if(!m_controller.back().getAsBoolean()){
+      toggleInit = true;
+    }
+    // m_counterweightSubsystem.initializeCounterweightMotor();
+    // m_armSubsystem.initializeArmMotor();
   }
 
   // Called once the command ends or is interrupted.

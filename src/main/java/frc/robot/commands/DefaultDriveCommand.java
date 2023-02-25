@@ -43,7 +43,7 @@ public class DefaultDriveCommand extends CommandBase {
                         m_drivetrainSubsystem.getGyroscopeRotation()
                 ));
         }
-        if(m_drivetrainSubsystem.isFieldOriented == false){
+        if(!m_drivetrainSubsystem.isFieldOriented){
             m_drivetrainSubsystem.drive(
                 new ChassisSpeeds(
                     m_translationXSupplier.getAsDouble(), 

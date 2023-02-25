@@ -1,4 +1,9 @@
 package frc.robot;
+
+import java.util.HashMap;
+
+import edu.wpi.first.wpilibj2.command.Command;
+
 public final class Constants {
 //========DRIVETRAIN CONSTANTS=======================================================================================
 
@@ -32,32 +37,34 @@ public final class Constants {
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 11;
 
+    public static final HashMap<String, Command> autonEventMap = new HashMap<>();
+
 //====ARM CONSTANTS================================================================================================
 
     public static final double armkP = 0.03;
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 106;
-    public static final double armMidTarget = 85;
+    public static final double armHighTarget = 99.95;
+    public static final double armMidTarget = 85.98;
     public static final double armLowTarget = 30;
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
 
     public static final int ARM_MOTOR_CURRENT_LIMIT = 20;
-    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 50;
+    public static final int ARM_MOTOR_INIT_CURRENT_LIMIT = 0;
 
     public static final double ARM_MOTOR_INIT_VELOCITY_MIN = 0.1;
 
     public static final double MANUAL_ARM_ADJUST_DEADZONE = 0.1;
-    public static final double MANUAL_ARM_ADJUST_POWER_MULTIPLIER = 1;
+    public static final double MANUAL_ARM_ADJUST_POWER_MULTIPLIER = 11;
 
 //====GRIP CONSTANTS===============================================================================================
     
     public static final int GRIP_MOTOR_ID = 42;
 
-    public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 45;
+    public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 0;
     public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
 
     public static final double GRIP_MOTOR_INIT_VELOCITY_MIN = 0.1;
@@ -66,8 +73,8 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 6;
-    public static final double gripCubeTarget = 10;
+    public static final double gripConeTarget = -6;
+    public static final double gripCubeTarget = -10;
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -98,5 +105,5 @@ public final class Constants {
 //====OTHER CONSTANTS==============================================================================================
 
     public static final int LED_PWM_PORT = 30; //plz change later, not actual value, thx :)
-    public static final double triggerDeadzone = 0.5;
+    public static final double gripTriggerDeadzone = 0.2;
 }

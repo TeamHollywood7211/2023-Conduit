@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.ErrorCode;
+import java.util.Random;
+
+//import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
-import com.ctre.phoenix.led.CANdleFaults;
+//import com.ctre.phoenix.led.CANdleFaults;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,16 +21,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class LedSubsystem extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
   CANdle candle = new CANdle(54);
-  RainbowAnimation rainbowAnim = new RainbowAnimation(1, 0.5, 64); //sets it to URGUHBLED!!! 
+  RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, 64); //sets it to URGUHBLED!!! 
  
   public LedSubsystem() {
     
     CANdleConfiguration config = new CANdleConfiguration();
     config.stripType = LEDStripType.RGB; // set the strip type to RGB
-    config.brightnessScalar = 0.25; // dim the LEDs to half brightness
+    config.brightnessScalar = 0.05; // dim the LEDs to half brightness
     candle.configAllSettings(config);
   
-    candle.setLEDs(0,255,255); //sets LEDs to WHITE (255 is bright value )
+    candle.setLEDs(255,255,255); //sets LEDs to WHITE (255 is bright value )
     
     candle.animate(rainbowAnim);
 
@@ -45,7 +47,7 @@ public class LedSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    candle.animate(rainbowAnim);
+    
   }
 
   @Override
@@ -53,10 +55,20 @@ public class LedSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 
-   public void callCone(CANdle candle){
+   public void callCone(){ //CANdle candle
+    //candle.setLEDs(0, 0, 0);
+    candle.configFactoryDefault();
     candle.setLEDs(255,255,0);
   } 
-  public void callCube(CANdle candle){
+  public void callCube(){
+    //candle.setLEDs(0, 0, 0);
+    candle.configFactoryDefault();
     candle.setLEDs(255,0,255);
+  }
+  public void tasteTheRainbow(){
+    candle.configFactoryDefault();
+    RainbowAnimation rainbowAnim = new RainbowAnimation(0.25, 0.5, 64);
+    //candle.setLEDs(Random(0,255),0,255);
+    candle.animate(rainbowAnim);
   }
 }
