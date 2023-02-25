@@ -27,18 +27,31 @@ public class LedCommand extends CommandBase {
   @Override
   public void execute() {
     
-    if(m_controller.povUp().getAsBoolean())
+    if(m_controller.button(1).getAsBoolean())
     {
       m_Ledsubsystem.callCone();
     }
-    if(m_controller.povDown().getAsBoolean())
+    if(m_controller.button(2).getAsBoolean())
     {
       m_Ledsubsystem.callCube();
     }
-    if(m_controller.povRight().getAsBoolean())
+    if(m_controller.button(3).getAsBoolean())
     {
-      m_Ledsubsystem.tasteTheRainbow();
+      m_Ledsubsystem.callOffYouStupidThing();
     }
+
+
+    if((m_controller.button(2).getAsBoolean()) == false)
+    {
+      if((m_controller.button(1).getAsBoolean()) == false)
+      {
+        m_Ledsubsystem.callNone();
+      }
+    }
+    //if(m_controller.button(3).getAsBoolean())
+    //{
+    //  m_Ledsubsystem.tasteTheRainbow();
+    //}
   }
 
   // Called once the command ends or is interrupted.

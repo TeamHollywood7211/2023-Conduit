@@ -134,15 +134,18 @@ public class RobotContainer {
       .onTrue(m_armCommand);
 
 
-      new Trigger(m_operatorController.povUp()) //dpad up
+      new Trigger(m_operatorController.button(1)) //dpad up
       .whileTrue(m_ledCommand);
-      new Trigger(m_operatorController.povDown()) //dpad down
-      .whileTrue(m_ledCommand);
-      new Trigger(m_operatorController.povRight()) //dpad right
-      .whileTrue(m_ledCommand);
-      
 
+      new Trigger(m_operatorController.button(1)) //dpad up
+      .onFalse(m_ledCommand);
 
+      new Trigger(m_operatorController.button(2)) //dpad down
+      .whileTrue(m_ledCommand);
+      new Trigger(m_operatorController.button(2)) //dpad down
+      .onFalse(m_ledCommand);
+      new Trigger(m_operatorController.button(3)) //dpad down
+      .onFalse(m_ledCommand);
     new Trigger(m_operatorController.leftStick())
       .onTrue(m_armCommand);
 
