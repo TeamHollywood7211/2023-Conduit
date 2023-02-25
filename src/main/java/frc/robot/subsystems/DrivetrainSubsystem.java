@@ -37,7 +37,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         // CameraSubsystem m_cameraSubsystem;
 
-        public static final double MAX_VOLTAGE = 12.0;
+        public static final double MAX_VOLTAGE = 11.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
         /**
         * The maximum angular velocity of the robot in radians per second.
