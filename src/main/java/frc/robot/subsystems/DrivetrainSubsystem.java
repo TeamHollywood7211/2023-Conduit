@@ -7,11 +7,13 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.swervedrivespecialties.swervelib.*;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -24,7 +26,18 @@ import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-        public static final double MAX_VOLTAGE = 12.0;
+        // public SwerveDriveOdometry m_odometry;
+        
+        // SwerveModuleState[] states;
+        // SwerveModulePosition[] swerveModulePositions;
+        // SwerveModulePosition frontLeftPose;
+        // SwerveModulePosition frontRightPose;
+        // SwerveModulePosition backLeftPose;
+        // SwerveModulePosition backRightPose;
+
+        // CameraSubsystem m_cameraSubsystem;
+
+        public static final double MAX_VOLTAGE = 11.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
         /**
         * The maximum angular velocity of the robot in radians per second.
@@ -51,20 +64,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private final SwerveModule m_backLeftModule;
         private final SwerveModule m_backRightModule;
 
-        private PIDController tipPID;
-
         private AHRS gyro;
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
         public boolean isFieldOriented = true;
         
-        public DrivetrainSubsystem() {
+        public DrivetrainSubsystem(CameraSubsystem cameraSubsystem) {
+                // m_cameraSubsystem = cameraSubsystem;
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
                 gyro = new AHRS(SPI.Port.kMXP);
-
-                tipPID = new PIDController(tipkP, tipkI, tipkD);
-                tipPID.setTolerance(10);
 
                 Mk4ModuleConfiguration moduleConfig = new Mk4ModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
@@ -110,6 +119,24 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         BACK_RIGHT_MODULE_STEER_ENCODER, 
                         BACK_RIGHT_MODULE_STEER_OFFSET
                 );
+
+                // states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+                // frontLeftPose = new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle);
+                // frontRightPose = new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle);
+                // backLeftPose = new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle);
+                // backRightPose = new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle);
+                // swerveModulePositions = new SwerveModulePosition[] {
+                //         new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle),
+                //         new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle),
+                //         new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle),
+                //         new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle)
+                // };
+
+                // m_odometry = new SwerveDriveOdometry(
+                //         m_kinematics, 
+                //         getGyroscopeRotation(), 
+                //         swerveModulePositions
+                // );
         }
         /**
          * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
@@ -133,6 +160,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 return Rotation2d.fromDegrees(360 - gyro.getYaw());
         }
 
+        // public Pose2d getOdometry(){
+        //         return m_odometry.getPoseMeters();
+        // }
+
+        // public void resetOdometry(Pose2d pose){
+        //         m_odometry.resetPosition(getGyroscopeRotation(), swerveModulePositions, pose);
+        // }
+
         public void drive(ChassisSpeeds chassisSpeeds) {
                 m_chassisSpeeds = chassisSpeeds;
         }
@@ -141,18 +176,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 isFieldOriented = !isFieldOriented;
         }
 
-        public void untipBot(){
-                double untip = tipPID.calculate(gyro.getPitch(), 0);
-                drive(new ChassisSpeeds(untip, 0, 0));
-        }
-
 
         @Override
         public void periodic() {
-                SmartDashboard.putNumber("Gyroscope Position from Swerve", 0);
                 SmartDashboard.putNumber("Gyroscope Position from Swerve", gyro.getYaw());
                 SmartDashboard.putBoolean("fieldoriented", isFieldOriented);
                 SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+                // swerveModulePositions = new SwerveModulePosition[]{
+                //         new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle),
+                //         new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle),
+                //         new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle),
+                //         new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle)
+                // };
+
+                // m_odometry.update(getGyroscopeRotation(), swerveModulePositions);
                 //SwerveDriveKinematics.normalizeWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states,MAX_VELOCITY_METERS_PER_SECOND);
 

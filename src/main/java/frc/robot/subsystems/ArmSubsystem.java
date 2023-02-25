@@ -138,11 +138,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(){
-    gripMotor.set(0.35);
+    gripMotor.set(0.5);
   }
 
   public void runGripIn(){
-    gripMotor.set(-0.35);
+    gripMotor.set(-0.5);
   }
 
   public void runGripInPrecise(){
@@ -238,19 +238,20 @@ public class ArmSubsystem extends SubsystemBase {
   public void periodic() {
     
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Arm Pos", getAnglePos());
 
     //gets the constants from the dashboard
-    newArmkP = SmartDashboard.getNumber("arm P", armkP);
-    newArmkI = SmartDashboard.getNumber("arm I", armkI);
-    newArmkD = SmartDashboard.getNumber("arm D", armkD);
+    // newArmkP = SmartDashboard.getNumber("arm P", armkP);
+    // newArmkI = SmartDashboard.getNumber("arm I", armkI);
+    // newArmkD = SmartDashboard.getNumber("arm D", armkD);
 
     // newGripkP = SmartDashboard.getNumber("grip P", gripkP);
     // newGripkI = SmartDashboard.getNumber("grip I", gripkI);
     // newGripkD = SmartDashboard.getNumber("grip D", gripkD);
 
-    armPID.setP(newArmkP);
-    armPID.setI(newArmkI);
-    armPID.setD(newArmkD);
+    // armPID.setP(newArmkP);
+    // armPID.setI(newArmkI);
+    // armPID.setD(newArmkD);
 
     // gripPID.setP(newGripkP);
     // gripPID.setI(newGripkI);
