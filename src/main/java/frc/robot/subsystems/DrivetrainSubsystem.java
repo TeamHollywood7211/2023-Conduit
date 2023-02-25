@@ -26,16 +26,16 @@ import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
 
-        public SwerveDriveOdometry m_odometry;
+        // public SwerveDriveOdometry m_odometry;
         
-        SwerveModuleState[] states;
-        SwerveModulePosition[] swerveModulePositions;
-        SwerveModulePosition frontLeftPose;
-        SwerveModulePosition frontRightPose;
-        SwerveModulePosition backLeftPose;
-        SwerveModulePosition backRightPose;
+        // SwerveModuleState[] states;
+        // SwerveModulePosition[] swerveModulePositions;
+        // SwerveModulePosition frontLeftPose;
+        // SwerveModulePosition frontRightPose;
+        // SwerveModulePosition backLeftPose;
+        // SwerveModulePosition backRightPose;
 
-        CameraSubsystem m_cameraSubsystem;
+        // CameraSubsystem m_cameraSubsystem;
 
         public static final double MAX_VOLTAGE = 12.0;
         public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
@@ -71,7 +71,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public boolean isFieldOriented = true;
         
         public DrivetrainSubsystem(CameraSubsystem cameraSubsystem) {
-                m_cameraSubsystem = cameraSubsystem;
+                // m_cameraSubsystem = cameraSubsystem;
                 ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
                 gyro = new AHRS(SPI.Port.kMXP);
 
@@ -120,23 +120,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         BACK_RIGHT_MODULE_STEER_OFFSET
                 );
 
-                states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
-                frontLeftPose = new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle);
-                frontRightPose = new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle);
-                backLeftPose = new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle);
-                backRightPose = new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle);
-                swerveModulePositions = new SwerveModulePosition[] {
-                        new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle),
-                        new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle),
-                        new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle),
-                        new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle)
-                };
+                // states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+                // frontLeftPose = new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle);
+                // frontRightPose = new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle);
+                // backLeftPose = new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle);
+                // backRightPose = new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle);
+                // swerveModulePositions = new SwerveModulePosition[] {
+                //         new SwerveModulePosition(states[0].speedMetersPerSecond, states[0].angle),
+                //         new SwerveModulePosition(states[1].speedMetersPerSecond, states[1].angle),
+                //         new SwerveModulePosition(states[2].speedMetersPerSecond, states[2].angle),
+                //         new SwerveModulePosition(states[3].speedMetersPerSecond, states[3].angle)
+                // };
 
-                m_odometry = new SwerveDriveOdometry(
-                        m_kinematics, 
-                        getGyroscopeRotation(), 
-                        swerveModulePositions
-                );
+                // m_odometry = new SwerveDriveOdometry(
+                //         m_kinematics, 
+                //         getGyroscopeRotation(), 
+                //         swerveModulePositions
+                // );
         }
         /**
          * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
@@ -160,13 +160,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 return Rotation2d.fromDegrees(360 - gyro.getYaw());
         }
 
-        public Pose2d getOdometry(){
-                return m_odometry.getPoseMeters();
-        }
+        // public Pose2d getOdometry(){
+        //         return m_odometry.getPoseMeters();
+        // }
 
-        public void resetOdometry(Pose2d pose){
-                m_odometry.resetPosition(getGyroscopeRotation(), swerveModulePositions, pose);
-        }
+        // public void resetOdometry(Pose2d pose){
+        //         m_odometry.resetPosition(getGyroscopeRotation(), swerveModulePositions, pose);
+        // }
 
         public void drive(ChassisSpeeds chassisSpeeds) {
                 m_chassisSpeeds = chassisSpeeds;

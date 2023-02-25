@@ -65,16 +65,16 @@ public class RobotContainer {
 
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
-  public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-    m_drivetrainSubsystem::getOdometry, 
-    m_drivetrainSubsystem::resetOdometry, 
-    new PIDConstants(1.0, 0.0, 0.1), 
-    new PIDConstants(1.0, 0.0, 0.1), 
-    m_drivetrainSubsystem::drive, 
-    autonEventMap,
-    true,
-    m_drivetrainSubsystem
-  );
+  // public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
+  //   m_drivetrainSubsystem::getOdometry, 
+  //   m_drivetrainSubsystem::resetOdometry, 
+  //   new PIDConstants(1.0, 0.0, 0.1), 
+  //   new PIDConstants(1.0, 0.0, 0.1), 
+  //   m_drivetrainSubsystem::drive, 
+  //   autonEventMap,
+  //   true,
+  //   m_drivetrainSubsystem
+  // );
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
