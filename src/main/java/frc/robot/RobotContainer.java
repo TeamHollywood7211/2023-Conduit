@@ -4,6 +4,12 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -22,8 +28,14 @@ import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
+import frc.robot.subsystems.DashboardSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
+import static frc.robot.Constants.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -57,7 +69,23 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
   );
 
+  //dashboard sub
+  //private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
+
   //the robot's autons
+  SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
+    m_drivetrainSubsystem::getPose2d, 
+    m_drivetrainSubsystem::resetPose2d, 
+    new PIDConstants(1.0, 0.0, 0), 
+    new PIDConstants(0.2499, 0.0, 0), 
+    m_drivetrainSubsystem::drive, 
+    eventMap, 
+    true,
+    m_drivetrainSubsystem
+  );
+
+  final List<PathPlannerTrajectory> testAuton = PathPlanner.loadPathGroup("testAuton", new PathConstraints(1, 1));
+  Command testAutoCommand = autonBuilder.fullAuto(testAuton);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   // public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
@@ -140,8 +168,11 @@ public class RobotContainer {
   }
 
   public void configureAutons(){
+    eventMap.put("fireSingleSolenoid", m_fireFlipperAuton);
+
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
+    autonChooser.addOption("testAuton", testAutoCommand);
     SmartDashboard.putData(autonChooser);
   }
 
