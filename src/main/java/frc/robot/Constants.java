@@ -64,6 +64,8 @@ public final class Constants {
     
     public static final int GRIP_MOTOR_ID = 42;
 
+    public static final double GRIP_MOTOR_SPEED = 0.5;
+
     public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 0;
     public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
 

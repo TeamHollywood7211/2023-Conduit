@@ -138,11 +138,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(){
-    gripMotor.set(0.5);
+    gripMotor.set(GRIP_MOTOR_SPEED);
   }
 
   public void runGripIn(){
-    gripMotor.set(-0.5);
+    gripMotor.set(-GRIP_MOTOR_SPEED);
   }
 
   public void runGripInPrecise(){

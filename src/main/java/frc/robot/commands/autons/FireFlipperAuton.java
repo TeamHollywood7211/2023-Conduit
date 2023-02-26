@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.autons;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;

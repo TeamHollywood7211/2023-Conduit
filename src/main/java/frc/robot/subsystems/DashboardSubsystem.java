@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -7,14 +10,18 @@ public class DashboardSubsystem extends SubsystemBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private ArmSubsystem m_armSubsystem;
   private CounterweightSubsystem m_counterweightSubsystem;
-  //private DrivetrainSubsystem m_drivetrainSubsystem;
+  private DrivetrainSubsystem m_drivetrainSubsystem;
   private SolenoidSubsystem m_solenoidSubsystem;
 
-  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem) {
+  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, SendableChooser autonChooser) {
     m_armSubsystem = armSubsystem;
     m_counterweightSubsystem = counterweightSubsystem;
-    //m_drivetrainSubsystem = drivetrainSubsystem;
+    m_drivetrainSubsystem = drivetrainSubsystem;
     m_solenoidSubsystem = solenoidSubsystem;
+
+    ShuffleboardTab driveTab = Shuffleboard.getTab("DriveTab");
+    driveTab.addCamera("FrontCam", "front-limelight", null);
+    driveTab.add(autonChooser);
   }
 
   public void periodic(){
@@ -33,6 +40,11 @@ public class DashboardSubsystem extends SubsystemBase {
     //SOLENOID DASHBOARD STUFF
     SmartDashboard.putBoolean("wrist solenoid state", m_solenoidSubsystem.getWristSolenoidState());
     SmartDashboard.putBoolean("armSolenoid State", m_solenoidSubsystem.getArmSolenoidState());
+
+    //DRIVETRAIN DASHBOARD STUFF
+    SmartDashboard.putNumber("Gyroscope Position from Swerve", m_drivetrainSubsystem.getGyroscopeRotationAsDouble());
+    SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
+
   }
 
   // Returns true when the command should end.

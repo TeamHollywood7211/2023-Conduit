@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -15,21 +14,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.FireFlipperAuton;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
 import frc.robot.commands.ManualCounterweightCommand;
 import frc.robot.commands.ToggleCommand;
+import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
-
-import static frc.robot.Constants.*;
-
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -40,9 +34,9 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 public class RobotContainer {
   SendableChooser<Command> autonChooser = new SendableChooser<>();
   // The robot's controller(s)
-  //private final XboxController m_controller = new XboxController(0);
   private final CommandXboxController m_driverController = new CommandXboxController(0);
   private final CommandXboxController m_operatorController = new CommandXboxController(1);
+
   // The robot's subsystems
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem);
@@ -55,7 +49,7 @@ public class RobotContainer {
   public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_operatorController);
   private final GripCommand m_gripCommand = new GripCommand(m_armSubsystem, m_operatorController);
   private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_driverController);
-  private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
+  // private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
     m_drivetrainSubsystem, 
     () -> -modifyAxis(m_driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
@@ -63,6 +57,7 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
   );
 
+  //the robot's autons
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   // public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
@@ -81,15 +76,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Set up the default command for the drivetrain.
-    // The controls are for field-oriented driving:
-    // Left stick Y axis -> forward and backwards movement
-    // Left stick X axis -> left and right movement
-    // Right stick X axis -> rotation
-    autonChooser.setDefaultOption("Do nothing", new InstantCommand());
-    autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
-    SmartDashboard.putData(autonChooser);
+    configureAutons();
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -152,7 +140,9 @@ public class RobotContainer {
   }
 
   public void configureAutons(){
-    autonEventMap.put("fireFlipperSolenoid", m_fireFlipperAuton);
+    autonChooser.setDefaultOption("Do nothing", new InstantCommand());
+    autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
+    SmartDashboard.putData(autonChooser);
   }
 
   /**
