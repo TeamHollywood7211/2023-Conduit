@@ -24,32 +24,32 @@ public class DashboardSubsystem extends SubsystemBase {
     // ShuffleboardTab driveTab = Shuffleboard.getTab("DriveTab");
     // driveTab.addCamera("FrontCam", "front-limelight", null);
     // driveTab.add(autonChooser);
-    SmartDashboard.putData("Field", m_field);
+    // SmartDashboard.putData("Field", m_field);
   }
 
   public void periodic(){
     //ARM DASHBOARD STUFF
-    SmartDashboard.putNumber("ARM POS", m_armSubsystem.getAnglePos());
-    SmartDashboard.putBoolean("is outside frame", m_armSubsystem.armOutsideFramePerim(0));
-    SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
+    // SmartDashboard.putNumber("ARM POS", m_armSubsystem.getAnglePos());
+    // SmartDashboard.putBoolean("is outside frame", m_armSubsystem.armOutsideFramePerim(0));
+    // SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
 
     //GRIP DASHBOARD STUFF
-    SmartDashboard.putNumber("Grip Current", m_armSubsystem.getGripCurrent());
+    // SmartDashboard.putNumber("Grip Current", m_armSubsystem.getGripCurrent());
 
     //COUNTERWEIGHT DASHBOARD STUFF
-    SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
-    SmartDashboard.putNumber("Counterweight Current", m_counterweightSubsystem.getCounterweightCurrent());
+    // SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
+    // SmartDashboard.putNumber("Counterweight Current", m_counterweightSubsystem.getCounterweightCurrent());
 
     //SOLENOID DASHBOARD STUFF
-    SmartDashboard.putBoolean("wrist solenoid state", m_solenoidSubsystem.getWristSolenoidState());
-    SmartDashboard.putBoolean("armSolenoid State", m_solenoidSubsystem.getArmSolenoidState());
+    // SmartDashboard.putBoolean("wrist solenoid state", m_solenoidSubsystem.getWristSolenoidState());
+    // SmartDashboard.putBoolean("armSolenoid State", m_solenoidSubsystem.getArmSolenoidState());
 
     //DRIVETRAIN DASHBOARD STUFF
     SmartDashboard.putNumber("Gyroscope Position from Swerve", m_drivetrainSubsystem.getGyroscopeRotationAsDouble());
     SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
 
     //FIELD DASHBOARD STUFF
-    m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());
+    // m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());
   }
 
   // Returns true when the command should end.

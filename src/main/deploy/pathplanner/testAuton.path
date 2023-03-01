@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 4.195642988442375,
-        "y": 6.03118789175967
+        "x": 4.613552070706038,
+        "y": 6.03
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.3638888320430675,
-        "y": 6.03118789175967
+        "x": 5.781797914306726,
+        "y": 6.03
       },
-      "holonomicAngle": 0.9,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,15 +24,15 @@
     },
     {
       "anchorPoint": {
-        "x": 7.66238878449321,
-        "y": 6.05018375913529
+        "x": 7.28,
+        "y": 6.03
       },
       "prevControl": {
-        "x": 6.263113010991917,
-        "y": 6.05018375913529
+        "x": 7.012991281924217,
+        "y": 6.03
       },
       "nextControl": null,
-      "holonomicAngle": -178.78112476486888,
+      "holonomicAngle": 90.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -40,17 +40,13 @@
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "waitBehavior": "minimum",
+        "waitTime": 0.0
       }
     }
   ],
-  "markers": [
-    {
-      "position": 0.41818181818182865,
-      "names": [
-        "fireSingleSolenoid"
-      ]
-    }
-  ]
+  "maxVelocity": 4.0,
+  "maxAcceleration": 3.0,
+  "isReversed": null,
+  "markers": []
 }

@@ -70,34 +70,35 @@ public class RobotContainer {
   );
 
   //dashboard sub
-  //private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
+  private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
 
   //the robot's autons
   SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
     m_drivetrainSubsystem::resetPose2d, 
-    new PIDConstants(1.0, 0.0, 0), 
-    new PIDConstants(0.2499, 0.0, 0), 
+    new PIDConstants(0.00001, 0.0, 0), 
+    new PIDConstants(0.6, 0.0, 0), 
     m_drivetrainSubsystem::drive, 
     eventMap, 
     true,
     m_drivetrainSubsystem
   );
 
-  final List<PathPlannerTrajectory> testAuton = PathPlanner.loadPathGroup("testAuton", new PathConstraints(1, 1));
-  Command testAutoCommand = autonBuilder.fullAuto(testAuton);
-  private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
-
-  // public SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-  //   m_drivetrainSubsystem::getOdometry, 
-  //   m_drivetrainSubsystem::resetOdometry, 
-  //   new PIDConstants(1.0, 0.0, 0.1), 
-  //   new PIDConstants(1.0, 0.0, 0.1), 
-  //   m_drivetrainSubsystem::drive, 
-  //   autonEventMap,
-  //   true,
+  // SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
+  //   m_drivetrainSubsystem::getPose2d, 
+  //   m_drivetrainSubsystem::resetPose2d, 
+  //   m_drivetrainSubsystem.getKinematics(), 
+  //   new PIDConstants(0.0001, 0, 0), 
+  //   new PIDConstants(1, 0, 0), 
+  //   m_drivetrainSubsystem::setAllStates, 
+  //   eventMap,
+  //   false, 
   //   m_drivetrainSubsystem
   // );
+
+  final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(4, 3));
+  Command testAutoCommand = autonBuilder.fullAuto(testAuton);
+  private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
