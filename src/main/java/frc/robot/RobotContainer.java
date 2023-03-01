@@ -76,8 +76,8 @@ public class RobotContainer {
   SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
     m_drivetrainSubsystem::resetPose2d, 
-    new PIDConstants(0.00001, 0.0, 0), 
-    new PIDConstants(0.6, 0.0, 0), 
+    new PIDConstants(0.0001, 0.0, 0), 
+    new PIDConstants(10, 0.0, 0), 
     m_drivetrainSubsystem::drive, 
     eventMap, 
     true,
