@@ -66,14 +66,14 @@ public class ArmSubsystem extends SubsystemBase {
     gripPID.setD(gripkD);
 
     //put constants to the dashboard so we can tune them on the fly
-    SmartDashboard.putNumber("arm P", armkP);
-    SmartDashboard.putNumber("arm I", armkI);
-    SmartDashboard.putNumber("arm D", armkD);
+    // SmartDashboard.putNumber("arm P", armkP);
+    // SmartDashboard.putNumber("arm I", armkI);
+    // SmartDashboard.putNumber("arm D", armkD);
     
-    // //put constants to the dashboard so we can tune them on the fly
-    SmartDashboard.putNumber("grip P", gripkP);
-    SmartDashboard.putNumber("grip I", gripkI);
-    SmartDashboard.putNumber("grip D", gripkD);
+    // put constants to the dashboard so we can tune them on the fly
+    // SmartDashboard.putNumber("grip P", gripkP);
+    // SmartDashboard.putNumber("grip I", gripkI);
+    // SmartDashboard.putNumber("grip D", gripkD);
   }
 
   //this sets the arm to the high position, or top nodes
@@ -138,11 +138,11 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(){
-    gripMotor.set(0.5);
+    gripMotor.set(GRIP_MOTOR_SPEED);
   }
 
   public void runGripIn(){
-    gripMotor.set(-0.5);
+    gripMotor.set(-GRIP_MOTOR_SPEED);
   }
 
   public void runGripInPrecise(){
@@ -238,7 +238,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void periodic() {
     
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Arm Pos", getAnglePos());
+    // SmartDashboard.putNumber("Arm Pos", getAnglePos());
 
     //gets the constants from the dashboard
     // newArmkP = SmartDashboard.getNumber("arm P", armkP);

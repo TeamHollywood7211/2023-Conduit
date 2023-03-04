@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.autons;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -41,7 +41,7 @@ public class FireFlipperAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_solenoidSubsystem.getFlipperSolenoidState() && time.get()>4){
+    if(m_solenoidSubsystem.getFlipperSolenoidState() && time.get()>0.15){
       return true;
     }
     return false;

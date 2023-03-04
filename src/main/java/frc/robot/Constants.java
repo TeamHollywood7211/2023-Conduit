@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 public final class Constants {
 //========DRIVETRAIN CONSTANTS=======================================================================================
 
-    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 26.0;
+    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.6604;//26.0
         //The left-to-right distance between the drivetrain wheels should be measured from center to center.
         //The front-to-back distance between the drivetrain wheels should be measured from center to center.
 
-    public static final double DRIVETRAIN_WHEELBASE_METERS = 32.0;
+    public static final double DRIVETRAIN_WHEELBASE_METERS = 0.8128;
 
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1;
     public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 2;
@@ -21,23 +21,23 @@ public final class Constants {
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 11; 
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12; 
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(11.953); // 25.92 for practice bot 11.953 for new
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(10.458); // 25.92 for practice bot 11.953 for new
 
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 21; 
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 22; 
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(252.333); // 57.21 for practice bot 252.333 for new
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(254); // 57.21 for practice bot 252.333 for new
 
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 31;
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 32;
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 33;
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-87.515); // 159.61 for practice bot -87.515 for new
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(275.097); // 159.61 for practice bot -87.515 for new
 
-    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 20;
+    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 35;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
-    public static final int NOMINAL_DRIVE_VOLTAGE = 11;
+    public static final int NOMINAL_DRIVE_VOLTAGE = 12;
 
-    public static final HashMap<String, Command> autonEventMap = new HashMap<>();
+    public static HashMap<String, Command> eventMap = new HashMap<>();
 
 //====ARM CONSTANTS================================================================================================
 
@@ -63,6 +63,8 @@ public final class Constants {
 //====GRIP CONSTANTS===============================================================================================
     
     public static final int GRIP_MOTOR_ID = 42;
+
+    public static final double GRIP_MOTOR_SPEED = 0.5;
 
     public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 0;
     public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
