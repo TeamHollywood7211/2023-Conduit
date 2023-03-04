@@ -72,31 +72,30 @@ public class RobotContainer {
   //dashboard sub
   private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
   //the robot's autons
-  SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
-    m_drivetrainSubsystem::getPose2d,
-    m_drivetrainSubsystem::resetPose2d,
-    new PIDConstants(1, 0.0, 0), 
-    new PIDConstants(0.3, 0.0, 0), 
-    m_drivetrainSubsystem::drive, 
-    eventMap, 
-    true,
-    m_drivetrainSubsystem
-  );
+  // SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
+  //   m_drivetrainSubsystem::getPose2d,
+  //   m_drivetrainSubsystem::resetPose2d,
+  //   new PIDConstants(1, 0.0, 0), 
+  //   new PIDConstants(0.53, 0.0, 0), 
+  //   m_drivetrainSubsystem::drive, 
+  //   eventMap, 
+  //   m_drivetrainSubsystem
+  // );
 
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
     m_drivetrainSubsystem::resetPose2d, 
     m_drivetrainSubsystem.getKinematics(), 
     new PIDConstants(1, 0, 0),
-    new PIDConstants(0.6, 0, 0), 
+    new PIDConstants(0.53, 0, 0), 
     m_drivetrainSubsystem::setAllStates, 
-    eventMap,
-    false, 
+    eventMap, 
     m_drivetrainSubsystem
   );
 
   final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(1, 1));
-  Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
+  private Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
+  private Command testtesttest = m_drivetrainSubsystem.followTrajectoryCommand(testAuton, true);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   /**
@@ -173,6 +172,7 @@ public class RobotContainer {
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
     autonChooser.addOption("testAuton", testAutoCommand);
+    autonChooser.addOption("testtesttest", testtesttest);
     SmartDashboard.putData(autonChooser);
   }
 

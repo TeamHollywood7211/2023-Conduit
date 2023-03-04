@@ -10,6 +10,7 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 //import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.*;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -26,6 +27,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
@@ -231,9 +233,26 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 return isFieldOriented;
         }
 
-        // public Command folowTrajectoryCommand(PathPlannerTrajectory traj){
-                
-        // }
+        public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+                return new SequentialCommandGroup(
+                     new InstantCommand(() -> {
+                       // Reset odometry for the first path you run during auto
+                       if(isFirstPath){
+                           this.resetPose2d(traj.getInitialHolonomicPose());
+                       }
+                     }),
+                        new PPSwerveControllerCommand(
+                                traj, 
+                                this::getPose2d, 
+                                m_kinematics, 
+                                new PIDController(1, 0, 0),
+                                new PIDController(1, 0, 0), 
+                                new PIDController(0.53, 0, 0), 
+                                this::setAllStates, 
+                                this
+                        )
+                );
+             }
 
 
         @Override
