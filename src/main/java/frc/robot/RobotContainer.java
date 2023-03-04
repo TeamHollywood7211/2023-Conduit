@@ -87,15 +87,15 @@ public class RobotContainer {
     m_drivetrainSubsystem::getPose2d, 
     m_drivetrainSubsystem::resetPose2d, 
     m_drivetrainSubsystem.getKinematics(), 
-    new PIDConstants(1, 0, 0), 
-    new PIDConstants(0.5, 0, 0), 
+    new PIDConstants(1, 0, 0),
+    new PIDConstants(0.6, 0, 0), 
     m_drivetrainSubsystem::setAllStates, 
     eventMap,
     false, 
     m_drivetrainSubsystem
   );
 
-  final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(2, 2));
+  final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(1, 1));
   Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
