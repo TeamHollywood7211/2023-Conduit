@@ -246,8 +246,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                 this::getPose2d, 
                                 m_kinematics, 
                                 new PIDController(1, 0, 0),
-                                new PIDController(1, 0, 0), 
-                                new PIDController(0.53, 0, 0), 
+                                new PIDController(0, 0, 0), 
+                                new PIDController(0.52, 0, 0), //0.53
                                 this::setAllStates, 
                                 this
                         )

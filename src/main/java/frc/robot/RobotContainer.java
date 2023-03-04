@@ -87,15 +87,14 @@ public class RobotContainer {
     m_drivetrainSubsystem::resetPose2d, 
     m_drivetrainSubsystem.getKinematics(), 
     new PIDConstants(1, 0, 0),
-    new PIDConstants(0.53, 0, 0), 
+    new PIDConstants(0.52, 0, 0), 
     m_drivetrainSubsystem::setAllStates, 
     eventMap, 
     m_drivetrainSubsystem
   );
 
-  final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(1, 1));
+  final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(2, 2));
   private Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
-  private Command testtesttest = m_drivetrainSubsystem.followTrajectoryCommand(testAuton, true);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   /**
@@ -172,7 +171,6 @@ public class RobotContainer {
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
     autonChooser.addOption("testAuton", testAutoCommand);
-    autonChooser.addOption("testtesttest", testtesttest);
     SmartDashboard.putData(autonChooser);
   }
 

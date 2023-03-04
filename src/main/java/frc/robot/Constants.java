@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 public final class Constants {
 //========DRIVETRAIN CONSTANTS=======================================================================================
 
-    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 26.0;
+    public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.6604;//26.0
         //The left-to-right distance between the drivetrain wheels should be measured from center to center.
         //The front-to-back distance between the drivetrain wheels should be measured from center to center.
 
-    public static final double DRIVETRAIN_WHEELBASE_METERS = 32.0;
+    public static final double DRIVETRAIN_WHEELBASE_METERS = 0.8128;
 
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1;
     public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 2;
