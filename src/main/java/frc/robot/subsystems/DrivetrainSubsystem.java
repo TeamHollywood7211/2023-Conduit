@@ -149,12 +149,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         //returns what the drivetrain sees as gyro angle but as Rotation2d
         public Rotation2d getGyroscopeRotation() {
-                return Rotation2d.fromDegrees(360 - m_gyro.getYaw());
+                return Rotation2d.fromDegrees(-m_gyro.getYaw());//360 - m_gyro.getYaw());
         }
 
         //returns what the drivetrain sees as gyro angle but as a double
         public double getGyroscopeRotationAsDouble(){
-                return 360-m_gyro.getYaw();
+                return -m_gyro.getYaw();
         }
 
         public SwerveModuleState getModuleState(SwerveModule module) {
@@ -198,7 +198,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
 
         public void resetPose2d(Pose2d pose){
-                m_odometry.resetPosition(getGyroscopeRotation(), swerveModulePositions, pose);
+                m_odometry.resetPosition(
+                        getGyroscopeRotation(), 
+                        new SwerveModulePosition[]{
+                                m_frontLeftModule.getPosition(), 
+                                m_frontRightModule.getPosition(), 
+                                m_backLeftModule.getPosition(), 
+                                m_backRightModule.getPosition()
+                        },
+                        pose
+                );
         }
 
         public Pose2d getPose2d(){
@@ -231,10 +240,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public void periodic() {
                 states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
-                updateSwerveModulePositions();
+                //updateSwerveModulePositions();
                 m_odometry.update(
                         getGyroscopeRotation(),
-                        swerveModulePositions
+                        new SwerveModulePosition[]{
+                                m_frontLeftModule.getPosition(), 
+                                m_frontRightModule.getPosition(), 
+                                m_backLeftModule.getPosition(), 
+                                m_backRightModule.getPosition()
+                        }
                 );
         }
 }

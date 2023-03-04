@@ -71,33 +71,32 @@ public class RobotContainer {
 
   //dashboard sub
   private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
-
   //the robot's autons
   SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d,
     m_drivetrainSubsystem::resetPose2d,
-    new PIDConstants(0.01, 0.0, 0), 
-    new PIDConstants(0.25, 0.0, 0), 
+    new PIDConstants(1, 0.0, 0), 
+    new PIDConstants(0.3, 0.0, 0), 
     m_drivetrainSubsystem::drive, 
     eventMap, 
     true,
     m_drivetrainSubsystem
   );
 
-  // SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
-  //   m_drivetrainSubsystem::getPose2d, 
-  //   m_drivetrainSubsystem::resetPose2d, 
-  //   m_drivetrainSubsystem.getKinematics(), 
-  //   new PIDConstants(0.0001, 0, 0), 
-  //   new PIDConstants(1, 0, 0), 
-  //   m_drivetrainSubsystem::setAllStates, 
-  //   eventMap,
-  //   false, 
-  //   m_drivetrainSubsystem
-  // );
+  SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
+    m_drivetrainSubsystem::getPose2d, 
+    m_drivetrainSubsystem::resetPose2d, 
+    m_drivetrainSubsystem.getKinematics(), 
+    new PIDConstants(1, 0, 0), 
+    new PIDConstants(0.5, 0, 0), 
+    m_drivetrainSubsystem::setAllStates, 
+    eventMap,
+    false, 
+    m_drivetrainSubsystem
+  );
 
   final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(2, 2));
-  Command testAutoCommand = autonBuilder.fullAuto(testAuton);
+  Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   /**
