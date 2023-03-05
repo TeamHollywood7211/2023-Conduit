@@ -37,6 +37,8 @@ public final class Constants {
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
 
+    public static double AUTON_TRANSLATE_P = 1;
+    public static double AUTON_ROTATE_P = 0.53;
     public static HashMap<String, Command> eventMap = new HashMap<>();
 
 //====ARM CONSTANTS================================================================================================

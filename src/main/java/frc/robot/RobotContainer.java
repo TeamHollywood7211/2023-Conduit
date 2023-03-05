@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
@@ -72,29 +74,29 @@ public class RobotContainer {
   //dashboard sub
   private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
   //the robot's autons
-  // SwerveAutoBuilder autonBuilder = new SwerveAutoBuilder(
-  //   m_drivetrainSubsystem::getPose2d,
-  //   m_drivetrainSubsystem::resetPose2d,
-  //   new PIDConstants(1, 0.0, 0), 
-  //   new PIDConstants(0.53, 0.0, 0), 
-  //   m_drivetrainSubsystem::drive, 
-  //   eventMap, 
-  //   m_drivetrainSubsystem
-  // );
 
+  //robot trajectories
+  final List<PathPlannerTrajectory> testAuton = PathPlanner.loadPathGroup("testAuton", new PathConstraints(2, 2));
+  final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Throw and Park", new PathConstraints(1, 0.5));
+  final List<PathPlannerTrajectory> driveGrabPark = PathPlanner.loadPathGroup("Drive Grab Park", new PathConstraints(4, 3));
+ 
+
+  //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
     m_drivetrainSubsystem::resetPose2d, 
     m_drivetrainSubsystem.getKinematics(), 
-    new PIDConstants(1, 0, 0),
-    new PIDConstants(0.52, 0, 0), 
+    new PIDConstants(AUTON_TRANSLATE_P, 0, 0),
+    new PIDConstants(AUTON_ROTATE_P, 0, 0), 
     m_drivetrainSubsystem::setAllStates, 
     eventMap, 
+    false,
     m_drivetrainSubsystem
   );
 
-  final PathPlannerTrajectory testAuton = PathPlanner.loadPath("testAuton", new PathConstraints(2, 2));
   private Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
+  private Command throwAndParkCommand = stateAutoBuilder.fullAuto(throwAndPark);
+  private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPark);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
 
   /**
@@ -106,6 +108,19 @@ public class RobotContainer {
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
     // Configure the button bindings
     configureButtonBindings();
+  }
+
+  public void configureAutons(){
+    eventMap.put("firesol", m_fireFlipperAuton);
+    eventMap.put("print", new PrintCommand("===========================didthething==================================="));
+    eventMap.put("wait2", new WaitCommand(2));
+
+    autonChooser.setDefaultOption("Do nothing", new InstantCommand());
+    autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
+    autonChooser.addOption("testAuton", testAutoCommand);
+    autonChooser.addOption("Throw and Park", throwAndParkCommand);
+    autonChooser.addOption("Drive Grab PArk", driveGrabParkCommand);
+    SmartDashboard.putData(autonChooser);
   }
 
   /**
@@ -163,15 +178,6 @@ public class RobotContainer {
       .onTrue(m_gripCommand);
     new Trigger(m_operatorController.leftTrigger(0.1))
       .onTrue(m_gripCommand);
-  }
-
-  public void configureAutons(){
-    eventMap.put("fireSingleSolenoid", m_fireFlipperAuton);
-
-    autonChooser.setDefaultOption("Do nothing", new InstantCommand());
-    autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
-    autonChooser.addOption("testAuton", testAutoCommand);
-    SmartDashboard.putData(autonChooser);
   }
 
   /**
