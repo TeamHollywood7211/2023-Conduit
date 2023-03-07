@@ -13,13 +13,15 @@ public class DashboardSubsystem extends SubsystemBase {
   private CounterweightSubsystem m_counterweightSubsystem;
   private DrivetrainSubsystem m_drivetrainSubsystem;
   private SolenoidSubsystem m_solenoidSubsystem;
+  private GripSubsystem m_gripSubsystem;
   private final Field2d m_field = new Field2d();
 
-  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, SendableChooser autonChooser) {
+  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, GripSubsystem gripSubsystem, SendableChooser autonChooser) {
     m_armSubsystem = armSubsystem;
     m_counterweightSubsystem = counterweightSubsystem;
     m_drivetrainSubsystem = drivetrainSubsystem;
     m_solenoidSubsystem = solenoidSubsystem;
+    m_gripSubsystem = gripSubsystem;
 
     // ShuffleboardTab driveTab = Shuffleboard.getTab("DriveTab");
     // driveTab.addCamera("FrontCam", "front-limelight", null);
@@ -34,7 +36,8 @@ public class DashboardSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
 
     //GRIP DASHBOARD STUFF
-    // SmartDashboard.putNumber("Grip Current", m_armSubsystem.getGripCurrent());
+    //SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
+    SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
 
     //COUNTERWEIGHT DASHBOARD STUFF
     // SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());

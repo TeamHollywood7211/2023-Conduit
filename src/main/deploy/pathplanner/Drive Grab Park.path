@@ -16,7 +16,9 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "firesol"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
@@ -41,7 +43,9 @@
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "gripcube"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "after",
         "waitTime": 4.0
@@ -72,16 +76,10 @@
   ],
   "markers": [
     {
-      "position": 0.8242424242424354,
+      "position": 0.4,
       "names": [
-        "putArmOut",
-        "gripIn"
-      ]
-    },
-    {
-      "position": 0.0,
-      "names": [
-        "firesol"
+        "event",
+        "armlow"
       ]
     }
   ]

@@ -26,17 +26,17 @@ import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
 import frc.robot.commands.ManualCounterweightCommand;
 import frc.robot.commands.ToggleCommand;
+import frc.robot.commands.autons.ArmToLowAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
+import frc.robot.commands.autons.GrabCubeAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DashboardSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.GripSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 import static frc.robot.Constants.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -57,11 +57,12 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
+  private final GripSubsystem m_gripSubsystem = new GripSubsystem();
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
   public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_operatorController);
-  private final GripCommand m_gripCommand = new GripCommand(m_armSubsystem, m_operatorController);
+  private final GripCommand m_gripCommand = new GripCommand(m_gripSubsystem, m_operatorController);
   private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_driverController);
   // private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
@@ -72,7 +73,7 @@ public class RobotContainer {
   );
 
   //dashboard sub
-  private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, autonChooser);
+  private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, m_gripSubsystem, autonChooser);
   //the robot's autons
 
   //robot trajectories
@@ -98,6 +99,8 @@ public class RobotContainer {
   private Command throwAndParkCommand = stateAutoBuilder.fullAuto(throwAndPark);
   private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPark);
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
+  private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
+  private GrabCubeAuton m_grabCubeAuton = new GrabCubeAuton(m_solenoidSubsystem, m_gripSubsystem);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -112,14 +115,15 @@ public class RobotContainer {
 
   public void configureAutons(){
     eventMap.put("firesol", m_fireFlipperAuton);
+    eventMap.put("grabcube", m_grabCubeAuton);
+    eventMap.put("armlow", m_armToLowAuton);
     eventMap.put("print", new PrintCommand("===========================didthething==================================="));
-    eventMap.put("wait2", new WaitCommand(2));
 
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
-    autonChooser.addOption("testAuton", testAutoCommand);
+    //autonChooser.addOption("testAuton", testAutoCommand);
     autonChooser.addOption("Throw and Park", throwAndParkCommand);
-    autonChooser.addOption("Drive Grab PArk", driveGrabParkCommand);
+    autonChooser.addOption("Drive Grab Park", driveGrabParkCommand);
     SmartDashboard.putData(autonChooser);
   }
 
