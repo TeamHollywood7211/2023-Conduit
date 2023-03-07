@@ -49,7 +49,7 @@ public final class Constants {
 
     public static final double armHighTarget = 99.95;
     public static final double armMidTarget = 85.98;
-    public static final double armLowTarget = 30;
+    public static final double armLowTarget = 33;
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
@@ -73,12 +73,12 @@ public final class Constants {
 
     public static final double GRIP_MOTOR_INIT_VELOCITY_MIN = 0.1;
 
-    public static final double gripkP = 0.2;
+    public static final double gripkP = 0.1;
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = -6;
-    public static final double gripCubeTarget = -10;
+    public static final double gripConeTarget = -148;
+    public static final double gripCubeTarget = -89;
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;

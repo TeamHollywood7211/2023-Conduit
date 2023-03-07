@@ -3,15 +3,17 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.GripSubsystem;
+
 import static frc.robot.Constants.*;
 
 public class GripCommand extends CommandBase {
-  private ArmSubsystem m_armSubsystem;
+  private GripSubsystem m_gripSubsystem;
   private CommandXboxController m_controller;
-  public GripCommand(ArmSubsystem armSubsystem, CommandXboxController controller) {
+  public GripCommand(GripSubsystem gripSubsystem, CommandXboxController controller) {
     m_controller = controller;
-    m_armSubsystem = armSubsystem;
-    addRequirements(armSubsystem);
+    m_gripSubsystem = gripSubsystem;
+    addRequirements(gripSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -22,15 +24,15 @@ public class GripCommand extends CommandBase {
   @Override
   public void execute() {
     if(m_controller.getRightTriggerAxis() > gripTriggerDeadzone){
-      m_armSubsystem.runGripIn();
-      //m_armSubsystem.setGripCone();
+      //m_gripSubsystem.runGripIn();
+      m_gripSubsystem.setGripCone();
     } else if(m_controller.getLeftTriggerAxis() > gripTriggerDeadzone){
-      m_armSubsystem.runGripOut();
-      //m_armSubsystem.setGripCube();
+      //m_gripSubsystem.runGripOut();
+      m_gripSubsystem.setGripCube();
     }
     else{
-      //m_armSubsystem.setGripOut();
-      m_armSubsystem.stopGrip();
+      m_gripSubsystem.setGripOut();
+      //m_gripSubsystem.stopGrip();
     }
 
   }

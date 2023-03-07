@@ -17,36 +17,11 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "firesol"
+          "print"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 4.15,
-        "y": 2.75
-      },
-      "prevControl": {
-        "x": 3.1500000000000004,
-        "y": 2.75
-      },
-      "nextControl": {
-        "x": 5.15,
-        "y": 2.75
-      },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "after",
-        "waitTime": 1.0
+        "waitTime": 0.0
       }
     },
     {
@@ -76,11 +51,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.745,
+        "x": 3.84,
         "y": 2.75
       },
       "prevControl": {
-        "x": 4.8572725151022835,
+        "x": 4.9522725151022815,
         "y": 2.75
       },
       "nextControl": null,
@@ -100,12 +75,5 @@
   "maxVelocity": 1.0,
   "maxAcceleration": 0.5,
   "isReversed": null,
-  "markers": [
-    {
-      "position": 0.0,
-      "names": [
-        "firesol"
-      ]
-    }
-  ]
+  "markers": []
 }

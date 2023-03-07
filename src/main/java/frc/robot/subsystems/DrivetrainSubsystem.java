@@ -68,7 +68,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private final SwerveModule m_backRightModule;
 
         //duh
-        private final AHRS m_gyro = new AHRS(Port.kMXP);;
+        private final AHRS m_gyro = new AHRS(SPI.Port.kMXP);
         
         private SwerveModuleState[] states;
 
