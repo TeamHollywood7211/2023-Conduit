@@ -1,9 +1,5 @@
 package frc.robot;
 
-import java.util.HashMap;
-
-import edu.wpi.first.wpilibj2.command.Command;
-
 public final class Constants {
 //========DRIVETRAIN CONSTANTS=======================================================================================
 
@@ -38,8 +34,9 @@ public final class Constants {
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
 
     public static double AUTON_TRANSLATE_P = 1;
-    public static double AUTON_ROTATE_P = 0.53;
-    public static HashMap<String, Command> eventMap = new HashMap<>();
+    public static double AUTON_ROTATE_P = 0.56;
+    
+    // public static HashMap<String, Command> eventMap = new HashMap<>();;
 
 //====ARM CONSTANTS================================================================================================
 

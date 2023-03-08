@@ -44,21 +44,21 @@
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "gripcube"
+          "grabcube"
         ],
         "executionBehavior": "parallel",
-        "waitBehavior": "after",
-        "waitTime": 4.0
+        "waitBehavior": "deadline",
+        "waitTime": 2.0
       }
     },
     {
       "anchorPoint": {
         "x": 2.3245500519437066,
-        "y": 4.578004037524663
+        "y": 4.59
       },
       "prevControl": {
         "x": 4.202413659831442,
-        "y": 4.578004037524663
+        "y": 4.59
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -67,13 +67,18 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "print"
+        ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
     }
   ],
+  "maxVelocity": 2.0,
+  "maxAcceleration": 2.0,
+  "isReversed": null,
   "markers": [
     {
       "position": 0.4,

@@ -17,14 +17,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
-import frc.robot.commands.ManualCounterweightCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.autons.ArmToLowAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
@@ -37,7 +35,10 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.GripSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 import static frc.robot.Constants.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -74,13 +75,23 @@ public class RobotContainer {
 
   //dashboard sub
   private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, m_gripSubsystem, autonChooser);
-  //the robot's autons
+  //the robot's auton parts
+  private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
+  private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
+  private GrabCubeAuton m_grabCubeAuton = new GrabCubeAuton(m_solenoidSubsystem, m_gripSubsystem);
+
+  public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
+    Map.entry("firesol", m_fireFlipperAuton),
+    Map.entry("grabcube", m_grabCubeAuton),
+    Map.entry("armlow", m_armToLowAuton),
+    Map.entry("print", new PrintCommand("===========================didthething==================================="))
+  ));;
 
   //robot trajectories
   final List<PathPlannerTrajectory> testAuton = PathPlanner.loadPathGroup("testAuton", new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Throw and Park", new PathConstraints(1, 0.5));
-  final List<PathPlannerTrajectory> driveGrabPark = PathPlanner.loadPathGroup("Drive Grab Park", new PathConstraints(4, 3));
- 
+  final List<PathPlannerTrajectory> driveGrabPark = PathPlanner.loadPathGroup("Drive Grab Park", new PathConstraints(2, 2));
+  final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
 
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
@@ -98,14 +109,17 @@ public class RobotContainer {
   private Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
   private Command throwAndParkCommand = stateAutoBuilder.fullAuto(throwAndPark);
   private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPark);
-  private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
-  private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
-  private GrabCubeAuton m_grabCubeAuton = new GrabCubeAuton(m_solenoidSubsystem, m_gripSubsystem);
+  private Command parkCommand = stateAutoBuilder.fullAuto(park);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    // eventMap.put("firesol", m_fireFlipperAuton);
+    // eventMap.put("grabcube", m_grabCubeAuton);
+    // eventMap.put("armlow", m_armToLowAuton);
+    // eventMap.put("print", new PrintCommand("==============================================="));
+
     // Set up the default command for the drivetrain.
     configureAutons();
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
@@ -114,16 +128,17 @@ public class RobotContainer {
   }
 
   public void configureAutons(){
-    eventMap.put("firesol", m_fireFlipperAuton);
-    eventMap.put("grabcube", m_grabCubeAuton);
-    eventMap.put("armlow", m_armToLowAuton);
-    eventMap.put("print", new PrintCommand("===========================didthething==================================="));
+    // eventMap.put("firesol", m_fireFlipperAuton);
+    // eventMap.put("grabcube", m_grabCubeAuton);
+    // eventMap.put("armlow", m_armToLowAuton);
 
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
     //autonChooser.addOption("testAuton", testAutoCommand);
     autonChooser.addOption("Throw and Park", throwAndParkCommand);
     autonChooser.addOption("Drive Grab Park", driveGrabParkCommand);
+    autonChooser.addOption("Park on Table", parkCommand);
+    autonChooser.addOption("gript", m_grabCubeAuton);
     SmartDashboard.putData(autonChooser);
   }
 

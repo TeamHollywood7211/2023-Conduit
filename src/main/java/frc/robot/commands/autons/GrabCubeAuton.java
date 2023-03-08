@@ -3,6 +3,7 @@ package frc.robot.commands.autons;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.GripSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
+import static frc.robot.Constants.*;
 
 public class GrabCubeAuton extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -35,6 +36,9 @@ public class GrabCubeAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(m_gripSubsystem.getGripPos() <= gripCubeTarget-3){
+      return true;
+    }
     return false;
   }
 }
