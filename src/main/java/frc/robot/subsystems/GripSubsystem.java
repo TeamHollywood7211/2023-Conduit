@@ -53,8 +53,16 @@ public class GripSubsystem extends SubsystemBase {
     gripMotor.set(GRIP_MOTOR_SPEED);
   }
 
+  public void runGripOut(double throttle){
+    gripMotor.set(GRIP_MOTOR_SPEED*throttle);
+  }
+
   public void runGripIn(){
     gripMotor.set(-GRIP_MOTOR_SPEED);
+  }
+
+  public void runGripIn(double throttle){
+    gripMotor.set(-GRIP_MOTOR_SPEED*throttle);
   }
 
   public void runGripInPrecise(){
