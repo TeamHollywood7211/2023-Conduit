@@ -49,12 +49,12 @@ public class GripSubsystem extends SubsystemBase {
     return gripMotor.getEncoder().getPosition();
   }
 
-  public void runGripOut(){
-    gripMotor.set(GRIP_MOTOR_SPEED);
+  public void runGripOut(double input){
+    gripMotor.set(GRIP_MOTOR_SPEED*input);
   }
 
-  public void runGripIn(){
-    gripMotor.set(-GRIP_MOTOR_SPEED);
+  public void runGripIn(double input){
+    gripMotor.set(-GRIP_MOTOR_SPEED*input);
   }
 
   public void runGripInPrecise(){

@@ -68,9 +68,9 @@ public class RobotContainer {
   // private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
     m_drivetrainSubsystem, 
-    () -> -modifyAxis(m_driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-    () -> -modifyAxis(m_driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-    () -> -modifyAxis(m_driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    () -> -modifyAxis(m_driverController.getLeftY()) * MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(m_driverController.getLeftX()) * MAX_VELOCITY_METERS_PER_SECOND,
+    () -> -modifyAxis(m_driverController.getRightX()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
   );
 
   //dashboard sub
@@ -88,7 +88,6 @@ public class RobotContainer {
   ));;
 
   //robot trajectories
-  final List<PathPlannerTrajectory> testAuton = PathPlanner.loadPathGroup("testAuton", new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Throw and Park", new PathConstraints(1, 0.5));
   final List<PathPlannerTrajectory> driveGrabPark = PathPlanner.loadPathGroup("Drive Grab Park", new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
@@ -106,7 +105,6 @@ public class RobotContainer {
     m_drivetrainSubsystem
   );
 
-  private Command testAutoCommand = stateAutoBuilder.fullAuto(testAuton);
   private Command throwAndParkCommand = stateAutoBuilder.fullAuto(throwAndPark);
   private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPark);
   private Command parkCommand = stateAutoBuilder.fullAuto(park);
@@ -115,11 +113,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // eventMap.put("firesol", m_fireFlipperAuton);
-    // eventMap.put("grabcube", m_grabCubeAuton);
-    // eventMap.put("armlow", m_armToLowAuton);
-    // eventMap.put("print", new PrintCommand("==============================================="));
-
     // Set up the default command for the drivetrain.
     configureAutons();
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
@@ -134,11 +127,9 @@ public class RobotContainer {
 
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
-    //autonChooser.addOption("testAuton", testAutoCommand);
     autonChooser.addOption("Throw and Park", throwAndParkCommand);
     autonChooser.addOption("Drive Grab Park", driveGrabParkCommand);
     autonChooser.addOption("Park on Table", parkCommand);
-    autonChooser.addOption("gript", m_grabCubeAuton);
     SmartDashboard.putData(autonChooser);
   }
 
