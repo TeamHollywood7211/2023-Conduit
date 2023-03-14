@@ -11,7 +11,9 @@ public class LedCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final LedSubsystem m_Ledsubsystem;
   private CommandGenericHID m_controller = new CommandGenericHID(1); 
-
+  private boolean toBuCone = false;
+  private boolean toBuCube = false;
+  private boolean toBuNone = false;
 
   public  LedCommand(LedSubsystem subsystem,CommandGenericHID m_coolBoard) {
     m_Ledsubsystem = subsystem;
@@ -27,27 +29,43 @@ public class LedCommand extends CommandBase {
   @Override
   public void execute() {
     
-    if(m_controller.button(1).getAsBoolean())
+    if((m_controller.button(1).getAsBoolean()) && (toBuCone == false))
     {
-      m_Ledsubsystem.callCone();
+      toBuCone = true;
+      m_Ledsubsystem.callCone(); 
     }
-    if(m_controller.button(2).getAsBoolean())
+    if((m_controller.button(2).getAsBoolean()) && (toBuCube == false))
     {
+      toBuCube = true;
       m_Ledsubsystem.callCube();
     }
-    if(m_controller.button(3).getAsBoolean())
+    if((m_controller.button(3).getAsBoolean()) && (toBuNone == false))
     {
-      m_Ledsubsystem.callOffYouStupidThing();
+      toBuNone = true;
+      m_Ledsubsystem.callNone();
     }
 
+    if(!m_controller.button(1).getAsBoolean()) 
+    {
+      toBuCone = false;
+    }
+    if(!m_controller.button(2).getAsBoolean()) 
+    {
+      toBuCube = false;
+    }   
+    if(!m_controller.button(3).getAsBoolean()) 
+    {
+      toBuNone = false;
+    }
+    
 
-    if((m_controller.button(2).getAsBoolean()) == false)
+   /*  if((m_controller.button(2).getAsBoolean()) == false)
     {
       if((m_controller.button(1).getAsBoolean()) == false)
       {
         m_Ledsubsystem.callNone();
       }
-    }
+    }*/
     //if(m_controller.button(3).getAsBoolean())
     //{
     //  m_Ledsubsystem.tasteTheRainbow();
