@@ -124,7 +124,7 @@ public class RobotContainer {
     these three buttons do the same thing because in the command it checks to see which button is pressed 
     to do a thing. These buttons set the arm to different positions: Y-high X-mid A-low
     */
-    new Trigger(m_operatorController.y())
+     new Trigger(m_operatorController.y()) 
       .onTrue(m_armCommand);
     new Trigger(m_operatorController.x())
       .onTrue(m_armCommand);
@@ -134,18 +134,15 @@ public class RobotContainer {
       .onTrue(m_armCommand);
 
 
-      new Trigger(m_operatorController.button(1)) //dpad up
-      .whileTrue(m_ledCommand);
+      new Trigger(m_operatorController.button(1)) //Calling cones
+      .onTrue(m_ledCommand);
+      new Trigger(m_operatorController.button(2)) //Calling cubes
+      .onTrue(m_ledCommand);
+      new Trigger(m_operatorController.button(3)) //We don't fricking want anything, okay?
+      .onTrue(m_ledCommand);
 
-      new Trigger(m_operatorController.button(1)) //dpad up
-      .onFalse(m_ledCommand);
 
-      new Trigger(m_operatorController.button(2)) //dpad down
-      .whileTrue(m_ledCommand);
-      new Trigger(m_operatorController.button(2)) //dpad down
-      .onFalse(m_ledCommand);
-      new Trigger(m_operatorController.button(3)) //dpad down
-      .onFalse(m_ledCommand);
+
     new Trigger(m_operatorController.leftStick())
       .onTrue(m_armCommand);
 
@@ -154,6 +151,7 @@ public class RobotContainer {
     //   .onTrue(m_InitializeCommand);
 
     //left trigger toggles the wrist solenoid
+    
     new Trigger(m_operatorController.button(5))
       .onTrue(m_armCommand);
 
@@ -167,7 +165,7 @@ public class RobotContainer {
     new Trigger(m_operatorController.leftTrigger(0.1))
       .onTrue(m_gripCommand);
   }
-
+ 
   public void configureAutons(){
     autonEventMap.put("fireFlipperSolenoid", m_fireFlipperAuton);
   }
