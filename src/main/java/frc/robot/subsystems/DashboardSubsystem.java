@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import static frc.robot.Constants.*;
 
 public class DashboardSubsystem extends SubsystemBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
@@ -25,17 +26,21 @@ public class DashboardSubsystem extends SubsystemBase {
     // driveTab.addCamera("FrontCam", "front-limelight", null);
     // driveTab.add(autonChooser);
     // SmartDashboard.putData("Field", m_field);
+    // SmartDashboard.putNumber("arm P", armkP);
+    // SmartDashboard.putNumber("arm I", armkI);
+    // SmartDashboard.putNumber("arm D", armkD);
   }
 
   public void periodic(){
     //ARM DASHBOARD STUFF
-    // SmartDashboard.putNumber("ARM POS", m_armSubsystem.getAnglePos());
+    SmartDashboard.putNumber("ARM POS", m_armSubsystem.getArmPos());
     // SmartDashboard.putBoolean("is outside frame", m_armSubsystem.armOutsideFramePerim(0));
     // SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
 
     //GRIP DASHBOARD STUFF
-    //SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
+    SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
     SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
+    SmartDashboard.putNumber("Grip Temp Celcius", m_gripSubsystem.getGripTemp());
 
     //COUNTERWEIGHT DASHBOARD STUFF
     // SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
@@ -51,6 +56,9 @@ public class DashboardSubsystem extends SubsystemBase {
 
     //FIELD DASHBOARD STUFF
     // m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());
+
+    //SOLENOID STUFF
+    SmartDashboard.putNumber("PSI", m_solenoidSubsystem.getCompressorPSI());
   }
 
   // Returns true when the command should end.

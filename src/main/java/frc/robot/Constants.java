@@ -38,6 +38,7 @@ public final class Constants {
 
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
+    public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
     public static double AUTON_TRANSLATE_P = 1;
     public static double AUTON_ROTATE_P = 0.56;
@@ -50,9 +51,9 @@ public final class Constants {
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 99.95;
-    public static final double armMidTarget = 85.98;
-    public static final double armLowTarget = 33;
+    public static final double armHighTarget = 99.95; // 99.95 for practice bot
+    public static final double armMidTarget = 85; // 85.98 for practice bot
+    public static final double armLowTarget = 30.5; // 33 for practice bot
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
@@ -76,12 +77,12 @@ public final class Constants {
 
     public static final double GRIP_MOTOR_INIT_VELOCITY_MIN = 0.1;
 
-    public static final double gripkP = 0.1;
+    public static final double gripkP = 1.5;
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = -148;
-    public static final double gripCubeTarget = -89;
+    public static final double gripConeTarget = 2.38; //practice -148
+    public static final double gripCubeTarget = 0.48;//practice -89
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -112,5 +113,5 @@ public final class Constants {
 //====OTHER CONSTANTS==============================================================================================
 
     public static final int LED_PWM_PORT = 30; //plz change later, not actual value, thx :)
-    public static final double gripTriggerDeadzone = 0.2;
+    public static final double gripTriggerDeadzone = 0.05;
 }

@@ -50,11 +50,11 @@ public class GripSubsystem extends SubsystemBase {
   }
 
   public void runGripOut(double input){
-    gripMotor.set(GRIP_MOTOR_SPEED*input);
+    gripMotor.set(-GRIP_MOTOR_SPEED*input);
   }
 
   public void runGripIn(double input){
-    gripMotor.set(-GRIP_MOTOR_SPEED*input);
+    gripMotor.set(GRIP_MOTOR_SPEED*input);
   }
 
   public void runGripInPrecise(){
@@ -67,6 +67,10 @@ public class GripSubsystem extends SubsystemBase {
 
   public double getGripCurrent(){
     return gripMotor.getOutputCurrent();
+  }
+
+  public double getGripTemp(){
+    return gripMotor.getMotorTemperature();
   }
 
   public void initializeGripMotor(){

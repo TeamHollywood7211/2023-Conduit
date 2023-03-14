@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import static frc.robot.Constants.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax.*;
@@ -38,11 +39,6 @@ public class ArmSubsystem extends SubsystemBase {
     armPID.setI(armkI);
     armPID.setD(armkD);
     armPID.setSmartMotionAllowedClosedLoopError(1, 0);
-
-    //put constants to the dashboard so we can tune them on the fly
-    // SmartDashboard.putNumber("arm P", armkP);
-    // SmartDashboard.putNumber("arm I", armkI);
-    // SmartDashboard.putNumber("arm D", armkD);
   }
 
   //this sets the arm to the high position, or top nodes
@@ -72,6 +68,10 @@ public class ArmSubsystem extends SubsystemBase {
     double alteredInput = -input*MANUAL_ARM_ADJUST_POWER_MULTIPLIER;
     double currentPos = armEncoder.getPosition();
     armPID.setReference(currentPos+alteredInput, ControlType.kPosition);
+  }
+
+  public void setArmJustAboveLow(){
+    armPID.setReference(armLowTarget+12, ControlType.kPosition);
   }
 
   public void driveArmBack(){

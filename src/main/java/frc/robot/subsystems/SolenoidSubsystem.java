@@ -34,7 +34,11 @@ public class SolenoidSubsystem extends SubsystemBase {
   }
 
   public void enableAnalogCompressor(){
-    m_pneumaticHub.enableCompressorAnalog(70, 120);
+    m_pneumaticHub.enableCompressorAnalog(70, 115);
+  }
+
+  public double getCompressorPSI(){
+    return m_pneumaticHub.getPressure(0);
   }
 
   //method sets main extension solenoid to retract (run in initialization of command to make toggle work)
