@@ -2,12 +2,12 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8876451023044232,
+        "x": 1.88,
         "y": 3.0488367137871717
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8876451023044263,
+        "x": 2.880000000000003,
         "y": 3.0488367137871717
       },
       "holonomicAngle": 0,
@@ -16,19 +16,21 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
+        "names": [
+          "firesol"
+        ],
         "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
+        "waitBehavior": "before",
+        "waitTime": 1.0
       }
     },
     {
       "anchorPoint": {
-        "x": 4.1,
+        "x": 3.86,
         "y": 3.05
       },
       "prevControl": {
-        "x": 3.0999999999999996,
+        "x": 2.86,
         "y": 3.05
       },
       "nextControl": null,

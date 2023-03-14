@@ -33,15 +33,12 @@ import static frc.robot.Constants.*;
 public class DrivetrainSubsystem extends SubsystemBase {        
         // CameraSubsystem m_cameraSubsystem;
 
-        public static final double MAX_VOLTAGE = 11.0;
-        public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
         /**
         * The maximum angular velocity of the robot in radians per second.
         * <p>
         * This is a measure of how fast the robot can rotate in place.
         */
         // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
-        public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
         //if this is true the robot will be field oriented, and vice versa.
