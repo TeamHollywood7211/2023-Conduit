@@ -25,6 +25,7 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.InitializeCommand;
 import frc.robot.commands.ToggleCommand;
+import frc.robot.commands.LedCommand;
 import frc.robot.commands.autons.ArmHomeAuton;
 import frc.robot.commands.autons.ArmToLowAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
@@ -35,6 +36,7 @@ import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DashboardSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.GripSubsystem;
+import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 import static frc.robot.Constants.*;
 
@@ -53,11 +55,13 @@ public class RobotContainer {
   // The robot's controller(s)
   private final CommandXboxController m_driverController = new CommandXboxController(0);
   private final CommandXboxController m_operatorController = new CommandXboxController(1);
+  private final CommandXboxController m_signalController = new CommandXboxController(2);
 
   // The robot's subsystems
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
+  private final LedSubsystem m_LedSubsystem = new LedSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
@@ -67,6 +71,8 @@ public class RobotContainer {
   public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_operatorController);
   private final GripCommand m_gripCommand = new GripCommand(m_gripSubsystem, m_operatorController);
   private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_driverController);
+  private final LedCommand m_LedCommand = new LedCommand(m_LedSubsystem, m_signalController);
+
   // private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
   private final DefaultDriveCommand m_driveCommand = new DefaultDriveCommand(
     m_drivetrainSubsystem, 
@@ -206,6 +212,17 @@ public class RobotContainer {
       .onTrue(m_gripCommand);
     new Trigger(m_operatorController.leftTrigger(0.1))
       .onTrue(m_gripCommand);
+
+    // TODO: Katona - I'm 99% sure these aren't needed.  
+    //       button 5 works, but isn't listed here.  (See LedCommand.java)
+    //       Leaving for 1 check-in to verify behavior.
+    new Trigger(m_signalController.button(1))
+      .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(2))
+       .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(3))
+       .onTrue(m_LedCommand);
+
   }
 
   /**

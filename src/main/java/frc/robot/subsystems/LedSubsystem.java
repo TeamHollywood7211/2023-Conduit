@@ -1,48 +1,70 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
-
-//
-//!!HEY!! BEFORE YOU GO DEEP INTO THIS LIKE 40 
-//
+import com.ctre.phoenix.led.CANdle;
+import com.ctre.phoenix.led.RainbowAnimation;
+import static frc.robot.Constants.*;
 
 public class LedSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public CANSparkMax ledMotor;
     
-  public LedSubsystem()
-  {
-    //ledMotor = new CANSparkMax(ledMotor, MotorType.kBrushless);
-    //on god, no idea why that dont work, commenting it out (true nu cap moment)
-  } 
+    //define candle
+    CANdle candle1 = new CANdle(LED_CANDLE);
+    //create a rainbow anim.
+    RainbowAnimation rainbowAnimation = new RainbowAnimation(1, 1, 128);
 
-  public void setMode(LEDMode mode)
-  {
+    public LedSubsystem() {
 
-  }
+    }
 
 
-  public enum LEDMode{
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
 
-  }
-  public void FlashCone() {
-    //ledPWM.set(-0.09);
+    }
 
-    
-  }
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    //ledPWM.set(currentLedMode);
-  }
 
-  @Override
-  public void simulationPeriodic() {
-    // This method will be called once per scheduler run during simulation
-  }
+    @Override
+    public void simulationPeriodic() {
+        // This method will be called once per scheduler run when in simulation
+
+    }
+
+	
+    public void allPurple(){
+        setAllLights(80,45,127,1);
+    }
+
+	
+    public void allYellow(){
+        setAllLights(255,200,46,0);
+    }
+
+	
+    public void allRed(){
+        setAllLights(255,0,0,1);
+    }	
+	
+
+    public void allOff(){
+        setAllLights(0,0,0,0);
+    }    
+
+
+    public void setAllLights(int red, int green, int blue, int bright)
+    {
+        //set brightness
+        candle1.configBrightnessScalar(0);
+        //set color of all LEDs at once
+        candle1.setLEDs(0, 0, 0);
+    }
+
+
+    public void allRainbow(){
+        // This is still work in progress
+        candle1.animate(rainbowAnimation);
+    }
+
+
 }

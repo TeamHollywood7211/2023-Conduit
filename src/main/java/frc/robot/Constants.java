@@ -112,6 +112,6 @@ public final class Constants {
 
 //====OTHER CONSTANTS==============================================================================================
 
-    public static final int LED_PWM_PORT = 30; //plz change later, not actual value, thx :)
+    public static final int LED_CANDLE = 51;
     public static final double gripTriggerDeadzone = 0.05;
 }
