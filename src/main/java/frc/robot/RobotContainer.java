@@ -28,7 +28,8 @@ import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.autons.ArmHomeAuton;
 import frc.robot.commands.autons.ArmToLowAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
-import frc.robot.commands.autons.GrabCubeAuton;
+import frc.robot.commands.autons.PlaceHighAuton;
+import frc.robot.commands.autons.PlaceHighShortAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
@@ -56,6 +57,15 @@ public class RobotContainer {
 
   // The robot's subsystems
   private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
+
+  public void setLimelightSetting(){
+    m_cameraSubsystem.setLimelightSetting();
+  }
+
+  public void createFrontUsbCamera(){
+    m_cameraSubsystem.createCamera();
+  }
+
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
@@ -80,16 +90,21 @@ public class RobotContainer {
   //the robot's auton parts
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
   private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
-  private GrabCubeAuton m_grabCubeAuton = new GrabCubeAuton(m_solenoidSubsystem, m_gripSubsystem);
   private ArmHomeAuton m_armHomeAuton = new ArmHomeAuton(m_armSubsystem, m_solenoidSubsystem);
+  private PlaceHighAuton m_placeHighAuton = new PlaceHighAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
+  private PlaceHighShortAuton m_placeHighShortAuton = new PlaceHighShortAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
 
   public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
     Map.entry("firesol", m_fireFlipperAuton),
-    Map.entry("grabcube", m_grabCubeAuton),
+    Map.entry("grabcube", new InstantCommand(m_gripSubsystem::setGripCube, m_gripSubsystem)),
     Map.entry("grabcone", new InstantCommand(m_gripSubsystem::setGripCone, m_gripSubsystem)),
     Map.entry("grabout", new InstantCommand(m_gripSubsystem::setGripOut, m_gripSubsystem)),
     Map.entry("wristout", new InstantCommand(m_solenoidSubsystem::extendWrist, m_solenoidSubsystem)),
     Map.entry("wristin", new InstantCommand(m_solenoidSubsystem::retractWrist, m_solenoidSubsystem)),
+    Map.entry("extendarm", new InstantCommand(m_solenoidSubsystem::extendArm, m_solenoidSubsystem)),
+    Map.entry("retractarm", new InstantCommand(m_solenoidSubsystem::retractArm, m_solenoidSubsystem)),
+    Map.entry("armhigh", new InstantCommand(m_armSubsystem::setArmHigh, m_armSubsystem)),
+    Map.entry("armmid", new InstantCommand(m_armSubsystem::setArmMid, m_armSubsystem)),
     Map.entry("armlow", m_armToLowAuton),
     Map.entry("armin", new InstantCommand(m_armSubsystem::setArmStored, m_armSubsystem)),
     Map.entry("armwristhome", m_armHomeAuton),
@@ -97,6 +112,8 @@ public class RobotContainer {
     Map.entry("wait0.75sec", new WaitCommand(0.75)),
     Map.entry("wait0.5sec", new WaitCommand(0.5)),
     Map.entry("armslightup", new InstantCommand(m_armSubsystem::setArmJustAboveLow, m_armSubsystem)),
+    Map.entry("placehigh", m_placeHighAuton),
+    Map.entry("placehighshort", m_placeHighShortAuton),
     Map.entry("print", new PrintCommand("===========================didthething==================================="))
   ));;
 
@@ -105,6 +122,7 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(1, 1));
+  final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 2));
 
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
@@ -123,6 +141,7 @@ public class RobotContainer {
   private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPlace);
   private Command parkCommand = stateAutoBuilder.fullAuto(park);
   private Command bumpSideCommand = stateAutoBuilder.fullAuto(bumpSide);
+  private Command placeTwoHighCommand = stateAutoBuilder.fullAuto(placeTwoHigh);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -148,6 +167,8 @@ public class RobotContainer {
     autonChooser.addOption("Drive Grab Place", driveGrabParkCommand);
     autonChooser.addOption("Park on Table", parkCommand);
     autonChooser.addOption("Bump Side", bumpSideCommand);
+    autonChooser.addOption("Place Two High", placeTwoHighCommand);
+    autonChooser.addOption("test", new InstantCommand(m_gripSubsystem::setGripCube, m_gripSubsystem));
     SmartDashboard.putData(autonChooser);
   }
 

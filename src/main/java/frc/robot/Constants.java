@@ -82,7 +82,7 @@ public final class Constants {
     public static final double gripkD = 0;
 
     public static final double gripConeTarget = 2.38; //practice -148
-    public static final double gripCubeTarget = 0.48;//practice -89
+    public static final double gripCubeTarget = 1.55;//practice -89
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;

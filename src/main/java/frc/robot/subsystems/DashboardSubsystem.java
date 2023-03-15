@@ -40,7 +40,7 @@ public class DashboardSubsystem extends SubsystemBase {
     //GRIP DASHBOARD STUFF
     SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
     SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
-    SmartDashboard.putNumber("Grip Temp Celcius", m_gripSubsystem.getGripTemp());
+    SmartDashboard.putNumber("Grip Temp Farenheit", m_gripSubsystem.getGripTemp()*(9/5)+32);
 
     //COUNTERWEIGHT DASHBOARD STUFF
     // SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());

@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,12 +22,24 @@ public class CameraSubsystem extends SubsystemBase {
   private NetworkTable backTable;
 
   public CameraSubsystem() {
-    frontTable = NetworkTableInstance.getDefault().getTable("limelight-front");
+    frontTable = NetworkTableInstance.getDefault().getTable("limelight-frontcm");
     frontTx = frontTable.getEntry("tx");
     frontTy = frontTable.getEntry("ty");
     frontTa = frontTable.getEntry("ta");
     frontBotPose = frontTable.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
-    frontTable.getEntry("stream").setNumber(2);
+  }
+
+  //this is run on robot init so set it to what you want here
+  public void setLimelightSetting(){
+    frontTable.getEntry("stream").setNumber(0);
+  }
+
+  public void createCamera(){
+    // MjpegServer mjpegServer1 = new MjpegServer("frontUsbCam", 1181);
+    // mjpegServer1.setSource(frontUsbCamera);
+    // CameraServer.addServer("frontUsbCam");
+    UsbCamera frontUsbCamera = new UsbCamera("frontUsbCamObject", 1);
+    CameraServer.startAutomaticCapture(frontUsbCamera);
   }
 
   @Override
