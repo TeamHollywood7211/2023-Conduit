@@ -41,13 +41,32 @@ public class LedCommand extends CommandBase {
     }
     else if((m_controller.button(4).getAsBoolean()))
     {
-      m_Ledsubsystem.allRainbow();
+      m_Ledsubsystem.allGreen();
     }
     else if((m_controller.button(5).getAsBoolean()))
     {
+      m_Ledsubsystem.allBlue();
+    }
+    else if((m_controller.button(6).getAsBoolean()))
+    {
       m_Ledsubsystem.allOff();
     }
-    
+    else if((m_controller.button(7).getAsBoolean()))
+    {
+      m_Ledsubsystem.allWhite();
+    }
+    else if((m_controller.button(8).getAsBoolean()))
+    {
+      m_Ledsubsystem.allRainbow();
+    }
+    else if((m_controller.button(9).getAsBoolean()))
+    {
+      m_Ledsubsystem.allOff();
+    }
+    else if((m_controller.button(10).getAsBoolean()))
+    {
+      m_Ledsubsystem.allOff();
+    }    
   }
 
 

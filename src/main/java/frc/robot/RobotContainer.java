@@ -226,6 +226,16 @@ public class RobotContainer {
        .onTrue(m_LedCommand);   
     new Trigger(m_signalController.button(5))
        .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(6))
+       .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(7))
+       .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(8))
+       .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(9))
+       .onTrue(m_LedCommand);
+    new Trigger(m_signalController.button(10))
+       .onTrue(m_LedCommand);                     
   }
 
   /**

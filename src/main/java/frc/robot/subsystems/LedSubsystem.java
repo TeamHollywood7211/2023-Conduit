@@ -55,13 +55,28 @@ public class LedSubsystem extends SubsystemBase {
     }	
 	
 
+    public void allGreen(){
+        setAllLights(0,255,0,1);
+    }	
+
+
+    public void allBlue(){
+        setAllLights(255,0,255,1);
+    }	
+
+
+    public void allWhite(){
+        setAllLights(255,0,0,0.5);
+    }	
+
+
     public void allOff(){
         setAllLights(0,0,0,0);
         candle1.clearAnimation(0);        
     }    
 
 
-    public void setAllLights(int red, int green, int blue, int bright)
+    public void setAllLights(int red, int green, int blue, double bright)
     {
         // Make sure there isn't an animation overriding
         candle1.clearAnimation(0);
