@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 public class LedCommand extends CommandBase {
 
-  private final LedSubsystem m_Ledsubsystem;
+  private LedSubsystem m_Ledsubsystem = new LedSubsystem();
   private CommandGenericHID m_controller; 
 
 
@@ -31,19 +31,19 @@ public class LedCommand extends CommandBase {
     {
       m_Ledsubsystem.allYellow();; 
     }
-    if((m_controller.button(2).getAsBoolean()))
+    else if((m_controller.button(2).getAsBoolean()))
     {
       m_Ledsubsystem.allPurple();;
     }
-    if((m_controller.button(3).getAsBoolean()))
+    else if((m_controller.button(3).getAsBoolean()))
     {
       m_Ledsubsystem.allRed();
     }
-    if((m_controller.button(4).getAsBoolean()))
+    else if((m_controller.button(4).getAsBoolean()))
     {
       m_Ledsubsystem.allRainbow();
     }
-    if((m_controller.button(5).getAsBoolean()))
+    else if((m_controller.button(5).getAsBoolean()))
     {
       m_Ledsubsystem.allOff();
     }

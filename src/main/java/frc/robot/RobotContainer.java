@@ -217,12 +217,15 @@ public class RobotContainer {
     //       button 5 works, but isn't listed here.  (See LedCommand.java)
     //       Leaving for 1 check-in to verify behavior.
     new Trigger(m_signalController.button(1))
-      .onTrue(m_LedCommand);
+       .onTrue(m_LedCommand);
     new Trigger(m_signalController.button(2))
        .onTrue(m_LedCommand);
     new Trigger(m_signalController.button(3))
        .onTrue(m_LedCommand);
-
+    new Trigger(m_signalController.button(4))
+       .onTrue(m_LedCommand);   
+    new Trigger(m_signalController.button(5))
+       .onTrue(m_LedCommand);
   }
 
   /**
