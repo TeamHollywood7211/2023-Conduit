@@ -35,10 +35,10 @@ public class PlaceHighShortAuton extends CommandBase {
     if(m_armSubsystem.getArmPos()>armHighTarget-10){
       m_solenoidSubsystem.extendArm();
     }
-    if(time.get()>1){
+    if(time.get()>0.75){
       m_solenoidSubsystem.extendWrist();
     }
-    if(time.get()>1.5){
+    if(time.get()>1){
       m_gripSubsystem.setGripOut();
     }
   }
@@ -52,7 +52,7 @@ public class PlaceHighShortAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(time.get() > 1.8){
+    if(time.get() > 1.15){
       return true;
     }
     return false;

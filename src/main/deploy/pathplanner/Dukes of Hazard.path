@@ -54,15 +54,15 @@
     {
       "anchorPoint": {
         "x": 1.8306575001775598,
-        "y": 4.2
+        "y": 4.1
       },
       "prevControl": {
         "x": 4.366605794822965,
-        "y": 5.495287074744766
+        "y": 5.395287074744766
       },
       "nextControl": {
         "x": 1.7662398072564705,
-        "y": 4.167097355572373
+        "y": 4.067097355572373
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -72,7 +72,8 @@
       "stopEvent": {
         "names": [
           "placehighshort",
-          "retractarm"
+          "retractarm",
+          "wristin"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -81,15 +82,15 @@
     },
     {
       "anchorPoint": {
-        "x": 7.054521028473338,
-        "y": 3.371766459172729
+        "x": 4.945979749779405,
+        "y": 2.621429697835699
       },
       "prevControl": {
-        "x": 5.9622586543751295,
-        "y": 5.803237483252218
+        "x": 2.2770603835046535,
+        "y": 1.9660722733767737
       },
       "nextControl": null,
-      "holonomicAngle": -66.27960442769539,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -119,9 +120,9 @@
       ]
     },
     {
-      "position": 2.418181818181972,
+      "position": 2.4909090909091014,
       "names": [
-        "armlow"
+        "armin"
       ]
     },
     {

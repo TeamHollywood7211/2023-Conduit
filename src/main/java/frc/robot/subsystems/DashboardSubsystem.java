@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,8 +39,8 @@ public class DashboardSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
 
     //GRIP DASHBOARD STUFF
-    SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
-    SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
+    // SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
+    // SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
     SmartDashboard.putNumber("Grip Temp Farenheit", m_gripSubsystem.getGripTemp()*(9/5)+32);
 
     //COUNTERWEIGHT DASHBOARD STUFF
@@ -59,6 +60,8 @@ public class DashboardSubsystem extends SubsystemBase {
 
     //SOLENOID STUFF
     SmartDashboard.putNumber("PSI", m_solenoidSubsystem.getCompressorPSI());
+
+    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
   }
 
   // Returns true when the command should end.

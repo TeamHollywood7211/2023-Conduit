@@ -36,6 +36,7 @@ import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DashboardSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.GripSubsystem;
+import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
 import static frc.robot.Constants.*;
 
@@ -71,6 +72,7 @@ public class RobotContainer {
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
+  public final LedSubsystem m_ledSubsystem = new LedSubsystem();
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
@@ -82,7 +84,8 @@ public class RobotContainer {
     m_drivetrainSubsystem, 
     () -> -modifyAxis(m_driverController.getLeftY()) * MAX_VELOCITY_METERS_PER_SECOND,
     () -> -modifyAxis(m_driverController.getLeftX()) * MAX_VELOCITY_METERS_PER_SECOND,
-    () -> -modifyAxis(m_driverController.getRightX()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    () -> -modifyAxis(m_driverController.getRightX()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+    m_driverController
   );
 
   //dashboard sub
@@ -121,8 +124,9 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Flip, Over and Back", new PathConstraints(1, 0.5));
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
-  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(1, 1));
+  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2, 1.5));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 2));
+  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3, 2), new PathConstraints(2, 2));
 
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
@@ -142,6 +146,7 @@ public class RobotContainer {
   private Command parkCommand = stateAutoBuilder.fullAuto(park);
   private Command bumpSideCommand = stateAutoBuilder.fullAuto(bumpSide);
   private Command placeTwoHighCommand = stateAutoBuilder.fullAuto(placeTwoHigh);
+  private Command dukesOfHazardCommand = stateAutoBuilder.fullAuto(dukesOfHazard);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -168,7 +173,7 @@ public class RobotContainer {
     autonChooser.addOption("Park on Table", parkCommand);
     autonChooser.addOption("Bump Side", bumpSideCommand);
     autonChooser.addOption("Place Two High", placeTwoHighCommand);
-    autonChooser.addOption("test", new InstantCommand(m_gripSubsystem::setGripCube, m_gripSubsystem));
+    autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
     SmartDashboard.putData(autonChooser);
   }
 
@@ -187,12 +192,19 @@ public class RobotContainer {
     new Trigger(m_driverController.start())
       .onTrue(m_toggleCommand);
 
-    //triggers that allow for manual control of the counterweight, mostly for testing of center of grav
-    // new Trigger(m_driverController.povDown())
-    //   .whileTrue(m_manualCounterweightCommand);
-    // new Trigger(m_driverController.povUp())
-    //   .whileTrue(m_manualCounterweightCommand);
-  
+    //Buttons set the lights to either yellow or purple
+    new Trigger(m_driverController.povLeft())
+      .onTrue(new InstantCommand(m_ledSubsystem::allYellow, m_ledSubsystem));
+
+    new Trigger(m_driverController.povRight())
+      .onTrue(new InstantCommand(m_ledSubsystem::allPurple, m_ledSubsystem));
+
+    new Trigger(m_driverController.povUp())
+      .onTrue(new InstantCommand(m_ledSubsystem::allRed, m_ledSubsystem));
+
+    new Trigger(m_driverController.povDown())
+      .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));
+
     
     /*
     these three buttons do the same thing because in the command it checks to see which button is pressed 
@@ -210,9 +222,16 @@ public class RobotContainer {
     new Trigger(m_operatorController.leftStick())
       .onTrue(m_armCommand);
 
-    //back button rezeros the arm subsystem and the counterweight subsystem
-    // new Trigger(m_operatorController.back())
-    //   .onTrue(m_InitializeCommand);
+    //led control for op
+    new Trigger(m_operatorController.povRight())
+      .onTrue(new InstantCommand(m_ledSubsystem::allPurple));
+    new Trigger(m_operatorController.povLeft())
+      .onTrue(new InstantCommand(m_ledSubsystem::allYellow));
+    new Trigger(m_operatorController.povUp())
+      .onTrue(new InstantCommand(m_ledSubsystem::allRed, m_ledSubsystem));
+    new Trigger(m_operatorController.povDown())
+      .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));
+
 
     //left trigger toggles the wrist solenoid
     new Trigger(m_operatorController.button(5))

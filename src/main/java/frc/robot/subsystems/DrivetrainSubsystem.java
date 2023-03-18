@@ -32,6 +32,7 @@ import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {        
         // CameraSubsystem m_cameraSubsystem;
+        public boolean drivetrainState = true;
 
         /**
         * The maximum angular velocity of the robot in radians per second.
@@ -130,6 +131,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
                 swerveModulePositions = new SwerveModulePosition[]{m_frontLeftModule.getPosition(), m_frontRightModule.getPosition(), m_backLeftModule.getPosition(), m_backRightModule.getPosition()};
         }
+
+        public void setDriveSlow(){
+                MAX_VOLTAGE = 4;
+                drivetrainState = false;
+        }
+
+        public void setDriveNormal(){
+                MAX_VOLTAGE = 11;
+                drivetrainState = true;
+        }
+
         /**
          * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
          * 'forwards' direction.
