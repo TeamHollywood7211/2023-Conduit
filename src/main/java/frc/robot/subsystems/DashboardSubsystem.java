@@ -54,6 +54,7 @@ public class DashboardSubsystem extends SubsystemBase {
     //DRIVETRAIN DASHBOARD STUFF
     SmartDashboard.putNumber("Gyroscope Position as Double", m_drivetrainSubsystem.getGyroscopeRotationAsDouble());
     SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
+    SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
 
     //FIELD DASHBOARD STUFF
     // m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());

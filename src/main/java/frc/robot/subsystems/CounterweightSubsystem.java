@@ -45,6 +45,10 @@ public class CounterweightSubsystem extends SubsystemBase {
       counterweightPID.setReference(counterweightLowTarget, ControlType.kPosition);
     }
 
+    public void setCounterweightCustom(double pos){
+      counterweightPID.setReference(pos, ControlType.kPosition);
+    }
+
     public double getCounterweightCurrent(){
       return counterweightMotor.getOutputCurrent();
     }

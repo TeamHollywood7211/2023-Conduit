@@ -30,6 +30,8 @@ import frc.robot.commands.autons.ArmToLowAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.commands.autons.PlaceHighAuton;
 import frc.robot.commands.autons.PlaceHighShortAuton;
+import frc.robot.commands.autons.UntipRobotAuton;
+import frc.robot.commands.autons.XStanceAuton;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
@@ -67,10 +69,10 @@ public class RobotContainer {
     m_cameraSubsystem.createCamera();
   }
 
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem);
+  private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
+  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem, m_counterweightSubsystem);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
-  private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
   public final LedSubsystem m_ledSubsystem = new LedSubsystem();
   
@@ -96,6 +98,8 @@ public class RobotContainer {
   private ArmHomeAuton m_armHomeAuton = new ArmHomeAuton(m_armSubsystem, m_solenoidSubsystem);
   private PlaceHighAuton m_placeHighAuton = new PlaceHighAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private PlaceHighShortAuton m_placeHighShortAuton = new PlaceHighShortAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
+  private UntipRobotAuton m_untipRobotAuton = new UntipRobotAuton(m_drivetrainSubsystem);
+  private XStanceAuton m_xStanceAuton = new XStanceAuton(m_drivetrainSubsystem);
 
   public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
     Map.entry("firesol", m_fireFlipperAuton),
@@ -117,6 +121,9 @@ public class RobotContainer {
     Map.entry("armslightup", new InstantCommand(m_armSubsystem::setArmJustAboveLow, m_armSubsystem)),
     Map.entry("placehigh", m_placeHighAuton),
     Map.entry("placehighshort", m_placeHighShortAuton),
+    Map.entry("zerogyro", new InstantCommand(m_drivetrainSubsystem::zeroGyroscope)),
+    Map.entry("unpitch", m_untipRobotAuton),
+    Map.entry("xstance", m_xStanceAuton),
     Map.entry("print", new PrintCommand("===========================didthething==================================="))
   ));;
 
@@ -125,9 +132,8 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2, 1.5));
-  final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 2));
-  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3, 2), new PathConstraints(2, 2));
-
+  final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
+  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3, 3.5), new PathConstraints(2, 2));
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -140,6 +146,7 @@ public class RobotContainer {
     true,
     m_drivetrainSubsystem
   );
+
 
   private Command throwAndParkCommand = stateAutoBuilder.fullAuto(throwAndPark);
   private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPlace);

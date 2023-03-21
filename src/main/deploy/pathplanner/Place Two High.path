@@ -54,15 +54,15 @@
     {
       "anchorPoint": {
         "x": 1.8306575001775598,
-        "y": 4.14
+        "y": 4.23
       },
       "prevControl": {
         "x": 4.366605794822965,
-        "y": 5.435287074744766
+        "y": 5.525287074744766
       },
       "nextControl": {
         "x": 1.7662398072564705,
-        "y": 4.107097355572373
+        "y": 4.197097355572374
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -85,20 +85,47 @@
         "y": 3.3527705917971082
       },
       "prevControl": {
-        "x": 6.171213195506961,
-        "y": 5.7842416158765975
+        "x": 6.3113969836962225,
+        "y": 5.826351502327065
+      },
+      "nextControl": {
+        "x": 7.27626478271974,
+        "y": 3.319543131491717
+      },
+      "holonomicAngle": -81.7412085193598,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "grabcone"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.396303815164021,
+        "y": 3.0437663882846575
+      },
+      "prevControl": {
+        "x": 7.396303815164021,
+        "y": 3.174357025405781
       },
       "nextControl": null,
-      "holonomicAngle": -66.27960442769539,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "grabcone"
+          "zerogyro"
         ],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -130,6 +157,19 @@
       "position": 1.5999999999999894,
       "names": [
         "armhigh"
+      ]
+    },
+    {
+      "position": 3.4909090909090486,
+      "names": [
+        "grabcone"
+      ]
+    },
+    {
+      "position": 1.7212121212121354,
+      "names": [
+        "extendarm",
+        "extendwrist"
       ]
     }
   ]

@@ -106,9 +106,9 @@ public final class Constants {
 
 //====ANTI TIP CONSTANTS===========================================================================================
 
-    public static final double tipkP = 1;
-    public static final double tipkI = 0;
-    public static final double tipkD = 0;
+public final static double unpitchkP = 0.027;
+public final static double unpitchkI = 0;
+public final static double unpitchkD = 0;
 
 //====OTHER CONSTANTS==============================================================================================
 

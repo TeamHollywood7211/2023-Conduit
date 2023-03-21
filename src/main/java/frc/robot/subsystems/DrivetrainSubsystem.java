@@ -20,6 +20,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -32,6 +33,8 @@ import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {        
         // CameraSubsystem m_cameraSubsystem;
+        CounterweightSubsystem m_counterweightSubsystem;
+        //this is true when normal speeds false when slow speeds
         public boolean drivetrainState = true;
 
         /**
@@ -70,12 +73,19 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         private SwerveModulePosition[] swerveModulePositions;
 
-        public DrivetrainSubsystem(CameraSubsystem cameraSubsystem) {
+        private PIDController unpitchPIDController;
+        
+
+        public DrivetrainSubsystem(CameraSubsystem cameraSubsystem, CounterweightSubsystem counterweightSubsystem) {
+                m_counterweightSubsystem = counterweightSubsystem;
                 MkModuleConfiguration moduleConfig = new MkModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
                 moduleConfig.setSteerCurrentLimit(STEER_MOTOR_CURRENT_LIMIT);
                 moduleConfig.setNominalVoltage(NOMINAL_DRIVE_VOLTAGE);
                 moduleConfig.setSteerPID(1.0, 0.0, 0.1);
+
+                unpitchPIDController = new PIDController(unpitchkP, unpitchkI, unpitchkD);
+                unpitchPIDController.setTolerance(6);
 
                 ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
 
@@ -143,10 +153,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
         }
 
         public void xStance(){
-                m_frontLeftModule.set(0, 45);
-                m_frontRightModule.set(0, -45);
-                m_backLeftModule.set(0, 45);
-                m_backRightModule.set(0, -45);
+                m_frontLeftModule.set(0, 44.8);
+                m_frontRightModule.set(0, -44.8);
+                m_backLeftModule.set(0, -44.8);
+                m_backRightModule.set(0, 44.8);
+        }
+
+        public void unpitchRobot(){
+                drive(new ChassisSpeeds(
+                unpitchPIDController.calculate(getPitch(), 0),
+                0,
+                0
+                ));
         }
 
         /**
@@ -159,6 +177,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         public void calibrateGyro(){
                 m_gyro.calibrate();
+        }
+
+        public double getPitch(){
+                return m_gyro.getPitch();
         }
 
         //returns what the drivetrain sees as gyro angle but as Rotation2d

@@ -32,15 +32,7 @@ public class PlaceHighShortAuton extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_armSubsystem.getArmPos()>armHighTarget-10){
-      m_solenoidSubsystem.extendArm();
-    }
-    if(time.get()>0.75){
-      m_solenoidSubsystem.extendWrist();
-    }
-    if(time.get()>1){
       m_gripSubsystem.setGripOut();
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -52,7 +44,7 @@ public class PlaceHighShortAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(time.get() > 1.15){
+    if(time.get() > 0.5){
       return true;
     }
     return false;
