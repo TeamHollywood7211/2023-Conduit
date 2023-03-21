@@ -13,6 +13,8 @@ public class ToggleCommand extends CommandBase {
     m_controller = controller;
     m_drivetrainSubsystem = drivetrainSubsystem;
     addRequirements(drivetrainSubsystem);
+    //this.ignoringDisable(true);
+
   }
 
   // Called when the command is initially scheduled.

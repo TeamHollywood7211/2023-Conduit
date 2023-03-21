@@ -26,7 +26,7 @@ public class GripCommand extends CommandBase {
     if(m_controller.getRightTriggerAxis() > gripTriggerDeadzone){
       m_gripSubsystem.runGripIn(m_controller.getRightTriggerAxis());
       //m_gripSubsystem.setGripCone();
-    } else if(m_controller.getLeftTriggerAxis() > gripTriggerDeadzone){
+    } else if(m_controller.getLeftTriggerAxis() > gripTriggerDeadzone && m_gripSubsystem.getGripPos() > 0.1){
       m_gripSubsystem.runGripOut(m_controller.getLeftTriggerAxis());
       //m_gripSubsystem.setGripCube();
     }

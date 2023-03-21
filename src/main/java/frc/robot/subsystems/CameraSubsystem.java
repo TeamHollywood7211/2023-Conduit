@@ -48,7 +48,7 @@ public class CameraSubsystem extends SubsystemBase {
     frontY = frontTy.getDouble(0);
     frontA = frontTa.getDouble(0);
     frontBotPose = frontTable.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
-    SmartDashboard.putNumberArray("frontbotpose", frontBotPose);
+    // SmartDashboard.putNumberArray("frontbotpose", frontBotPose);
     // This method will be called once per scheduler run
   }
 

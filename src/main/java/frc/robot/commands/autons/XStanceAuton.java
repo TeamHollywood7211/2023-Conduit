@@ -1,12 +1,14 @@
-package frc.robot.ExampleFiles;
+package frc.robot.commands.autons;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class ExampleCommand extends CommandBase {
+public class XStanceAuton extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-
-  public ExampleCommand() {
-    addRequirements();
+  private DrivetrainSubsystem m_drivetrainSubsystem;
+  public XStanceAuton(DrivetrainSubsystem drivetrainSubsystem) {
+    m_drivetrainSubsystem = drivetrainSubsystem;
+    addRequirements(drivetrainSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -15,7 +17,9 @@ public class ExampleCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_drivetrainSubsystem.xStance();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
