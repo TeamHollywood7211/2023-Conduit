@@ -44,6 +44,7 @@ public final class Constants {
     public static final double AUTON_ROTATE_P = 0.56;
     
     public static final double driveSlowDeadzone = 0.3;
+    public static final double unpitchDeadzone = 5.5;
     
 //====ARM CONSTANTS================================================================================================
 

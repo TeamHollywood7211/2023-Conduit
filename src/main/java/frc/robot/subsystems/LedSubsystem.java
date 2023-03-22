@@ -41,12 +41,12 @@ public class LedSubsystem extends SubsystemBase {
 
 	
     public void allPurple(){
-        setAllLights(191,64,191,1);
+        setAllLights(191,0,191,1);
     }
 
 	
     public void allYellow(){
-        setAllLights(255,240,0,1);
+        setAllLights(255,190,0,1);
     }
 
 	
@@ -61,14 +61,13 @@ public class LedSubsystem extends SubsystemBase {
 
 
     public void allBlue(){
-        setAllLights(255,0,255,1);
+        setAllLights(0,0,255,0.5);
     }	
 
 
     public void allWhite(){
         setAllLights(255,0,0,0.5);
     }	
-
 
     public void allOff(){
         setAllLights(0,0,0,0);
@@ -91,6 +90,4 @@ public class LedSubsystem extends SubsystemBase {
         rainbowAnimation.setNumLed(128);
         candle1.animate(rainbowAnimation);
     }
-
-
 }

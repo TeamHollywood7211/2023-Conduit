@@ -16,9 +16,7 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "firesol"
-        ],
+        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "after",
         "waitTime": 1.5
@@ -114,13 +112,13 @@
       "position": 0.38181818181823146,
       "names": [
         "event",
-        "wristout"
+        "extendwrist"
       ]
     },
     {
       "position": 2.0000000000000924,
       "names": [
-        "wristin"
+        "retractwrist"
       ]
     }
   ]

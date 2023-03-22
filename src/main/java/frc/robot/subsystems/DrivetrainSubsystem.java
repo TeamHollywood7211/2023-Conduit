@@ -85,7 +85,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 moduleConfig.setSteerPID(1.0, 0.0, 0.1);
 
                 unpitchPIDController = new PIDController(unpitchkP, unpitchkI, unpitchkD);
-                unpitchPIDController.setTolerance(6);
+                unpitchPIDController.setTolerance(unpitchDeadzone);
 
                 ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
 
@@ -192,7 +192,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public double getGyroscopeRotationAsDouble(){
                 return -m_gyro.getYaw();
         }
-
+        
         public SwerveModuleState getModuleState(SwerveModule module) {
                 //return new SwerveModuleState(module.getDriveVelocity(), Rotation2d.fromDegrees(module.getSteerAngle()));
                 if(module == m_frontLeftModule){
@@ -266,28 +266,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public boolean getFieldOrientState(){
                 return isFieldOriented;
         }
-
-        public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
-                return new SequentialCommandGroup(
-                     new InstantCommand(() -> {
-                       // Reset odometry for the first path you run during auto
-                       if(isFirstPath){
-                           this.resetPose2d(traj.getInitialHolonomicPose());
-                       }
-                     }),
-                        new PPSwerveControllerCommand(
-                                traj, 
-                                this::getPose2d, 
-                                m_kinematics, 
-                                new PIDController(1, 0, 0),
-                                new PIDController(0, 0, 0), 
-                                new PIDController(0.52, 0, 0), //0.53
-                                this::setAllStates, 
-                                this
-                        )
-                );
-             }
-
 
         @Override
         public void periodic() {
