@@ -70,7 +70,7 @@ public class RobotContainer {
   }
 
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem, m_counterweightSubsystem);
+  public final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem, m_counterweightSubsystem);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
@@ -94,25 +94,26 @@ public class RobotContainer {
   private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, m_gripSubsystem, autonChooser);
   //the robot's auton parts
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
-  private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
+  // private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
   private ArmHomeAuton m_armHomeAuton = new ArmHomeAuton(m_armSubsystem, m_solenoidSubsystem);
   private PlaceHighAuton m_placeHighAuton = new PlaceHighAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private PlaceHighShortAuton m_placeHighShortAuton = new PlaceHighShortAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
-  private UntipRobotAuton m_untipRobotAuton = new UntipRobotAuton(m_drivetrainSubsystem);
+  private UntipRobotAuton m_untipRobotAuton = new UntipRobotAuton(m_drivetrainSubsystem, m_ledSubsystem);
   private XStanceAuton m_xStanceAuton = new XStanceAuton(m_drivetrainSubsystem);
 
   public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
     Map.entry("firesol", m_fireFlipperAuton),
     Map.entry("grabcube", new InstantCommand(m_gripSubsystem::setGripCube, m_gripSubsystem)),
     Map.entry("grabcone", new InstantCommand(m_gripSubsystem::setGripCone, m_gripSubsystem)),
+    Map.entry("grabconeloose", new InstantCommand(m_gripSubsystem::setGripConeLoose)),
     Map.entry("grabout", new InstantCommand(m_gripSubsystem::setGripOut, m_gripSubsystem)),
-    Map.entry("wristout", new InstantCommand(m_solenoidSubsystem::extendWrist, m_solenoidSubsystem)),
-    Map.entry("wristin", new InstantCommand(m_solenoidSubsystem::retractWrist, m_solenoidSubsystem)),
+    Map.entry("extendwrist", new InstantCommand(m_solenoidSubsystem::extendWrist, m_solenoidSubsystem)),
+    Map.entry("retractwrist", new InstantCommand(m_solenoidSubsystem::retractWrist, m_solenoidSubsystem)),
     Map.entry("extendarm", new InstantCommand(m_solenoidSubsystem::extendArm, m_solenoidSubsystem)),
     Map.entry("retractarm", new InstantCommand(m_solenoidSubsystem::retractArm, m_solenoidSubsystem)),
     Map.entry("armhigh", new InstantCommand(m_armSubsystem::setArmHigh, m_armSubsystem)),
     Map.entry("armmid", new InstantCommand(m_armSubsystem::setArmMid, m_armSubsystem)),
-    Map.entry("armlow", m_armToLowAuton),
+    Map.entry("armlow", new InstantCommand(m_armSubsystem::setArmLow)),
     Map.entry("armin", new InstantCommand(m_armSubsystem::setArmStored, m_armSubsystem)),
     Map.entry("armwristhome", m_armHomeAuton),
     Map.entry("wait1sec", new WaitCommand(1)),
@@ -128,12 +129,13 @@ public class RobotContainer {
   ));;
 
   //robot trajectories
-  final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Flip, Over and Back", new PathConstraints(1, 0.5));
+  final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Over and Back", new PathConstraints(1, 2));
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2, 1.5));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
-  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3, 3.5), new PathConstraints(2, 2));
+  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
+  final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 2), new PathConstraints(2, 2.5));
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -154,6 +156,7 @@ public class RobotContainer {
   private Command bumpSideCommand = stateAutoBuilder.fullAuto(bumpSide);
   private Command placeTwoHighCommand = stateAutoBuilder.fullAuto(placeTwoHigh);
   private Command dukesOfHazardCommand = stateAutoBuilder.fullAuto(dukesOfHazard);
+  private Command grabConeAndParkCommand = stateAutoBuilder.fullAuto(oneHighConeAndPark);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -174,13 +177,13 @@ public class RobotContainer {
     // eventMap.put("armlow", m_armToLowAuton);
 
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
-    autonChooser.addOption("Fire Cylinder", m_fireFlipperAuton);
-    autonChooser.addOption("Flip, Over and Back", throwAndParkCommand);
+    autonChooser.addOption("Over and Park", throwAndParkCommand);
     autonChooser.addOption("Drive Grab Place", driveGrabParkCommand);
     autonChooser.addOption("Park on Table", parkCommand);
     autonChooser.addOption("Bump Side", bumpSideCommand);
     autonChooser.addOption("Place Two High", placeTwoHighCommand);
     autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
+    autonChooser.addOption("Grab Cone and Park", grabConeAndParkCommand);
     SmartDashboard.putData(autonChooser);
   }
 

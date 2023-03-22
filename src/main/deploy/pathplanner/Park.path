@@ -26,11 +26,11 @@
     },
     {
       "anchorPoint": {
-        "x": 3.84,
+        "x": 4.282219391506453,
         "y": 3.05
       },
       "prevControl": {
-        "x": 2.84,
+        "x": 3.2822193915064526,
         "y": 3.05
       },
       "nextControl": null,
@@ -41,7 +41,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "zerogyro"
+          "zerogyro",
+          "unpitch"
         ],
         "executionBehavior": "parallel",
         "waitBehavior": "none",

@@ -16,9 +16,7 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "firesol"
-        ],
+        "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "after",
         "waitTime": 1.0
@@ -26,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 5.981254521750751,
-        "y": 2.75
+        "x": 6.321442417320924,
+        "y": 2.722312512294199
       },
       "prevControl": {
-        "x": 5.788828702538923,
-        "y": 2.747799615267477
+        "x": 6.129016598109096,
+        "y": 2.720112127561676
       },
       "nextControl": {
-        "x": 6.173680340962579,
-        "y": 2.752200384732523
+        "x": 6.513868236532752,
+        "y": 2.724512897026722
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -66,7 +64,8 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "zerogyro"
+          "zerogyro",
+          "unpitch"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -75,7 +74,7 @@
     }
   ],
   "maxVelocity": 1.0,
-  "maxAcceleration": 0.5,
+  "maxAcceleration": 2.0,
   "isReversed": null,
   "markers": []
 }

@@ -35,6 +35,11 @@ public class GripSubsystem extends SubsystemBase {
     gripState = gripStates.CONE;
   }
 
+  public void setGripConeLoose(){
+    gripPID.setReference(gripConeTarget+10, ControlType.kPosition);
+    gripState = gripStates.CONE;
+  }
+
   public void setGripCube(){
     gripPID.setReference(gripCubeTarget, ControlType.kPosition);
     gripState = gripStates.CUBE;
