@@ -12,7 +12,7 @@
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
-      "velOverride": null,
+      "velOverride": 0.5,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -42,7 +42,7 @@
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
-      "velOverride": null,
+      "velOverride": 0.5,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
@@ -86,45 +86,17 @@
         "x": 6.6086824248836455,
         "y": 3.32
       },
-      "nextControl": {
-        "x": 7.2688192959740245,
-        "y": 3.32
-      },
-      "holonomicAngle": 0.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
-          "grabcone"
-        ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 3.96,
-        "y": 3.204493326279887
-      },
-      "prevControl": {
-        "x": 4.432135380360988,
-        "y": 3.209759024179705
-      },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 0.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "zerogyro",
-          "unpitch"
+          "grabcone"
         ],
-        "executionBehavior": "sequential",
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -135,12 +107,6 @@
       "position": 1.2727272727272938,
       "names": [
         "extendwrist"
-      ]
-    },
-    {
-      "position": 3.563636363636465,
-      "names": [
-        "armwristhome"
       ]
     },
     {

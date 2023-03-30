@@ -24,7 +24,7 @@ public class ArmToLowAuton extends CommandBase {
   @Override
   public void execute() {
     m_armSubsystem.setArmLow();
-    if(m_armSubsystem.getArmPos() > armLowTarget-3){
+    if(m_armSubsystem.getArmPos() > armLowTarget+10){
       m_solenoidSubsystem.extendWrist();
     }
   }

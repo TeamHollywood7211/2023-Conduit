@@ -96,6 +96,7 @@ public class RobotContainer {
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
   // private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
   private ArmHomeAuton m_armHomeAuton = new ArmHomeAuton(m_armSubsystem, m_solenoidSubsystem);
+  private ArmToLowAuton m_armToLowConeAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
   private PlaceHighAuton m_placeHighAuton = new PlaceHighAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private PlaceHighShortAuton m_placeHighShortAuton = new PlaceHighShortAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private UntipRobotAuton m_untipRobotAuton = new UntipRobotAuton(m_drivetrainSubsystem, m_ledSubsystem);
@@ -113,7 +114,8 @@ public class RobotContainer {
     Map.entry("retractarm", new InstantCommand(m_solenoidSubsystem::retractArm, m_solenoidSubsystem)),
     Map.entry("armhigh", new InstantCommand(m_armSubsystem::setArmHigh, m_armSubsystem)),
     Map.entry("armmid", new InstantCommand(m_armSubsystem::setArmMid, m_armSubsystem)),
-    Map.entry("armlow", new InstantCommand(m_armSubsystem::setArmLow)),
+    Map.entry("armlow", new InstantCommand(m_armSubsystem::setArmLow, m_armSubsystem)),
+    Map.entry("armlowcone", m_armToLowConeAuton),
     Map.entry("armin", new InstantCommand(m_armSubsystem::setArmStored, m_armSubsystem)),
     Map.entry("armwristhome", m_armHomeAuton),
     Map.entry("wait1sec", new WaitCommand(1)),
@@ -131,11 +133,15 @@ public class RobotContainer {
   //robot trajectories
   final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Over and Back", new PathConstraints(1, 2));
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
-  final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
-  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2, 1.5));
+  final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1.0, 1.0
+  ));
+  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2.25, 2.25));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
-  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
+  final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.45, 3.30), new PathConstraints(2.925, 2.925));
+  final List<PathPlannerTrajectory> dukesOriginal = PathPlanner.loadPathGroup("Dukes Original", new PathConstraints(3.45, 3.30), new PathConstraints(2.925, 2.925));
   final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 2), new PathConstraints(2, 2.5));
+  final List<PathPlannerTrajectory> oneHighConeAndNothing = PathPlanner.loadPathGroup("Grab Cone and Nothing", new PathConstraints(1.3, 2), new PathConstraints(2, 2.5));
+
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -156,7 +162,9 @@ public class RobotContainer {
   private Command bumpSideCommand = stateAutoBuilder.fullAuto(bumpSide);
   private Command placeTwoHighCommand = stateAutoBuilder.fullAuto(placeTwoHigh);
   private Command dukesOfHazardCommand = stateAutoBuilder.fullAuto(dukesOfHazard);
+  private Command dukesOriginalCommand = stateAutoBuilder.fullAuto(dukesOriginal);
   private Command grabConeAndParkCommand = stateAutoBuilder.fullAuto(oneHighConeAndPark);
+  private Command grabConeAndNothingCommand = stateAutoBuilder.fullAuto(oneHighConeAndNothing);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -183,7 +191,10 @@ public class RobotContainer {
     autonChooser.addOption("Bump Side", bumpSideCommand);
     autonChooser.addOption("Place Two High", placeTwoHighCommand);
     autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
+    autonChooser.addOption("Dukes Original", dukesOriginalCommand);
     autonChooser.addOption("Grab Cone and Park", grabConeAndParkCommand);
+    autonChooser.addOption("Grab Cone and Nothing", grabConeAndNothingCommand);
+
     SmartDashboard.putData(autonChooser);
   }
 
@@ -240,7 +251,7 @@ public class RobotContainer {
     new Trigger(m_operatorController.povUp())
       .onTrue(new InstantCommand(m_ledSubsystem::allRed, m_ledSubsystem));
     new Trigger(m_operatorController.povDown())
-      .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));
+      .onTrue(new InstantCommand(m_ledSubsystem::allRainbow, m_ledSubsystem));
 
 
     //left trigger toggles the wrist solenoid

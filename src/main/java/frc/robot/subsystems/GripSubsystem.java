@@ -36,7 +36,7 @@ public class GripSubsystem extends SubsystemBase {
   }
 
   public void setGripConeLoose(){
-    gripPID.setReference(gripConeTarget+10, ControlType.kPosition);
+    gripPID.setReference(gripConeTarget-0.20, ControlType.kPosition);
     gripState = gripStates.CONE;
   }
 
@@ -104,6 +104,7 @@ public class GripSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    
     // This method will be called once per scheduler run
   }
 

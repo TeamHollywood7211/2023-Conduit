@@ -43,8 +43,8 @@ public final class Constants {
     public static final double AUTON_TRANSLATE_P = 1;
     public static final double AUTON_ROTATE_P = 0.56;
     
-    public static final double driveSlowDeadzone = 0.3;
-    public static final double unpitchDeadzone = 5.5;
+    public static final double driveSlowDeadzone = 0.3;  //0.3;
+    public static final double unpitchDeadzone = 3;
     
 //====ARM CONSTANTS================================================================================================
 
@@ -82,8 +82,8 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 2.38; //practice -148
-    public static final double gripCubeTarget = 1.55;//practice -89
+    public static final double gripConeTarget = 2.12; // 2.38 //practice -148
+    public static final double gripCubeTarget = 1.4; //1.55 //practice -89
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -107,7 +107,7 @@ public final class Constants {
 
 //====ANTI TIP CONSTANTS===========================================================================================
 
-public final static double unpitchkP = 0.027;
+public final static double unpitchkP = 0.032; //0.05; //0.027;
 public final static double unpitchkI = 0;
 public final static double unpitchkD = 0;
 

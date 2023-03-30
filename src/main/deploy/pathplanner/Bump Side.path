@@ -2,15 +2,71 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.9066409696800444,
-        "y": 1.0637685730347763
+        "x": 1.8914061888274158,
+        "y": 0.4821808139856896
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.865932272148905,
-        "y": 0.75033676133703
+        "x": 2.584541108931843,
+        "y": 0.6730440528550239
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "grabcone",
+          "placehigh",
+          "retractarm"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 3.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.784491072741544,
+        "y": 0.7534075218526392
+      },
+      "prevControl": {
+        "x": 3.840380552554831,
+        "y": 0.7734949797289556
+      },
+      "nextControl": {
+        "x": 5.25662645310253,
+        "y": 0.7433620882279356
+      },
+      "holonomicAngle": 179.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "armlow"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0.1
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.296808187601338,
+        "y": 0.6127714511068132
+      },
+      "prevControl": {
+        "x": 4.583582400247507,
+        "y": 0.5524988493586015
+      },
+      "nextControl": {
+        "x": 5.610961447506658,
+        "y": 0.6393196139157137
+      },
+      "holonomicAngle": 1.1691393279074804,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -18,49 +74,49 @@
       "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
-        "waitBehavior": "after",
-        "waitTime": 1.5
+        "waitBehavior": "none",
+        "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 6.73159128308778,
-        "y": 0.9212995677176191
+        "x": 6.743350629558401,
+        "y": 0.9
       },
       "prevControl": {
-        "x": 6.806099204953874,
-        "y": 0.9362011520908377
+        "x": 6.703168895059596,
+        "y": 0.7794547965035776
       },
       "nextControl": {
-        "x": 6.351673935575358,
-        "y": 0.8453160982151366
+        "x": 6.840537279649323,
+        "y": 1.1915599502727776
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 4.969740728110402,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": true,
       "stopEvent": {
         "names": [
-          "grabcone"
+          "grabcube"
         ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "after",
-        "waitTime": 1.0
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 0.5
       }
     },
     {
       "anchorPoint": {
-        "x": 4.926983882403784,
-        "y": 0.5983698223320629
+        "x": 4.834718240865054,
+        "y": 0.9141344598478676
       },
       "prevControl": {
-        "x": 5.592115453610297,
-        "y": 0.49566568266046945
+        "x": 5.471228810787926,
+        "y": 0.8466672894975178
       },
       "nextControl": {
-        "x": 3.6352649008615554,
-        "y": 0.7978264297760828
+        "x": 4.198207670942182,
+        "y": 0.9816016301982176
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -76,15 +132,68 @@
     },
     {
       "anchorPoint": {
-        "x": 1.9161389033678544,
-        "y": 0.4843946180783365
+        "x": 1.7206338172074849,
+        "y": 1.18
       },
       "prevControl": {
-        "x": 3.291762209907585,
-        "y": 0.4843946180783364
+        "x": 1.760815551706292,
+        "y": 1.4364970083323643
+      },
+      "nextControl": {
+        "x": 1.6870049006155996,
+        "y": 0.9653324002344081
+      },
+      "holonomicAngle": 180.01,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "placehighshort",
+          "retractarm"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.2776760290362694,
+        "y": 0.924179893472571
+      },
+      "prevControl": {
+        "x": 2.0320422595732417,
+        "y": 1.0144775133159294
+      },
+      "nextControl": {
+        "x": 4.523309798499297,
+        "y": 0.8338822736292126
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.030124842204572,
+        "y": 1.2255429022136264
+      },
+      "prevControl": {
+        "x": 5.276717320351935,
+        "y": 1.0297125879214195
       },
       "nextControl": null,
-      "holonomicAngle": 180.0,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -102,23 +211,29 @@
   "isReversed": null,
   "markers": [
     {
-      "position": 0.18181818181817144,
+      "position": 0.33939393939384527,
       "names": [
-        "event",
-        "armlow"
+        "retractwrist"
       ]
     },
     {
-      "position": 0.38181818181823146,
+      "position": 3.466666666666732,
       "names": [
         "event",
+        "armhigh"
+      ]
+    },
+    {
+      "position": 3.733333333333421,
+      "names": [
+        "extendarm",
         "extendwrist"
       ]
     },
     {
-      "position": 2.0000000000000924,
+      "position": 1.939393939393922,
       "names": [
-        "retractwrist"
+        "extendwrist"
       ]
     }
   ]

@@ -36,11 +36,12 @@ public class DashboardSubsystem extends SubsystemBase {
     //ARM DASHBOARD STUFF
     SmartDashboard.putNumber("ARM POS", m_armSubsystem.getArmPos());
     // SmartDashboard.putBoolean("is outside frame", m_armSubsystem.armOutsideFramePerim(0));
-    // SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
+    SmartDashboard.putNumber("Arm Current", m_armSubsystem.getArmCurrent());
+    SmartDashboard.putNumber("Arm Pose",m_armSubsystem.getArmPos());
 
     //GRIP DASHBOARD STUFF
-    // SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
-    // SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
+    SmartDashboard.putNumber("Grip Current", m_gripSubsystem.getGripCurrent());
+    SmartDashboard.putNumber("Grip Pose", m_gripSubsystem.getGripPos());
     SmartDashboard.putNumber("Grip Temp Farenheit", m_gripSubsystem.getGripTemp()*(9/5)+32);
 
     //COUNTERWEIGHT DASHBOARD STUFF

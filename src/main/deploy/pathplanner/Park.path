@@ -2,39 +2,67 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.88,
-        "y": 3.0488367137871717
+        "x": 1.941633356950925,
+        "y": 2.209995397434406
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.880000000000003,
-        "y": 3.0488367137871717
+        "x": 2.941633356950928,
+        "y": 2.209995397434406
       },
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "firesol"
+          "grabcone",
+          "placehigh",
+          "retractarm",
+          "retractwrist"
         ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 3.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 5.738807267088219,
+        "y": 2.209995397434406
+      },
+      "prevControl": {
+        "x": 5.296808187601338,
+        "y": 2.2200408310591073
+      },
+      "nextControl": {
+        "x": 6.431763244393713,
+        "y": 2.194246397950191
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
         "executionBehavior": "parallel",
-        "waitBehavior": "before",
+        "waitBehavior": "minimum",
         "waitTime": 1.0
       }
     },
     {
       "anchorPoint": {
-        "x": 4.282219391506453,
-        "y": 3.05
+        "x": 3.94067464826659,
+        "y": 2.2401316983085104
       },
       "prevControl": {
-        "x": 3.2822193915064526,
-        "y": 3.05
+        "x": 2.94067464826659,
+        "y": 2.2401316983085104
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -42,16 +70,24 @@
       "stopEvent": {
         "names": [
           "zerogyro",
-          "unpitch"
+          "unpitch",
+          "xstance"
         ],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     }
   ],
-  "maxVelocity": 1.0,
-  "maxAcceleration": 1.0,
+  "maxVelocity": 2.0,
+  "maxAcceleration": 2.0,
   "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.21818181818182442,
+      "names": [
+        "armin"
+      ]
+    }
+  ]
 }
