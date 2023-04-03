@@ -240,7 +240,7 @@ public class RobotContainer {
     new Trigger(m_operatorController.povUp())
       .onTrue(new InstantCommand(m_ledSubsystem::allRed, m_ledSubsystem));
     new Trigger(m_operatorController.povDown())
-      .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));
+      .onTrue(new InstantCommand(m_ledSubsystem::allRainbow, m_ledSubsystem));
 
 
     //left trigger toggles the wrist solenoid

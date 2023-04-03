@@ -31,10 +31,10 @@ public final class Constants {
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 33;
     public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(98.7); // 159.61 for practice bot -87.515 for new
 
-    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 35;
+    public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
-    public static double MAX_VOLTAGE = 11.0;
+    public static double MAX_VOLTAGE = 12.0;
 
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
