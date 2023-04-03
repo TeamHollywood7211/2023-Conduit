@@ -87,7 +87,7 @@ public class LedSubsystem extends SubsystemBase {
 
 
     public void allRainbow(){
-        rainbowAnimation.setNumLed(128);
+        rainbowAnimation.setNumLed(312);
         candle1.animate(rainbowAnimation);
     }
 }

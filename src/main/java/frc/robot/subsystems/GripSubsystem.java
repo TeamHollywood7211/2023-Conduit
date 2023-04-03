@@ -28,10 +28,15 @@ public class GripSubsystem extends SubsystemBase {
     gripPID.setP(gripkP);
     gripPID.setI(gripkI);
     gripPID.setD(gripkD);
+
+    configureMotorControllers();
+    gripEncoder.setPosition(0);
   }
 
   public void setGripCone(){
-    gripPID.setReference(gripConeTarget, ControlType.kPosition);
+    gripPID.setReference(//gripConeTarget,
+    53.6,
+     ControlType.kPosition);
     gripState = gripStates.CONE;
   }
 
@@ -41,7 +46,9 @@ public class GripSubsystem extends SubsystemBase {
   }
 
   public void setGripCube(){
-    gripPID.setReference(gripCubeTarget, ControlType.kPosition);
+    gripPID.setReference(//gripCubeTarget, 
+    34.5,
+    ControlType.kPosition);
     gripState = gripStates.CUBE;
   }
 
@@ -96,6 +103,7 @@ public class GripSubsystem extends SubsystemBase {
     gripMotor.setSmartCurrentLimit(GRIP_MOTOR_CURRENT_LIMIT);
 
     gripMotor.setIdleMode(IdleMode.kBrake);
+    gripMotor.setInverted(true);
 
     gripPID.setP(gripkP);
     gripPID.setI(gripkI);
