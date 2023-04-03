@@ -96,6 +96,7 @@ public class GripSubsystem extends SubsystemBase {
     gripMotor.setSmartCurrentLimit(GRIP_MOTOR_CURRENT_LIMIT);
 
     gripMotor.setIdleMode(IdleMode.kBrake);
+    gripMotor.setInverted(true);
 
     gripPID.setP(gripkP);
     gripPID.setI(gripkI);

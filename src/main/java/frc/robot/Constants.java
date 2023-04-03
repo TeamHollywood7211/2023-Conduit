@@ -34,7 +34,7 @@ public final class Constants {
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
-    public static double MAX_VOLTAGE = 12.0;
+    public static double MAX_VOLTAGE = 12;
 
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
@@ -43,8 +43,7 @@ public final class Constants {
     public static final double AUTON_TRANSLATE_P = 1;
     public static final double AUTON_ROTATE_P = 0.56;
     
-    public static final double driveSlowDeadzone = 0.3;
-    public static final double unpitchDeadzone = 5.5;
+    public static final double driveSlowDeadzone = 0.1;  //0.3;
     
 //====ARM CONSTANTS================================================================================================
 
@@ -82,8 +81,8 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 2.38; //practice -148
-    public static final double gripCubeTarget = 1.55;//practice -89
+    public static final double gripConeTarget = 53.6; // 2.38 //practice -148
+    public static final double gripCubeTarget = 34.5; //1.55 //practice -89
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -107,9 +106,11 @@ public final class Constants {
 
 //====ANTI TIP CONSTANTS===========================================================================================
 
-public final static double unpitchkP = 0.027;
+public final static double unpitchkP = 0.029; //0.027;
 public final static double unpitchkI = 0;
 public final static double unpitchkD = 0;
+
+public static final double unpitchDeadzone = 4;
 
 //====OTHER CONSTANTS==============================================================================================
 
