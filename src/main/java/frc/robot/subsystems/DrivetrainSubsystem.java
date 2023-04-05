@@ -183,6 +183,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 return m_gyro.getPitch();
         }
 
+        public double getDriveVelocity(){
+                return Math.abs(m_frontLeftModule.getDriveVelocity()) + Math.abs(m_frontRightModule.getDriveVelocity()) + Math.abs(m_backLeftModule.getDriveVelocity()) + Math.abs(m_backRightModule.getDriveVelocity())/4;
+        }
+
         //returns what the drivetrain sees as gyro angle but as Rotation2d
         public Rotation2d getGyroscopeRotation() {
                 return Rotation2d.fromDegrees(-m_gyro.getYaw());//360 - m_gyro.getYaw());

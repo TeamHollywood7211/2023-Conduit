@@ -81,7 +81,7 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 53.6; // 2.38 //practice -148
+    public static final double gripConeTarget = 55.6; // 2.38 //practice -148
     public static final double gripCubeTarget = 34.5; //1.55 //practice -89
     public static final double gripOutTarget = 0;
 

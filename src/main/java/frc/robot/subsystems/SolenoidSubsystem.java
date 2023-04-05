@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -17,15 +18,16 @@ public class SolenoidSubsystem extends SubsystemBase {
   private boolean wristSolenoidState;
   /** Creates a new ExampleSubsystem. */
   private PneumaticHub m_pneumaticHub;
+  private Compressor m_robotCompressor;
   private DoubleSolenoid m_armSolenoid;
   private DoubleSolenoid m_wristSolenoid;
   private Solenoid m_flipperSolenoid;
+  private boolean compressorNow = false; //false is normal true is run now
 
   public SolenoidSubsystem() {
     armSolenoidState = false;
     wristSolenoidState = false;
     m_pneumaticHub = new PneumaticHub(61);
-    //m_robotCompressor = new Compressor(PneumaticsModuleType.REVPH);
     m_armSolenoid = new DoubleSolenoid(61, PneumaticsModuleType.REVPH, 0, 1);
     //m_armSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 0, 1);
     //m_wristSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, 6, 7);
@@ -34,11 +36,25 @@ public class SolenoidSubsystem extends SubsystemBase {
   }
 
   public void enableAnalogCompressor(){
-    m_pneumaticHub.enableCompressorAnalog(70, 115);
+    m_pneumaticHub.enableCompressorAnalog(40, 115);
+  }
+
+  public void toggleCompressor(){
+    if(compressorNow){
+      m_pneumaticHub.enableCompressorAnalog(40, 115);
+      compressorNow = !compressorNow;
+    } else{
+      m_pneumaticHub.enableCompressorAnalog(110, 115);
+      compressorNow = !compressorNow;
+    }
   }
 
   public double getCompressorPSI(){
     return m_pneumaticHub.getPressure(0);
+  }
+
+  public boolean getCompressorState(){
+    return compressorNow;
   }
 
   //method sets main extension solenoid to retract (run in initialization of command to make toggle work)

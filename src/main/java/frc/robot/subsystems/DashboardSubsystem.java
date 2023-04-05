@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 
@@ -15,6 +16,7 @@ public class DashboardSubsystem extends SubsystemBase {
   private SolenoidSubsystem m_solenoidSubsystem;
   private GripSubsystem m_gripSubsystem;
   private final Field2d m_field = new Field2d();
+  private InstantCommand ToggleCompressorLimit;
 
   public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, GripSubsystem gripSubsystem, SendableChooser autonChooser) {
     m_armSubsystem = armSubsystem;
@@ -22,6 +24,7 @@ public class DashboardSubsystem extends SubsystemBase {
     m_drivetrainSubsystem = drivetrainSubsystem;
     m_solenoidSubsystem = solenoidSubsystem;
     m_gripSubsystem = gripSubsystem;
+    ToggleCompressorLimit = new InstantCommand(m_solenoidSubsystem::toggleCompressor);
 
     // ShuffleboardTab driveTab = Shuffleboard.getTab("DriveTab");
     // driveTab.addCamera("FrontCam", "front-limelight", null);
@@ -30,6 +33,7 @@ public class DashboardSubsystem extends SubsystemBase {
     // SmartDashboard.putNumber("arm P", armkP);
     // SmartDashboard.putNumber("arm I", armkI);
     // SmartDashboard.putNumber("arm D", armkD);
+    SmartDashboard.putData("Compressor Toggle", ToggleCompressorLimit);
   }
 
   public void periodic(){
@@ -44,17 +48,19 @@ public class DashboardSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Grip Temp Farenheit", m_gripSubsystem.getGripTemp()*(9/5)+32);
 
     //COUNTERWEIGHT DASHBOARD STUFF
-    // SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
+    SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
     // SmartDashboard.putNumber("Counterweight Current", m_counterweightSubsystem.getCounterweightCurrent());
 
     //SOLENOID DASHBOARD STUFF
     // SmartDashboard.putBoolean("wrist solenoid state", m_solenoidSubsystem.getWristSolenoidState());
     // SmartDashboard.putBoolean("armSolenoid State", m_solenoidSubsystem.getArmSolenoidState());
+    SmartDashboard.putBoolean("comp state", m_solenoidSubsystem.getCompressorState());
 
     //DRIVETRAIN DASHBOARD STUFF
     SmartDashboard.putNumber("Gyroscope Position as Double", m_drivetrainSubsystem.getGyroscopeRotationAsDouble());
     SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
-    SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
+    //SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
+    //SmartDashboard.putNumber("Drive Speed", m_drivetrainSubsystem.getDriveVelocity());
 
     //FIELD DASHBOARD STUFF
     // m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());
@@ -63,6 +69,7 @@ public class DashboardSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("PSI", m_solenoidSubsystem.getCompressorPSI());
 
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+
   }
 
   // Returns true when the command should end.

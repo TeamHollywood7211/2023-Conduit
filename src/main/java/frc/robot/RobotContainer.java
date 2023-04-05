@@ -23,10 +23,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.GripCommand;
-import frc.robot.commands.InitializeCommand;
 import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.autons.ArmHomeAuton;
-import frc.robot.commands.autons.ArmToLowAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.commands.autons.PlaceHighAuton;
 import frc.robot.commands.autons.PlaceHighShortAuton;
@@ -78,7 +76,6 @@ public class RobotContainer {
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
-  public final InitializeCommand m_InitializeCommand = new InitializeCommand(m_armSubsystem, m_counterweightSubsystem, m_operatorController);
   private final GripCommand m_gripCommand = new GripCommand(m_gripSubsystem, m_operatorController);
   private final ToggleCommand m_toggleCommand = new ToggleCommand(m_drivetrainSubsystem, m_driverController);
   // private final ManualCounterweightCommand m_manualCounterweightCommand = new ManualCounterweightCommand(m_counterweightSubsystem, m_driverController);
@@ -114,6 +111,7 @@ public class RobotContainer {
     Map.entry("armhigh", new InstantCommand(m_armSubsystem::setArmHigh, m_armSubsystem)),
     Map.entry("armmid", new InstantCommand(m_armSubsystem::setArmMid, m_armSubsystem)),
     Map.entry("armlow", new InstantCommand(m_armSubsystem::setArmLow)),
+    Map.entry("armlowest", new InstantCommand(m_armSubsystem::setArmJustBelowLow)),
     Map.entry("armin", new InstantCommand(m_armSubsystem::setArmStored, m_armSubsystem)),
     Map.entry("armwristhome", m_armHomeAuton),
     Map.entry("wait1sec", new WaitCommand(1)),
@@ -169,6 +167,7 @@ public class RobotContainer {
     m_drivetrainSubsystem.setDefaultCommand(m_driveCommand);
     // Configure the button bindings
     configureButtonBindings();
+    configureAllMotors();
   }
 
   public void configureAutons(){
@@ -288,5 +287,11 @@ public class RobotContainer {
     value = Math.copySign(value * value, value);
 
     return value;
+  }
+
+  private void configureAllMotors(){
+    m_armSubsystem.configureMotorControllers();
+    m_gripSubsystem.configureMotorControllers();
+    m_counterweightSubsystem.configureCounterweightMotor();
   }
 }

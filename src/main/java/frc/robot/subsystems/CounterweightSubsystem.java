@@ -45,6 +45,14 @@ public class CounterweightSubsystem extends SubsystemBase {
       counterweightPID.setReference(counterweightLowTarget, ControlType.kPosition);
     }
 
+    public void driveCounterweightForward(){
+      counterweightMotor.set(0.1);
+    }
+
+    public void driveCounterweightBackward(){
+      counterweightMotor.set(-0.1);
+    }
+
     public void setCounterweightCustom(double pos){
       counterweightPID.setReference(pos, ControlType.kPosition);
     }
@@ -82,6 +90,9 @@ public class CounterweightSubsystem extends SubsystemBase {
       counterweightMotor.restoreFactoryDefaults();
       counterweightMotor.setSmartCurrentLimit(COUNTERWEIGHT_CURRENT_LIMIT);
       counterweightMotor.setIdleMode(IdleMode.kBrake);
+      counterweightPID.setP(counterweightkP); //actuallys sets da P
+      counterweightPID.setI(counterweightkI); //actually sets da i
+      counterweightPID.setD(counterweightkD); //actually sets da D  
     }
 
     @Override
