@@ -48,7 +48,7 @@ public class DashboardSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Grip Temp Farenheit", m_gripSubsystem.getGripTemp()*(9/5)+32);
 
     //COUNTERWEIGHT DASHBOARD STUFF
-    SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
+    //SmartDashboard.putNumber("Counterweight Motor Position", m_counterweightSubsystem.getCounterweightPos());
     // SmartDashboard.putNumber("Counterweight Current", m_counterweightSubsystem.getCounterweightCurrent());
 
     //SOLENOID DASHBOARD STUFF
@@ -59,8 +59,9 @@ public class DashboardSubsystem extends SubsystemBase {
     //DRIVETRAIN DASHBOARD STUFF
     SmartDashboard.putNumber("Gyroscope Position as Double", m_drivetrainSubsystem.getGyroscopeRotationAsDouble());
     SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
-    //SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
-    //SmartDashboard.putNumber("Drive Speed", m_drivetrainSubsystem.getDriveVelocity());
+    SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
+    // SmartDashboard.putBoolean("is tipping", m_drivetrainSubsystem.isTippingForward());
+    // SmartDashboard.putNumber("Drive Speed", m_drivetrainSubsystem.getDriveVelocity());
 
     //FIELD DASHBOARD STUFF
     // m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());

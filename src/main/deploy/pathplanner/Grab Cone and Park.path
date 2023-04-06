@@ -122,7 +122,8 @@
       "stopEvent": {
         "names": [
           "zerogyro",
-          "unpitch"
+          "unpitch",
+          "xstance"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",

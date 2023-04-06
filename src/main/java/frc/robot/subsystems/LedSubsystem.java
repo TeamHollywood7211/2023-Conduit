@@ -1,9 +1,12 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.ColorFlowAnimation;
+import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
@@ -15,14 +18,37 @@ public class LedSubsystem extends SubsystemBase {
     //define candle
     CANdle candle1 = new CANdle(LED_CANDLE_ID);
     //create animations
-    RainbowAnimation rainbowAnimation = new RainbowAnimation(1, 1, 128);
-    StrobeAnimation strobeAnimation = new StrobeAnimation(255, 0, 1);
+    RainbowAnimation rainbowAnimation;
+    StrobeAnimation strobeAnimation;
+    ColorFlowAnimation redFlowAnimation;
+    ColorFlowAnimation greenFlowAnimation;
+    LarsonAnimation larsonAnimation;
+    public boolean swagIsDone = false;
 
     public LedSubsystem() {
         CANdleConfiguration config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB; // set the strip type to RGB
         config.brightnessScalar = 0.5; // dim the LEDs to half brightness during init
         candle1.configAllSettings(config);
+
+        rainbowAnimation = new RainbowAnimation(1, 1, 128);
+        rainbowAnimation.setNumLed(numLEDs);
+
+        strobeAnimation = new StrobeAnimation(0, 255, 0);
+        strobeAnimation.setNumLed(numLEDs);
+        strobeAnimation.setSpeed(0.6);
+        
+        redFlowAnimation = new ColorFlowAnimation(255, 0, 0);
+        redFlowAnimation.setNumLed(numLEDs);
+        redFlowAnimation.setSpeed(0.5);
+
+        greenFlowAnimation = new ColorFlowAnimation(0, 255, 0);
+        greenFlowAnimation.setNumLed(numLEDs);
+        greenFlowAnimation.setSpeed(0.75);
+
+        larsonAnimation = new LarsonAnimation(255, 0, 0);
+        larsonAnimation.setNumLed(numLEDs);
+        larsonAnimation.setSpeed(1.2);
     }
 
 
@@ -66,7 +92,7 @@ public class LedSubsystem extends SubsystemBase {
 
 
     public void allWhite(){
-        setAllLights(255,0,0,0.5);
+        setAllLights(255,255,255,0.5);
     }	
 
     public void allOff(){
@@ -87,7 +113,22 @@ public class LedSubsystem extends SubsystemBase {
 
 
     public void allRainbow(){
-        rainbowAnimation.setNumLed(312);
         candle1.animate(rainbowAnimation);
+    }
+
+    public void allRedFlow(){
+        candle1.animate(redFlowAnimation);
+    }
+
+    public void allRedBounce(){
+        candle1.animate(larsonAnimation);
+    }
+
+    public void allGreenFlow(){
+        candle1.animate(greenFlowAnimation);
+    }
+
+    public void allGreenStrobe(){
+        candle1.animate(strobeAnimation);
     }
 }

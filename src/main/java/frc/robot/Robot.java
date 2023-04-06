@@ -31,7 +31,7 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.setLimelightSetting();
     UsbCamera frontUsbCamera = CameraServer.startAutomaticCapture();
-    frontUsbCamera.setResolution(320, 320);
+    frontUsbCamera.setResolution(240, 240);
   }
 
   /*
@@ -57,7 +57,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   // This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
   @Override

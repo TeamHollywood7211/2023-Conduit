@@ -106,14 +106,19 @@ public final class Constants {
 
 //====ANTI TIP CONSTANTS===========================================================================================
 
-public final static double unpitchkP = 0.029; //0.027;
+public final static double unpitchkP = 0.028; //0.027;
 public final static double unpitchkI = 0;
 public final static double unpitchkD = 0;
 
-public static final double unpitchDeadzone = 4;
+public static final double unpitchTolerance = 5.4;
+
+public static final double unpitchMaxTime = 5;
+
+public static final double unpitchLevelTime = 0.25;
 
 //====OTHER CONSTANTS==============================================================================================
 
     public static final int LED_CANDLE_ID = 51; //plz change later, not actual value, thx :)
     public static final double gripTriggerDeadzone = 0.05;
+    public static final int numLEDs = 312;
 }

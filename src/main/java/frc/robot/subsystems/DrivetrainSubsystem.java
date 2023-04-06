@@ -74,6 +74,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private SwerveModulePosition[] swerveModulePositions;
 
         private PIDController unpitchPIDController;
+
+        private double lastPitch;
+
+        private Timer everySecondTimer;
         
 
         public DrivetrainSubsystem(CameraSubsystem cameraSubsystem, CounterweightSubsystem counterweightSubsystem) {
@@ -85,7 +89,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 moduleConfig.setSteerPID(1.0, 0.0, 0.1);
 
                 unpitchPIDController = new PIDController(unpitchkP, unpitchkI, unpitchkD);
-                unpitchPIDController.setTolerance(unpitchDeadzone);
+                unpitchPIDController.setTolerance(unpitchTolerance);
 
                 ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
 
@@ -140,6 +144,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 );
 
                 swerveModulePositions = new SwerveModulePosition[]{m_frontLeftModule.getPosition(), m_frontRightModule.getPosition(), m_backLeftModule.getPosition(), m_backRightModule.getPosition()};
+                everySecondTimer = new Timer();
+                everySecondTimer.start();
         }
 
         public void setDriveSlow(){
@@ -166,6 +172,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 0
                 ));
         }
+
+        
 
         /**
          * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
@@ -285,5 +293,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                 m_backRightModule.getPosition()
                         }
                 );
+
+                if(everySecondTimer.get()>=1){
+                        lastPitch = getPitch();
+                        everySecondTimer.reset();
+                }
         }
 }

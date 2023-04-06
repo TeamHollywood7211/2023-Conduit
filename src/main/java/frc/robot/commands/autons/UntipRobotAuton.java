@@ -32,13 +32,14 @@ public class UntipRobotAuton extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(commandTime.get() < 4){
+    if(commandTime.get() < unpitchMaxTime){
       m_drivetrainSubsystem.unpitchRobot();
-    } else{
-      m_drivetrainSubsystem.xStance();
+    }else{ //else if(m_drivetrainSubsystem.isTippingForward() || commandTime.get() > unpitchMaxTime){
+      //m_drivetrainSubsystem.xStance();
+      isDone = true;
     }
 
-    if((m_drivetrainSubsystem.getPitch() < unpitchDeadzone && m_drivetrainSubsystem.getPitch() > -unpitchDeadzone)){
+    if((m_drivetrainSubsystem.getPitch() < unpitchTolerance && m_drivetrainSubsystem.getPitch() > -unpitchTolerance)){
       time.start();
       m_ledSubsystem.allGreen();
     } else{
@@ -46,7 +47,7 @@ public class UntipRobotAuton extends CommandBase {
       m_ledSubsystem.allRed();
     }
 
-    if(time.get() >= 1){
+    if(time.get() >= unpitchLevelTime){
       isDone = true;
     }
   }
@@ -56,6 +57,9 @@ public class UntipRobotAuton extends CommandBase {
   public void end(boolean interrupted) {
     time.stop();
     time.reset();
+    commandTime.stop();
+    commandTime.reset();
+    m_ledSubsystem.allGreenFlow();
   }
 
   // Returns true when the command should end.

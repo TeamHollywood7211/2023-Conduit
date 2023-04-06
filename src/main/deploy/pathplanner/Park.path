@@ -40,9 +40,10 @@
       "stopEvent": {
         "names": [
           "zerogyro",
-          "unpitch"
+          "unpitch",
+          "xstance"
         ],
-        "executionBehavior": "parallel",
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
