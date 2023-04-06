@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
 import com.ctre.phoenix.led.ColorFlowAnimation;
+import com.ctre.phoenix.led.FireAnimation;
 import com.ctre.phoenix.led.LarsonAnimation;
 import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
@@ -22,7 +23,11 @@ public class LedSubsystem extends SubsystemBase {
     StrobeAnimation strobeAnimation;
     ColorFlowAnimation redFlowAnimation;
     ColorFlowAnimation greenFlowAnimation;
+    ColorFlowAnimation blueFlowAnimation;
+    ColorFlowAnimation FlowAnimation2;
+    ColorFlowAnimation FlowAnimation3;
     LarsonAnimation larsonAnimation;
+    FireAnimation fireAnim;
     public boolean swagIsDone = false;
 
     public LedSubsystem() {
@@ -42,13 +47,31 @@ public class LedSubsystem extends SubsystemBase {
         redFlowAnimation.setNumLed(numLEDs);
         redFlowAnimation.setSpeed(0.5);
 
+        blueFlowAnimation = new ColorFlowAnimation(0, 0, 255);
+        blueFlowAnimation.setNumLed(188);
+        blueFlowAnimation.setSpeed(0.7);
+        blueFlowAnimation.setLedOffset(0);
+
+        FlowAnimation2 = new ColorFlowAnimation(0, 0, 255);
+        FlowAnimation2.setNumLed(188);
+        FlowAnimation2.setSpeed(0.7);
+        FlowAnimation2.setLedOffset(120);
+
+        FlowAnimation3 = new ColorFlowAnimation(200, 0, 255);
+        FlowAnimation3.setNumLed(200);
+        FlowAnimation3.setSpeed(0.7);
+        FlowAnimation3.setLedOffset(120);
+
         greenFlowAnimation = new ColorFlowAnimation(0, 255, 0);
         greenFlowAnimation.setNumLed(numLEDs);
         greenFlowAnimation.setSpeed(0.75);
 
+        fireAnim = new FireAnimation();
+        fireAnim.setNumLed(numLEDs);
+
         larsonAnimation = new LarsonAnimation(255, 0, 0);
         larsonAnimation.setNumLed(numLEDs);
-        larsonAnimation.setSpeed(1.2);
+        larsonAnimation.setSpeed(0.5);
     }
 
 
@@ -67,16 +90,25 @@ public class LedSubsystem extends SubsystemBase {
 
 	
     public void allPurple(){
+        candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2); 
         setAllLights(191,0,191,1);
     }
 
 	
     public void allYellow(){
+        candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2); 
         setAllLights(255,190,0,1);
     }
 
 	
     public void allRed(){
+        candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2); 
         setAllLights(255,0,0,1);
     }	
 	
@@ -118,6 +150,11 @@ public class LedSubsystem extends SubsystemBase {
 
     public void allRedFlow(){
         candle1.animate(redFlowAnimation);
+    }
+
+    public void allBlueFlow(){
+        candle1.animate(blueFlowAnimation, 0);
+        candle1.animate(FlowAnimation2, 1);
     }
 
     public void allRedBounce(){

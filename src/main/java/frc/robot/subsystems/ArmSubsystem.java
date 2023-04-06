@@ -75,7 +75,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setArmJustBelowLow(){
-    armPID.setReference(24.3, ControlType.kPosition);
+    armPID.setReference(30, ControlType.kPosition);
   }
 
   public void driveArmBack(){

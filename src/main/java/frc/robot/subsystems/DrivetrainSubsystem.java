@@ -80,7 +80,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private Timer everySecondTimer;
         
 
-        public DrivetrainSubsystem(CameraSubsystem cameraSubsystem, CounterweightSubsystem counterweightSubsystem) {
+        public DrivetrainSubsystem(CounterweightSubsystem counterweightSubsystem) {
                 m_counterweightSubsystem = counterweightSubsystem;
                 MkModuleConfiguration moduleConfig = new MkModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);

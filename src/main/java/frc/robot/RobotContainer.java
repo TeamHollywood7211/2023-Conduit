@@ -10,6 +10,8 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -57,18 +59,19 @@ public class RobotContainer {
   private final CommandXboxController m_operatorController = new CommandXboxController(1);
 
   // The robot's subsystems
-  private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
+  //private final CameraSubsystem m_cameraSubsystem = new CameraSubsystem();
 
-  public void setLimelightSetting(){
-    m_cameraSubsystem.setLimelightSetting();
-  }
+  // public void setLimelightSetting(){
+  //   m_cameraSubsystem.setLimelightSetting();
+  // }
 
   public void createFrontUsbCamera(){
-    m_cameraSubsystem.createCamera();
+    UsbCamera frontUsbCamera = new UsbCamera("frontUsbCamObject", 1);
+    CameraServer.startAutomaticCapture(frontUsbCamera);
   }
 
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
-  public final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_cameraSubsystem, m_counterweightSubsystem);
+  public final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_counterweightSubsystem);
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
@@ -130,10 +133,10 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Over and Back", new PathConstraints(1, 2));
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
-  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Sidemaybe", new PathConstraints(3, 3));
+  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2, 1.5));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
-  final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 2), new PathConstraints(2, 2.5));
+  final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -149,7 +152,7 @@ public class RobotContainer {
 
 
   private Command throwAndParkCommand = stateAutoBuilder.fullAuto(throwAndPark);
-  private Command driveGrabParkCommand = stateAutoBuilder.fullAuto(driveGrabPlace);
+  private Command driveGrabPlaceCommand = stateAutoBuilder.fullAuto(driveGrabPlace);
   private Command parkCommand = stateAutoBuilder.fullAuto(park);
   private Command bumpSideCommand = stateAutoBuilder.fullAuto(bumpSide);
   private Command placeTwoHighCommand = stateAutoBuilder.fullAuto(placeTwoHigh);
@@ -177,7 +180,7 @@ public class RobotContainer {
 
     autonChooser.setDefaultOption("Do nothing", new InstantCommand());
     autonChooser.addOption("Over and Park", throwAndParkCommand);
-    autonChooser.addOption("Drive Grab Place", driveGrabParkCommand);
+    autonChooser.addOption("Drive Grab Place", driveGrabPlaceCommand);
     autonChooser.addOption("Park on Table", parkCommand);
     autonChooser.addOption("Bump Side", bumpSideCommand);
     autonChooser.addOption("Place Two High", placeTwoHighCommand);
