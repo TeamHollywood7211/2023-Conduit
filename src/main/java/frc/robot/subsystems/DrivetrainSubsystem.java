@@ -5,9 +5,6 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-//import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.*;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -24,9 +21,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
@@ -75,12 +69,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         private PIDController unpitchPIDController;
 
-        private double lastPitch;
+        // private double lastPitch;
 
         private Timer everySecondTimer;
         
 
-        public DrivetrainSubsystem(CameraSubsystem cameraSubsystem, CounterweightSubsystem counterweightSubsystem) {
+        public DrivetrainSubsystem(CounterweightSubsystem counterweightSubsystem) {
                 m_counterweightSubsystem = counterweightSubsystem;
                 MkModuleConfiguration moduleConfig = new MkModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
@@ -148,8 +142,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 everySecondTimer.start();
         }
 
-        public void setDriveSlow(){
-                MAX_VOLTAGE = 4;
+        public void setDriveSlow(double amt){
+                MAX_VOLTAGE = 4/amt;
                 drivetrainState = false;
         }
 
@@ -294,9 +288,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         }
                 );
 
-                if(everySecondTimer.get()>=1){
-                        lastPitch = getPitch();
-                        everySecondTimer.reset();
-                }
+                // if(everySecondTimer.get()>=1){
+                //         lastPitch = getPitch();
+                //         everySecondTimer.reset();
+                // }
         }
 }

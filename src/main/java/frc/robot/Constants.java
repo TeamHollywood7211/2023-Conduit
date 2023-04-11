@@ -82,7 +82,7 @@ public final class Constants {
     public static final double gripkD = 0;
 
     public static final double gripConeTarget = 55.6; // 2.38 //practice -148
-    public static final double gripCubeTarget = 34.5; //1.55 //practice -89
+    public static final double gripCubeTarget = 40; //1.55 //practice -89
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -114,7 +114,7 @@ public static final double unpitchTolerance = 5.4;
 
 public static final double unpitchMaxTime = 5;
 
-public static final double unpitchLevelTime = 0.25;
+public static final double unpitchLevelTime = 0.23;
 
 //====OTHER CONSTANTS==============================================================================================
 
