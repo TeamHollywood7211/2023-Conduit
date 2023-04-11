@@ -12,6 +12,7 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.hal.simulation.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,6 +27,8 @@ import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.GripCommand;
 import frc.robot.commands.ToggleCommand;
+import frc.robot.commands.TurnPurpleTimer;
+import frc.robot.commands.TurnYellowTimer;
 import frc.robot.commands.autons.ArmHomeAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.commands.autons.PlaceHighAuton;
@@ -100,6 +103,8 @@ public class RobotContainer {
   private PlaceHighShortAuton m_placeHighShortAuton = new PlaceHighShortAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private UntipRobotAuton m_untipRobotAuton = new UntipRobotAuton(m_drivetrainSubsystem, m_ledSubsystem);
   private XStanceAuton m_xStanceAuton = new XStanceAuton(m_drivetrainSubsystem);
+  private TurnPurpleTimer turnPurpleTimer = new TurnPurpleTimer(m_ledSubsystem);
+  private TurnYellowTimer turnYellowTimer = new TurnYellowTimer(m_ledSubsystem);
 
   public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
     Map.entry("firesol", m_fireFlipperAuton),
@@ -206,13 +211,13 @@ public class RobotContainer {
 
     //Buttons set the lights to either yellow or purple
     new Trigger(m_driverController.povLeft())
-      .onTrue(new InstantCommand(m_ledSubsystem::allYellow, m_ledSubsystem));
+      .onTrue(turnYellowTimer);
 
     new Trigger(m_driverController.povRight())
-      .onTrue(new InstantCommand(m_ledSubsystem::allPurple, m_ledSubsystem));
+      .onTrue(turnPurpleTimer);
 
     new Trigger(m_driverController.povUp())
-      .onTrue(new InstantCommand(m_ledSubsystem::allRed, m_ledSubsystem));
+      .onTrue(new InstantCommand(m_ledSubsystem::enabledAnim, m_ledSubsystem));
 
     new Trigger(m_driverController.povDown())
       .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));
@@ -240,9 +245,10 @@ public class RobotContainer {
     new Trigger(m_operatorController.povLeft())
       .onTrue(new InstantCommand(m_ledSubsystem::allYellow));
     new Trigger(m_operatorController.povUp())
-      .onTrue(new InstantCommand(m_ledSubsystem::allRed, m_ledSubsystem));
+      .onTrue(new InstantCommand(m_ledSubsystem::enabledAnim, m_ledSubsystem));
     new Trigger(m_operatorController.povDown())
       .onTrue(new InstantCommand(m_ledSubsystem::allRainbow, m_ledSubsystem));
+      //.onTrue(new InstantCommand(this::printComments));
 
 
     //left trigger toggles the wrist solenoid
@@ -296,5 +302,9 @@ public class RobotContainer {
     m_armSubsystem.configureMotorControllers();
     m_gripSubsystem.configureMotorControllers();
     m_counterweightSubsystem.configureCounterweightMotor();
+  }
+
+  private void printComments(){
+    System.out.println("Comments::::" + RoboRioDataJNI.getComments());
   }
 }
