@@ -59,7 +59,7 @@ public class DefaultDriveCommand extends CommandBase {
         }
 
         if(m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
-            m_drivetrainSubsystem.setDriveSlow();
+            m_drivetrainSubsystem.setDriveSlow(m_controller.getRightTriggerAxis());
         } else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean() && !m_drivetrainSubsystem.drivetrainState){
             m_drivetrainSubsystem.setDriveNormal();
         }

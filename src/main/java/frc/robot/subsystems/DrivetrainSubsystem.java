@@ -142,8 +142,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 everySecondTimer.start();
         }
 
-        public void setDriveSlow(){
-                MAX_VOLTAGE = 4;
+        public void setDriveSlow(double amt){
+                MAX_VOLTAGE = 4/amt;
                 drivetrainState = false;
         }
 
