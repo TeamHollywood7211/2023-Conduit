@@ -22,21 +22,13 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import static frc.robot.Constants.*;
 
-public class DrivetrainSubsystem extends SubsystemBase {        
+public class DrivetrainSubsystem extends SubsystemBase {  
         // CameraSubsystem m_cameraSubsystem;
         CounterweightSubsystem m_counterweightSubsystem;
-        //this is true when normal speeds false when slow speeds
-        public boolean drivetrainState = true;
-
-        /**
-        * The maximum angular velocity of the robot in radians per second.
-        * <p>
-        * This is a measure of how fast the robot can rotate in place.
-        */
-        // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
         //if this is true the robot will be field oriented, and vice versa.
@@ -69,9 +61,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         private PIDController unpitchPIDController;
 
-        // private double lastPitch;
-
         private Timer everySecondTimer;
+        private drivetrainStates driveState;
         
 
         public DrivetrainSubsystem(CounterweightSubsystem counterweightSubsystem) {
@@ -138,18 +129,27 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 );
 
                 swerveModulePositions = new SwerveModulePosition[]{m_frontLeftModule.getPosition(), m_frontRightModule.getPosition(), m_backLeftModule.getPosition(), m_backRightModule.getPosition()};
-                everySecondTimer = new Timer();
-                everySecondTimer.start();
+
+                driveState = drivetrainStates.NORMAL;
         }
 
-        public void setDriveSlow(double amt){
-                MAX_VOLTAGE = 4/amt;
-                drivetrainState = false;
+        public void setDriveFineTune(double amt){
+                MAX_VOLTAGE = FINE_TUNE_VOLTAGE/amt;
+                driveState = drivetrainStates.FINE_TUNE;
         }
 
         public void setDriveNormal(){
-                MAX_VOLTAGE = 11;
-                drivetrainState = true;
+                MAX_VOLTAGE = 12;
+                driveState = drivetrainStates.NORMAL;
+        }
+
+        public void setDriveArmUp(){
+                MAX_VOLTAGE = ARM_HIGH_VOLTAGE;
+                driveState = drivetrainStates.ARM_UP;
+        }
+
+        public drivetrainStates getDriveState(){
+                return driveState;
         }
 
         public void xStance(){
@@ -277,7 +277,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
         public void periodic() {
                 states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
                 SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
-                //updateSwerveModulePositions();
                 m_odometry.update(
                         getGyroscopeRotation(),
                         new SwerveModulePosition[]{
@@ -287,10 +286,5 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                 m_backRightModule.getPosition()
                         }
                 );
-
-                // if(everySecondTimer.get()>=1){
-                //         lastPitch = getPitch();
-                //         everySecondTimer.reset();
-                // }
         }
 }

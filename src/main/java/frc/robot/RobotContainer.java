@@ -36,13 +36,14 @@ import frc.robot.commands.autons.PlaceHighShortAuton;
 import frc.robot.commands.autons.UntipRobotAuton;
 import frc.robot.commands.autons.XStanceAuton;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CounterweightSubsystem;
 import frc.robot.subsystems.DashboardSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.GripSubsystem;
 import frc.robot.subsystems.LedSubsystem;
 import frc.robot.subsystems.SolenoidSubsystem;
+import frc.robot.subsystems.TimeOfFlightSubsystem;
+
 import static frc.robot.Constants.*;
 
 import java.util.HashMap;
@@ -78,7 +79,8 @@ public class RobotContainer {
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
-  public final LedSubsystem m_ledSubsystem = new LedSubsystem();
+  private final TimeOfFlightSubsystem m_timeOfFlightSubsystem = new TimeOfFlightSubsystem();
+  public final LedSubsystem m_ledSubsystem = new LedSubsystem(m_timeOfFlightSubsystem);
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
@@ -90,11 +92,12 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getLeftY()) * MAX_VELOCITY_METERS_PER_SECOND,
     () -> -modifyAxis(m_driverController.getLeftX()) * MAX_VELOCITY_METERS_PER_SECOND,
     () -> -modifyAxis(m_driverController.getRightX()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
-    m_driverController
+    m_driverController,
+    m_ledSubsystem
   );
 
   //dashboard sub
-  private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, m_gripSubsystem, autonChooser);
+  private final DashboardSubsystem m_DashboardSubsystem = new DashboardSubsystem(m_armSubsystem, m_counterweightSubsystem, m_drivetrainSubsystem, m_solenoidSubsystem, m_gripSubsystem, m_timeOfFlightSubsystem);
   //the robot's auton parts
   private FireFlipperAuton m_fireFlipperAuton = new FireFlipperAuton(m_solenoidSubsystem);
   // private ArmToLowAuton m_armToLowAuton = new ArmToLowAuton(m_armSubsystem, m_solenoidSubsystem);
@@ -142,6 +145,7 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
+  final List<PathPlannerTrajectory> placeCubeGrabConePark = PathPlanner.loadPathGroup("Place Cube Grab Cone Park",new PathConstraints(2, 2));
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -163,6 +167,7 @@ public class RobotContainer {
   private Command placeTwoHighCommand = stateAutoBuilder.fullAuto(placeTwoHigh);
   private Command dukesOfHazardCommand = stateAutoBuilder.fullAuto(dukesOfHazard);
   private Command grabConeAndParkCommand = stateAutoBuilder.fullAuto(oneHighConeAndPark);
+  private Command placeCubeGrabConeParkCommand = stateAutoBuilder.fullAuto(placeCubeGrabConePark);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -190,7 +195,8 @@ public class RobotContainer {
     autonChooser.addOption("Bump Side", bumpSideCommand);
     autonChooser.addOption("Place Two High", placeTwoHighCommand);
     autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
-    autonChooser.addOption("Grab Cone and Park", grabConeAndParkCommand);
+    autonChooser.addOption("Place Cone Park", grabConeAndParkCommand);
+    autonChooser.addOption("Place Cube Park", placeCubeGrabConeParkCommand);
     SmartDashboard.putData(autonChooser);
   }
 
@@ -302,9 +308,5 @@ public class RobotContainer {
     m_armSubsystem.configureMotorControllers();
     m_gripSubsystem.configureMotorControllers();
     m_counterweightSubsystem.configureCounterweightMotor();
-  }
-
-  private void printComments(){
-    System.out.println("Comments::::" + RoboRioDataJNI.getComments());
   }
 }

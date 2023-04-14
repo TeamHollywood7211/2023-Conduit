@@ -4,7 +4,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.LedSubsystem;
+import frc.robot.subsystems.armStates;
+import frc.robot.subsystems.drivetrainStates;
+
 import static frc.robot.Constants.*;
 
 import java.util.function.DoubleSupplier;
@@ -16,17 +21,23 @@ public class DefaultDriveCommand extends CommandBase {
     private final DoubleSupplier m_translationYSupplier;
     private final DoubleSupplier m_rotationSupplier;
     private final CommandXboxController m_controller;
+    private final LedSubsystem m_ledSubsystem;
+    private final ArmSubsystem m_armSubsystem;
 
     public DefaultDriveCommand(DrivetrainSubsystem drivetrainSubsystem,
                                DoubleSupplier translationXSupplier,
                                DoubleSupplier translationYSupplier,
                                DoubleSupplier rotationSupplier,
-                               CommandXboxController controller) {
+                               CommandXboxController controller,
+                               LedSubsystem ledSubsystem,
+                               ArmSubsystem armSubsystem) {
         this.m_drivetrainSubsystem = drivetrainSubsystem;
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
         this.m_rotationSupplier = rotationSupplier;
         this.m_controller = controller;
+        this.m_ledSubsystem = ledSubsystem;
+        this.m_armSubsystem = armSubsystem;
 
         addRequirements(drivetrainSubsystem);
     }
@@ -59,9 +70,19 @@ public class DefaultDriveCommand extends CommandBase {
         }
 
         if(m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
-            m_drivetrainSubsystem.setDriveSlow(m_controller.getRightTriggerAxis());
-        } else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean() && !m_drivetrainSubsystem.drivetrainState){
-            m_drivetrainSubsystem.setDriveNormal();
+            m_drivetrainSubsystem.setDriveFineTune(m_controller.getRightTriggerAxis());
+            m_ledSubsystem.distanceLights();
+        } else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
+            m_ledSubsystem.enabledAnim();
+            if(m_drivetrainSubsystem.getDriveState() != drivetrainStates.NORMAL && m_armSubsystem.armIsDown()){
+                m_drivetrainSubsystem.setDriveNormal();
+            } else if(!m_armSubsystem.armIsDown()){
+                m_drivetrainSubsystem.setDriveArmUp();
+            }
+        }
+
+        if(m_controller.leftTrigger(aimToPlaceDeadzone).getAsBoolean()){
+
         }
     }
 

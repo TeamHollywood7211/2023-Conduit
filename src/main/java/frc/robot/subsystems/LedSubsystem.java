@@ -35,12 +35,14 @@ public class LedSubsystem extends SubsystemBase {
     ColorFlowAnimation leftSideAnim;
     ColorFlowAnimation rightSideAnim;
     public boolean swagIsDone = false;
+    private TimeOfFlightSubsystem m_timeOfFlightSubsystem;
 
-    public LedSubsystem() {
+    public LedSubsystem(TimeOfFlightSubsystem timeOfFlightSubsystem) {
         CANdleConfiguration config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB; // set the strip type to RGB
         config.brightnessScalar = 0.5; // dim the LEDs to half brightness during init
         candle1.configAllSettings(config);
+        m_timeOfFlightSubsystem = timeOfFlightSubsystem;
 
         rainbowAnimation = new RainbowAnimation(1, 1, 128);
         rainbowAnimation.setNumLed(numLEDs);
@@ -83,17 +85,19 @@ public class LedSubsystem extends SubsystemBase {
         backStripAnim = new LarsonAnimation(255, 0, 0);
         backStripAnim.setNumLed(26);
         backStripAnim.setLedOffset(107);
-        backStripAnim.setSpeed(0.8);
+        backStripAnim.setSpeed(0.50);
 
         leftSideAnim = new ColorFlowAnimation(255, 0, 0);
-        leftSideAnim.setNumLed(146);
+        leftSideAnim.setNumLed(106);
         leftSideAnim.setSpeed(0.8);
 
         rightSideAnim = new ColorFlowAnimation(255, 0, 0);
-        rightSideAnim.setLedOffset(91);
-        rightSideAnim.setNumLed(146);
+        rightSideAnim.setLedOffset(134);
+        rightSideAnim.setNumLed(106);
         rightSideAnim.setSpeed(0.8);
         rightSideAnim.setDirection(Direction.Backward);
+
+
     }
 
 
@@ -157,8 +161,6 @@ public class LedSubsystem extends SubsystemBase {
 
     public void setAllLights(int red, int green, int blue, double bright)
     {
-        // Make sure there isn't an animation overriding
-        candle1.clearAnimation(0);
         // set brightness
         candle1.configBrightnessScalar(bright);
         // set color of all LEDs at once
@@ -198,8 +200,17 @@ public class LedSubsystem extends SubsystemBase {
         candle1.clearAnimation(0);
         candle1.clearAnimation(1);
         candle1.clearAnimation(2);
+        candle1.setLEDs(0, 0, 0);
         candle1.animate(leftSideAnim, 0);
         candle1.animate(rightSideAnim, 1);
         candle1.animate(backStripAnim, 2);
+    }
+
+    public void distanceLights(){
+        candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2);
+        candle1.setLEDs(255 - (int)m_timeOfFlightSubsystem.getDistance()/50, 155, 0, 0, 8, 35 - ((int)m_timeOfFlightSubsystem.getDistance()/100));
+        candle1.setLEDs(0, 0, 0, 0, 36 -(int)m_timeOfFlightSubsystem.getDistance()/100, 50);
     }
 }
