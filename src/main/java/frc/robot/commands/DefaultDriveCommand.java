@@ -73,11 +73,12 @@ public class DefaultDriveCommand extends CommandBase {
             m_drivetrainSubsystem.setDriveFineTune(m_controller.getRightTriggerAxis());
             m_ledSubsystem.distanceLights();
         } else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
-            m_ledSubsystem.enabledAnim();
             if(m_drivetrainSubsystem.getDriveState() != drivetrainStates.NORMAL && m_armSubsystem.armIsDown()){
                 m_drivetrainSubsystem.setDriveNormal();
-            } else if(!m_armSubsystem.armIsDown()){
+                m_ledSubsystem.enabledAnim();
+            } else if(m_drivetrainSubsystem.getDriveState() != drivetrainStates.ARM_UP && !m_armSubsystem.armIsDown()){
                 m_drivetrainSubsystem.setDriveArmUp();
+                m_ledSubsystem.enabledAnim();
             }
         }
 

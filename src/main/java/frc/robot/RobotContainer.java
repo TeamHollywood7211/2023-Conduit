@@ -93,7 +93,8 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getLeftX()) * MAX_VELOCITY_METERS_PER_SECOND,
     () -> -modifyAxis(m_driverController.getRightX()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
     m_driverController,
-    m_ledSubsystem
+    m_ledSubsystem,
+    m_armSubsystem
   );
 
   //dashboard sub

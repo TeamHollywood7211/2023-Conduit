@@ -123,4 +123,7 @@ public static final double unpitchLevelTime = 0.23;
     public static final double gripTriggerDeadzone = 0.05;
     public static final int numLEDs = 312;
     public static final double aimToPlaceDeadzone = 0.1;
+
+    public static final double playerStationDistance = 1400;
+    public static final double playerStationDistanceDeadzone = 30;
 }
