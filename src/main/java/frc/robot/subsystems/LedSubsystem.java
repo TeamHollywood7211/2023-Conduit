@@ -210,20 +210,18 @@ public class LedSubsystem extends SubsystemBase {
     }
 
     public void distanceLights(){
-        boolean canStrobe = true;
         candle1.clearAnimation(0);
         candle1.clearAnimation(1);
         candle1.clearAnimation(2);
         //candle1.setLEDs(255 - (int)(100/(m_tofSubsystem.getDistance()/1000) + 0.00001), (int)(100/(m_tofSubsystem.getDistance()/1000) + 0.00001), 0);
-        if(m_tofSubsystem.getDistance() > playerStationDistance){
-            // canStrobe = true;  
-            candle1.setLEDs(100, 0, 0, 0, 8, 40 - (int)Math.round(m_tofSubsystem.getDistance()/100));
-            candle1.setLEDs(0, 0, 0, 0, 41 - (int)Math.round(m_tofSubsystem.getDistance()/100), 50);  
+        if(m_tofSubsystem.getDistance() > playerStationDistance + playerStationDistanceDeadzone || m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone){
+              
+            candle1.setLEDs(100, 0, 0, 0, 108, 29 - (int)Math.round(m_tofSubsystem.getDistance()/100));
+            candle1.setLEDs(0, 0, 0, 0, 0, 107);
+            candle1.setLEDs(0, 0, 0, 0, 107 + 30 - (int)Math.round(m_tofSubsystem.getDistance()/100), 318);  
         // } else if(m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone && canStrobe){
-        //     canStrobe = false;
         //     allRedStrobe();
         } else if(m_tofSubsystem.getDistance() < playerStationDistance + playerStationDistanceDeadzone && m_tofSubsystem.getDistance() > playerStationDistance - playerStationDistanceDeadzone){
-            // canStrobe = true;
             allGreen();
         }
     }
