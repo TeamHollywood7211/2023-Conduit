@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class TimeOfFlightSubsystem extends SubsystemBase {
   private TimeOfFlight tof;
   public TimeOfFlightSubsystem() {
-    tof = new TimeOfFlight(772211);
-    tof.setRangingMode(RangingMode.Medium, 24);
+    tof = new TimeOfFlight(1);
+    tof.setRangingMode(RangingMode.Medium, 580);
   }
 
   public double getDistance(){

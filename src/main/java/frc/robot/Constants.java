@@ -35,7 +35,8 @@ public final class Constants {
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
     public static double MAX_VOLTAGE = 12;
-
+    public static double FINE_TUNE_VOLTAGE = 4;
+    public static double ARM_HIGH_VOLTAGE = 10.5;
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
@@ -121,4 +122,8 @@ public static final double unpitchLevelTime = 0.23;
     public static final int LED_CANDLE_ID = 51; //plz change later, not actual value, thx :)
     public static final double gripTriggerDeadzone = 0.05;
     public static final int numLEDs = 312;
+    public static final double aimToPlaceDeadzone = 0.1;
+
+    public static final double playerStationDistance = 960;
+    public static final double playerStationDistanceDeadzone = 50;
 }

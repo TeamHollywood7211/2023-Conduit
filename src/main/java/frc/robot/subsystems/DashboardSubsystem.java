@@ -15,10 +15,12 @@ public class DashboardSubsystem extends SubsystemBase {
   private DrivetrainSubsystem m_drivetrainSubsystem;
   private SolenoidSubsystem m_solenoidSubsystem;
   private GripSubsystem m_gripSubsystem;
+  private TimeOfFlightSubsystem m_timeOfFlightSubsystem;
   private final Field2d m_field = new Field2d();
   private InstantCommand ToggleCompressorLimit;
 
-  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, GripSubsystem gripSubsystem, SendableChooser autonChooser) {
+  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, GripSubsystem gripSubsystem, TimeOfFlightSubsystem timeOfFlightSubsystem) {
+    m_timeOfFlightSubsystem = timeOfFlightSubsystem;
     m_armSubsystem = armSubsystem;
     m_counterweightSubsystem = counterweightSubsystem;
     m_drivetrainSubsystem = drivetrainSubsystem;
@@ -70,6 +72,9 @@ public class DashboardSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("PSI", m_solenoidSubsystem.getCompressorPSI());
 
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+
+    //TOF SENSOR STUFF
+    SmartDashboard.putNumber("Distance From Sensor", m_timeOfFlightSubsystem.getDistance());
 
   }
 

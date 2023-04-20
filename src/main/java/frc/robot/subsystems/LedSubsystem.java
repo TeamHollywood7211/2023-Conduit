@@ -35,19 +35,21 @@ public class LedSubsystem extends SubsystemBase {
     ColorFlowAnimation leftSideAnim;
     ColorFlowAnimation rightSideAnim;
     public boolean swagIsDone = false;
+    private TimeOfFlightSubsystem m_tofSubsystem;
 
-    public LedSubsystem() {
+    public LedSubsystem(TimeOfFlightSubsystem timeOfFlightSubsystem) {
         CANdleConfiguration config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB; // set the strip type to RGB
         config.brightnessScalar = 0.5; // dim the LEDs to half brightness during init
         candle1.configAllSettings(config);
+        m_tofSubsystem = timeOfFlightSubsystem;
 
         rainbowAnimation = new RainbowAnimation(1, 1, 128);
         rainbowAnimation.setNumLed(numLEDs);
 
-        strobeAnimation = new StrobeAnimation(0, 255, 0);
+        strobeAnimation = new StrobeAnimation(255, 0, 0);
         strobeAnimation.setNumLed(numLEDs);
-        strobeAnimation.setSpeed(0.6);
+        strobeAnimation.setSpeed(1);
         
         redFlowAnimation = new ColorFlowAnimation(255, 0, 0);
         redFlowAnimation.setNumLed(numLEDs);
@@ -83,17 +85,19 @@ public class LedSubsystem extends SubsystemBase {
         backStripAnim = new LarsonAnimation(255, 0, 0);
         backStripAnim.setNumLed(26);
         backStripAnim.setLedOffset(107);
-        backStripAnim.setSpeed(0.8);
+        backStripAnim.setSpeed(0.50);
 
         leftSideAnim = new ColorFlowAnimation(255, 0, 0);
-        leftSideAnim.setNumLed(146);
+        leftSideAnim.setNumLed(106);
         leftSideAnim.setSpeed(0.8);
 
         rightSideAnim = new ColorFlowAnimation(255, 0, 0);
-        rightSideAnim.setLedOffset(91);
-        rightSideAnim.setNumLed(146);
+        rightSideAnim.setLedOffset(134);
+        rightSideAnim.setNumLed(106);
         rightSideAnim.setSpeed(0.8);
         rightSideAnim.setDirection(Direction.Backward);
+
+
     }
 
 
@@ -157,8 +161,9 @@ public class LedSubsystem extends SubsystemBase {
 
     public void setAllLights(int red, int green, int blue, double bright)
     {
-        // Make sure there isn't an animation overriding
         candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2);
         // set brightness
         candle1.configBrightnessScalar(bright);
         // set color of all LEDs at once
@@ -190,7 +195,7 @@ public class LedSubsystem extends SubsystemBase {
         candle1.animate(greenFlowAnimation);
     }
 
-    public void allGreenStrobe(){
+    public void allRedStrobe(){
         candle1.animate(strobeAnimation);
     }
 
@@ -198,8 +203,26 @@ public class LedSubsystem extends SubsystemBase {
         candle1.clearAnimation(0);
         candle1.clearAnimation(1);
         candle1.clearAnimation(2);
+        candle1.setLEDs(0, 0, 0);
         candle1.animate(leftSideAnim, 0);
         candle1.animate(rightSideAnim, 1);
         candle1.animate(backStripAnim, 2);
+    }
+
+    public void distanceLights(){
+        candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2);
+        //candle1.setLEDs(255 - (int)(100/(m_tofSubsystem.getDistance()/1000) + 0.00001), (int)(100/(m_tofSubsystem.getDistance()/1000) + 0.00001), 0);
+        if(m_tofSubsystem.getDistance() > playerStationDistance + playerStationDistanceDeadzone || m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone){
+              
+            candle1.setLEDs(100, 0, 0, 0, 108, 29 - (int)Math.round(m_tofSubsystem.getDistance()/100));
+            candle1.setLEDs(0, 0, 0, 0, 0, 107);
+            candle1.setLEDs(0, 0, 0, 0, 107 + 30 - (int)Math.round(m_tofSubsystem.getDistance()/100), 318);  
+        // } else if(m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone && canStrobe){
+        //     allRedStrobe();
+        } else if(m_tofSubsystem.getDistance() < playerStationDistance + playerStationDistanceDeadzone && m_tofSubsystem.getDistance() > playerStationDistance - playerStationDistanceDeadzone){
+            allGreen();
+        }
     }
 }

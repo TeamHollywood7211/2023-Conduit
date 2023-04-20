@@ -5,6 +5,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import frc.robot.subsystems.armStates;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,8 +13,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax.*;
 
 public class ArmSubsystem extends SubsystemBase {
-  public enum armStates{HIGH, MID, LOW, STORED};
-
   //private  angleCanCoder;
 
   private CANSparkMax armMotor;
@@ -27,7 +26,7 @@ public class ArmSubsystem extends SubsystemBase {
   private double newArmkD = armkD;
 
   public ArmSubsystem() {
-    armState = armStates.LOW;
+    armState = armStates.STORED;
     
     armMotor = new CANSparkMax(ARM_MOTOR_ID, MotorType.kBrushless);
     armPID = armMotor.getPIDController();
@@ -87,6 +86,18 @@ public class ArmSubsystem extends SubsystemBase {
 
   public double getArmCurrent(){
     return armMotor.getOutputCurrent();
+  }
+
+  public armStates getArmState(){
+    return armState;
+  }
+
+  public boolean armIsDown(){
+    if(getArmState() == armStates.LOW || getArmState() == armStates.STORED){
+      return true;
+    } else{
+      return false;
+    }
   }
 
   /**

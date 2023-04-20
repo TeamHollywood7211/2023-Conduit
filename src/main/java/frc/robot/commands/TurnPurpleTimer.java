@@ -38,7 +38,7 @@ public class TurnPurpleTimer extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(time.get()>8){
+    if(time.get()>4){
       return true;
     }
     return false;
