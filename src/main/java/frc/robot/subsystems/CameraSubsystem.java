@@ -12,17 +12,15 @@ public class CameraSubsystem extends SubsystemBase {
   private NetworkTableEntry frontTx;
   private NetworkTableEntry frontTy;
   private NetworkTableEntry frontTa;
-  private double frontX;
-  private double frontY;
+  // private double frontX;
+  // private double frontY;
   private double frontA;
   public double[] frontBotPose;
 
-  private NetworkTable backTable;
-
   public CameraSubsystem() {
     frontTable = NetworkTableInstance.getDefault().getTable("limelight-frontcm");
-    frontTx = frontTable.getEntry("tx");
-    frontTy = frontTable.getEntry("ty");
+    // frontTx = frontTable.getEntry("tx");
+    // frontTy = frontTable.getEntry("ty");
     frontTa = frontTable.getEntry("ta");
     frontBotPose = frontTable.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
   }
@@ -40,10 +38,14 @@ public class CameraSubsystem extends SubsystemBase {
     CameraServer.startAutomaticCapture(frontUsbCamera);
   }
 
+  public double getFrontArea(){
+    return frontA;
+  }
+
   @Override
   public void periodic() {
-    frontX = frontTx.getDouble(0);
-    frontY = frontTy.getDouble(0);
+    // frontX = frontTx.getDouble(0);
+    // frontY = frontTy.getDouble(0);
     frontA = frontTa.getDouble(0);
     frontBotPose = frontTable.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
     // SmartDashboard.putNumberArray("frontbotpose", frontBotPose);

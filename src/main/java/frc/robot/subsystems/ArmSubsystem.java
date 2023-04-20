@@ -5,7 +5,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import frc.robot.subsystems.armStates;
 import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax.*;
 
 public class ArmSubsystem extends SubsystemBase {
+  public enum armStates{HIGH, MID, LOW, STORED};
   //private  angleCanCoder;
 
   private CANSparkMax armMotor;
@@ -21,9 +21,9 @@ public class ArmSubsystem extends SubsystemBase {
 
   public armStates armState;
 
-  private double newArmkP = armkP;
-  private double newArmkI = armkI;
-  private double newArmkD = armkD;
+  // private double newArmkP = armkP;
+  // private double newArmkI = armkI;
+  // private double newArmkD = armkD;
 
   public ArmSubsystem() {
     armState = armStates.STORED;

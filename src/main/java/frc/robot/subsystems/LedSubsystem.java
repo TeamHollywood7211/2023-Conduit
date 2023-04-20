@@ -1,7 +1,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdleConfiguration;
@@ -207,20 +206,23 @@ public class LedSubsystem extends SubsystemBase {
         candle1.animate(backStripAnim, 2);
     }
 
-    public void distanceLights(TimeOfFlightSubsystem m_tofSubsystem){
+    public void distanceLights(CameraSubsystem cameraSubsystem){
         candle1.clearAnimation(0);
         candle1.clearAnimation(1);
         candle1.clearAnimation(2);
-        //candle1.setLEDs(255 - (int)(100/(m_tofSubsystem.getDistance()/1000) + 0.00001), (int)(100/(m_tofSubsystem.getDistance()/1000) + 0.00001), 0);
-        if(m_tofSubsystem.getDistance() > playerStationDistance + playerStationDistanceDeadzone || m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone){
-              
-            candle1.setLEDs(100, 0, 0, 0, 108, 29 - (int)Math.round(m_tofSubsystem.getDistance()/100));
+        if(cameraSubsystem.getFrontArea() < playerStationAreaTarget){
+            candle1.setLEDs(100, 0, 0, 0, 108, (int)(4 + cameraSubsystem.getFrontArea()*7.5));
             candle1.setLEDs(0, 0, 0, 0, 0, 107);
-            candle1.setLEDs(0, 0, 0, 0, 107 + 30 - (int)Math.round(m_tofSubsystem.getDistance()/100), 318);  
-        // } else if(m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone && canStrobe){
-        //     allRedStrobe();
-        } else if(m_tofSubsystem.getDistance() < playerStationDistance + playerStationDistanceDeadzone && m_tofSubsystem.getDistance() > playerStationDistance - playerStationDistanceDeadzone){
+            candle1.setLEDs(0, 0, 0, 0, 107 + (int)(5 + cameraSubsystem.getFrontArea()*7.5), 318);  
+        } else if(cameraSubsystem.getFrontArea() > playerStationAreaTarget){
             allGreen();
         }
+        // if(m_tofSubsystem.getDistance() > playerStationDistance + playerStationDistanceDeadzone || m_tofSubsystem.getDistance() < playerStationDistance - playerStationDistanceDeadzone){  
+        //     candle1.setLEDs(100, 0, 0, 0, 108, 29 - (int)Math.round(m_tofSubsystem.getDistance()/100));
+        //     candle1.setLEDs(0, 0, 0, 0, 0, 107);
+        //     candle1.setLEDs(0, 0, 0, 0, 107 + 30 - (int)Math.round(m_tofSubsystem.getDistance()/100), 318);  
+        // } else if(m_tofSubsystem.getDistance() < playerStationDistance + playerStationDistanceDeadzone && m_tofSubsystem.getDistance() > playerStationDistance - playerStationDistanceDeadzone){
+        //     allGreen();
+        // }
     }
 }

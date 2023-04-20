@@ -50,6 +50,14 @@ public class GripSubsystem extends SubsystemBase {
     gripState = gripStates.OUT;
   }
 
+  public boolean gripIsCone(){
+    if(gripState == gripStates.CONE){
+      return true;
+    } else{
+      return false;
+    }
+  }
+
   public double getGripPos(){
     return gripMotor.getEncoder().getPosition();
   }

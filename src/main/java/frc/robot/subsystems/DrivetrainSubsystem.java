@@ -17,16 +17,15 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {  
+        public enum drivetrainStates{NORMAL, ARM_UP, FINE_TUNE};
         // CameraSubsystem m_cameraSubsystem;
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
@@ -60,8 +59,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         private PIDController unpitchPIDController;
 
-        private Timer everySecondTimer;
         private drivetrainStates driveState;
+
+        private boolean driveNorm = true;
         
 
         public DrivetrainSubsystem() {
@@ -133,12 +133,23 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
         public void setDriveFineTune(double amt){
                 MAX_VOLTAGE = FINE_TUNE_VOLTAGE/amt;
-                driveState = drivetrainStates.FINE_TUNE;
+                //driveState = drivetrainStates.FINE_TUNE;
+                driveNorm = false;
         }
 
         public void setDriveNormal(){
                 MAX_VOLTAGE = 12;
-                driveState = drivetrainStates.NORMAL;
+                //driveState = drivetrainStates.NORMAL;
+                driveNorm = true;
+        }
+
+        public boolean driveIsNormal(){
+                // if(driveState == drivetrainStates.NORMAL){
+                //         return true;
+                // } else{
+                //         return false;
+                // }
+                return driveNorm;
         }
 
         public void setDriveArmUp(){

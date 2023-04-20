@@ -15,12 +15,12 @@ public class DashboardSubsystem extends SubsystemBase {
   private DrivetrainSubsystem m_drivetrainSubsystem;
   private SolenoidSubsystem m_solenoidSubsystem;
   private GripSubsystem m_gripSubsystem;
-  private TimeOfFlightSubsystem m_timeOfFlightSubsystem;
+  //private TimeOfFlightSubsystem m_timeOfFlightSubsystem;
   private final Field2d m_field = new Field2d();
   private InstantCommand ToggleCompressorLimit;
 
-  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, GripSubsystem gripSubsystem, TimeOfFlightSubsystem timeOfFlightSubsystem) {
-    m_timeOfFlightSubsystem = timeOfFlightSubsystem;
+  public DashboardSubsystem(ArmSubsystem armSubsystem, CounterweightSubsystem counterweightSubsystem, DrivetrainSubsystem drivetrainSubsystem, SolenoidSubsystem solenoidSubsystem, GripSubsystem gripSubsystem){//, TimeOfFlightSubsystem timeOfFlightSubsystem) {
+    //m_timeOfFlightSubsystem = timeOfFlightSubsystem;
     m_armSubsystem = armSubsystem;
     m_counterweightSubsystem = counterweightSubsystem;
     m_drivetrainSubsystem = drivetrainSubsystem;
@@ -61,7 +61,7 @@ public class DashboardSubsystem extends SubsystemBase {
     //DRIVETRAIN DASHBOARD STUFF
     SmartDashboard.putNumber("Gyroscope Position as Double", m_drivetrainSubsystem.getGyroscopeRotationAsDouble());
     SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
-    SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
+    //SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
     // SmartDashboard.putBoolean("is tipping", m_drivetrainSubsystem.isTippingForward());
     // SmartDashboard.putNumber("Drive Speed", m_drivetrainSubsystem.getDriveVelocity());
 
@@ -71,10 +71,10 @@ public class DashboardSubsystem extends SubsystemBase {
     //SOLENOID STUFF
     SmartDashboard.putNumber("PSI", m_solenoidSubsystem.getCompressorPSI());
 
-    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+    //SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
     //TOF SENSOR STUFF
-    SmartDashboard.putNumber("Distance From Sensor", m_timeOfFlightSubsystem.getDistance());
+    //SmartDashboard.putNumber("Distance From Sensor", m_timeOfFlightSubsystem.getDistance());
 
   }
 

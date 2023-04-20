@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -18,7 +17,6 @@ public class SolenoidSubsystem extends SubsystemBase {
   private boolean wristSolenoidState;
   /** Creates a new ExampleSubsystem. */
   private PneumaticHub m_pneumaticHub;
-  private Compressor m_robotCompressor;
   private DoubleSolenoid m_armSolenoid;
   private DoubleSolenoid m_wristSolenoid;
   private Solenoid m_flipperSolenoid;

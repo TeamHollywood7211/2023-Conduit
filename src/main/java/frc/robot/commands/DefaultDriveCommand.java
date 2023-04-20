@@ -4,12 +4,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LedSubsystem;
-import frc.robot.subsystems.TimeOfFlightSubsystem;
-import frc.robot.subsystems.armStates;
-import frc.robot.subsystems.drivetrainStates;
 
 import static frc.robot.Constants.*;
 
@@ -23,7 +20,7 @@ public class DefaultDriveCommand extends CommandBase {
     private final DoubleSupplier m_rotationSupplier;
     private final CommandXboxController m_controller;
     private final LedSubsystem m_ledSubsystem;
-    private final TimeOfFlightSubsystem m_tofSubsystem;
+    private final CameraSubsystem m_cameraSubsystem;
 
     public DefaultDriveCommand(DrivetrainSubsystem drivetrainSubsystem,
                                DoubleSupplier translationXSupplier,
@@ -31,14 +28,15 @@ public class DefaultDriveCommand extends CommandBase {
                                DoubleSupplier rotationSupplier,
                                CommandXboxController controller,
                                LedSubsystem ledSubsystem,
-                               TimeOfFlightSubsystem tofSubsystem) {
+                               CameraSubsystem cameraSubsystem
+                               ) {
         this.m_drivetrainSubsystem = drivetrainSubsystem;
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
         this.m_rotationSupplier = rotationSupplier;
         this.m_controller = controller;
         this.m_ledSubsystem = ledSubsystem;
-        this.m_tofSubsystem = tofSubsystem;
+        this.m_cameraSubsystem = cameraSubsystem;
 
         addRequirements(drivetrainSubsystem);
     }
@@ -72,26 +70,12 @@ public class DefaultDriveCommand extends CommandBase {
 
         if(m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
             m_drivetrainSubsystem.setDriveFineTune(m_controller.getRightTriggerAxis());
-            m_ledSubsystem.distanceLights(m_tofSubsystem);
+            m_ledSubsystem.distanceLights(m_cameraSubsystem);
         } 
-        else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean() && m_drivetrainSubsystem.getDriveState() != drivetrainStates.NORMAL){
+        else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean() && !m_drivetrainSubsystem.driveIsNormal()){
             m_drivetrainSubsystem.setDriveNormal();
             m_ledSubsystem.enabledAnim();
         }
-        
-        // else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
-        //     if(m_drivetrainSubsystem.getDriveState() != drivetrainStates.NORMAL && m_armSubsystem.armIsDown()){
-        //         m_drivetrainSubsystem.setDriveNormal();
-        //         m_ledSubsystem.enabledAnim();
-        //     } else if(m_drivetrainSubsystem.getDriveState() != drivetrainStates.ARM_UP && !m_armSubsystem.armIsDown()){
-        //         m_drivetrainSubsystem.setDriveArmUp();
-        //         m_ledSubsystem.enabledAnim();
-        //     }
-        // }
-
-        // if(m_controller.leftTrigger(aimToPlaceDeadzone).getAsBoolean()){
-
-        // }
     }
 
     @Override

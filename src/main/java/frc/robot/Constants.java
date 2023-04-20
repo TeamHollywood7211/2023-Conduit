@@ -126,4 +126,6 @@ public static final double unpitchLevelTime = 0.23;
 
     public static final double playerStationDistance = 960;
     public static final double playerStationDistanceDeadzone = 50;
+
+    public static final double playerStationAreaTarget = 2.6;
 }

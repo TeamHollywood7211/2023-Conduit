@@ -9,7 +9,7 @@ public class TimeOfFlightSubsystem extends SubsystemBase {
   private TimeOfFlight tof;
   public TimeOfFlightSubsystem() {
     tof = new TimeOfFlight(1);
-    tof.setRangingMode(RangingMode.Medium, 580);
+    tof.setRangingMode(RangingMode.Medium, 1200);
   }
 
   public double getDistance(){
