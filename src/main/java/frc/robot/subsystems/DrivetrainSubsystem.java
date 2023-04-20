@@ -28,7 +28,6 @@ import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {  
         // CameraSubsystem m_cameraSubsystem;
-        CounterweightSubsystem m_counterweightSubsystem;
 
         private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
         //if this is true the robot will be field oriented, and vice versa.
@@ -65,8 +64,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         private drivetrainStates driveState;
         
 
-        public DrivetrainSubsystem(CounterweightSubsystem counterweightSubsystem) {
-                m_counterweightSubsystem = counterweightSubsystem;
+        public DrivetrainSubsystem() {
                 MkModuleConfiguration moduleConfig = new MkModuleConfiguration();
                 moduleConfig.setDriveCurrentLimit(DRIVE_MOTOR_CURRENT_LIMIT);
                 moduleConfig.setSteerCurrentLimit(STEER_MOTOR_CURRENT_LIMIT);

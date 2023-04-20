@@ -35,14 +35,12 @@ public class LedSubsystem extends SubsystemBase {
     ColorFlowAnimation leftSideAnim;
     ColorFlowAnimation rightSideAnim;
     public boolean swagIsDone = false;
-    private TimeOfFlightSubsystem m_tofSubsystem;
 
-    public LedSubsystem(TimeOfFlightSubsystem timeOfFlightSubsystem) {
+    public LedSubsystem() {
         CANdleConfiguration config = new CANdleConfiguration();
         config.stripType = LEDStripType.RGB; // set the strip type to RGB
         config.brightnessScalar = 0.5; // dim the LEDs to half brightness during init
         candle1.configAllSettings(config);
-        m_tofSubsystem = timeOfFlightSubsystem;
 
         rainbowAnimation = new RainbowAnimation(1, 1, 128);
         rainbowAnimation.setNumLed(numLEDs);
@@ -209,7 +207,7 @@ public class LedSubsystem extends SubsystemBase {
         candle1.animate(backStripAnim, 2);
     }
 
-    public void distanceLights(){
+    public void distanceLights(TimeOfFlightSubsystem m_tofSubsystem){
         candle1.clearAnimation(0);
         candle1.clearAnimation(1);
         candle1.clearAnimation(2);

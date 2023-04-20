@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.LedSubsystem;
+import frc.robot.subsystems.TimeOfFlightSubsystem;
 import frc.robot.subsystems.armStates;
 import frc.robot.subsystems.drivetrainStates;
 
@@ -22,7 +23,7 @@ public class DefaultDriveCommand extends CommandBase {
     private final DoubleSupplier m_rotationSupplier;
     private final CommandXboxController m_controller;
     private final LedSubsystem m_ledSubsystem;
-    private final ArmSubsystem m_armSubsystem;
+    private final TimeOfFlightSubsystem m_tofSubsystem;
 
     public DefaultDriveCommand(DrivetrainSubsystem drivetrainSubsystem,
                                DoubleSupplier translationXSupplier,
@@ -30,14 +31,14 @@ public class DefaultDriveCommand extends CommandBase {
                                DoubleSupplier rotationSupplier,
                                CommandXboxController controller,
                                LedSubsystem ledSubsystem,
-                               ArmSubsystem armSubsystem) {
+                               TimeOfFlightSubsystem tofSubsystem) {
         this.m_drivetrainSubsystem = drivetrainSubsystem;
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
         this.m_rotationSupplier = rotationSupplier;
         this.m_controller = controller;
         this.m_ledSubsystem = ledSubsystem;
-        this.m_armSubsystem = armSubsystem;
+        this.m_tofSubsystem = tofSubsystem;
 
         addRequirements(drivetrainSubsystem);
     }
@@ -71,7 +72,7 @@ public class DefaultDriveCommand extends CommandBase {
 
         if(m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
             m_drivetrainSubsystem.setDriveFineTune(m_controller.getRightTriggerAxis());
-            m_ledSubsystem.distanceLights();
+            m_ledSubsystem.distanceLights(m_tofSubsystem);
         } 
         else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean() && m_drivetrainSubsystem.getDriveState() != drivetrainStates.NORMAL){
             m_drivetrainSubsystem.setDriveNormal();

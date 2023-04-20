@@ -75,12 +75,12 @@ public class RobotContainer {
   }
 
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
-  public final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem(m_counterweightSubsystem);
+  public final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
   private final SolenoidSubsystem m_solenoidSubsystem = new SolenoidSubsystem();
   private final GripSubsystem m_gripSubsystem = new GripSubsystem();
   private final TimeOfFlightSubsystem m_timeOfFlightSubsystem = new TimeOfFlightSubsystem();
-  public final LedSubsystem m_ledSubsystem = new LedSubsystem(m_timeOfFlightSubsystem);
+  public final LedSubsystem m_ledSubsystem = new LedSubsystem();
   
   //The robot's commands 
   private final ArmCommand m_armCommand = new ArmCommand(m_armSubsystem, m_solenoidSubsystem, m_counterweightSubsystem, m_operatorController);
@@ -94,7 +94,7 @@ public class RobotContainer {
     () -> -modifyAxis(m_driverController.getRightX()) * MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
     m_driverController,
     m_ledSubsystem,
-    m_armSubsystem
+    m_timeOfFlightSubsystem
   );
 
   //dashboard sub
