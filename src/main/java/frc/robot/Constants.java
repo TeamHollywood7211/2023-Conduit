@@ -71,7 +71,7 @@ public final class Constants {
     
     public static final int GRIP_MOTOR_ID = 42;
 
-    public static final double GRIP_MOTOR_SPEED = 0.5;
+    public static final double GRIP_MOTOR_SPEED = 0.70;
 
     public static final int GRIP_MOTOR_INIT_CURRENT_LIMIT = 0;
     public static final int GRIP_MOTOR_CURRENT_LIMIT = 20;
@@ -107,7 +107,7 @@ public final class Constants {
 
 //====ANTI TIP CONSTANTS===========================================================================================
 
-public final static double unpitchkP = 0.028; //0.027;
+public final static double unpitchkP = 0.026; //0.027;
 public final static double unpitchkI = 0;
 public final static double unpitchkD = 0;
 
@@ -115,7 +115,7 @@ public static final double unpitchTolerance = 5.4;
 
 public static final double unpitchMaxTime = 5;
 
-public static final double unpitchLevelTime = 0.23;
+public static final double unpitchLevelTime = 0.05;
 
 //====OTHER CONSTANTS==============================================================================================
 

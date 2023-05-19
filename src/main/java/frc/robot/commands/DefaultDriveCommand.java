@@ -70,11 +70,11 @@ public class DefaultDriveCommand extends CommandBase {
 
         if(m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean()){
             m_drivetrainSubsystem.setDriveFineTune(m_controller.getRightTriggerAxis());
-            m_ledSubsystem.distanceLights(m_cameraSubsystem);
+            //m_ledSubsystem.distanceLights(m_cameraSubsystem);
         } 
         else if(!m_controller.rightTrigger(driveSlowDeadzone).getAsBoolean() && !m_drivetrainSubsystem.driveIsNormal()){
             m_drivetrainSubsystem.setDriveNormal();
-            m_ledSubsystem.enabledAnim();
+            //m_ledSubsystem.enabledAnim();
         }
     }
 

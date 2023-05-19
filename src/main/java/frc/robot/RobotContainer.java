@@ -29,9 +29,11 @@ import frc.robot.commands.ToggleCommand;
 import frc.robot.commands.TurnPurpleTimer;
 import frc.robot.commands.TurnYellowTimer;
 import frc.robot.commands.autons.ArmHomeAuton;
+import frc.robot.commands.autons.ExtendBothAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.commands.autons.PlaceHighAuton;
 import frc.robot.commands.autons.PlaceHighShortAuton;
+import frc.robot.commands.autons.RetractBothAuton;
 import frc.robot.commands.autons.UntipRobotAuton;
 import frc.robot.commands.autons.XStanceAuton;
 import frc.robot.subsystems.ArmSubsystem;
@@ -107,6 +109,8 @@ public class RobotContainer {
   private XStanceAuton m_xStanceAuton = new XStanceAuton(m_drivetrainSubsystem);
   private TurnPurpleTimer turnPurpleTimer = new TurnPurpleTimer(m_ledSubsystem);
   private TurnYellowTimer turnYellowTimer = new TurnYellowTimer(m_ledSubsystem);
+  private RetractBothAuton retractBothAuton = new RetractBothAuton(m_solenoidSubsystem);
+  private ExtendBothAuton extendBothAuton = new ExtendBothAuton(m_solenoidSubsystem);
 
   public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
     Map.entry("firesol", m_fireFlipperAuton),
@@ -133,6 +137,8 @@ public class RobotContainer {
     Map.entry("zerogyro", new InstantCommand(m_drivetrainSubsystem::zeroGyroscope)),
     Map.entry("unpitch", m_untipRobotAuton),
     Map.entry("xstance", m_xStanceAuton),
+    Map.entry("extendboth", extendBothAuton),
+    Map.entry("retractboth", retractBothAuton),
     Map.entry("print", new PrintCommand("===========================didthething==================================="))
   ));;
 
@@ -145,6 +151,7 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
   final List<PathPlannerTrajectory> placeCubeGrabConePark = PathPlanner.loadPathGroup("Place Cube Grab Cone Park",new PathConstraints(2, 2));
+  final List<PathPlannerTrajectory> placeConePark = PathPlanner.loadPathGroup("Place Cone Park", new PathConstraints(1.7, 1.8), new PathConstraints(1.7, 1.8));
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -167,6 +174,7 @@ public class RobotContainer {
   private Command dukesOfHazardCommand = stateAutoBuilder.fullAuto(dukesOfHazard);
   private Command grabConeAndParkCommand = stateAutoBuilder.fullAuto(oneHighConeAndPark);
   private Command placeCubeGrabConeParkCommand = stateAutoBuilder.fullAuto(placeCubeGrabConePark);
+  private Command placeConeParkCommand = stateAutoBuilder.fullAuto(placeConePark);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -196,6 +204,7 @@ public class RobotContainer {
     autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
     autonChooser.addOption("Place Cone Park", grabConeAndParkCommand);
     autonChooser.addOption("Place Cube Park", placeCubeGrabConeParkCommand);
+    autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);
     SmartDashboard.putData(autonChooser);
   }
 

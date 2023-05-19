@@ -63,7 +63,7 @@ public class DashboardSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Field Orientation", m_drivetrainSubsystem.getFieldOrientState());
     //SmartDashboard.putNumber("Pitch", m_drivetrainSubsystem.getPitch());
     // SmartDashboard.putBoolean("is tipping", m_drivetrainSubsystem.isTippingForward());
-    // SmartDashboard.putNumber("Drive Speed", m_drivetrainSubsystem.getDriveVelocity());
+    SmartDashboard.putNumber("Drive Speed", m_drivetrainSubsystem.getDriveVelocity());
 
     //FIELD DASHBOARD STUFF
     // m_field.setRobotPose(m_drivetrainSubsystem.getPose2d());
