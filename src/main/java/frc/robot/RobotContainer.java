@@ -72,6 +72,7 @@ public class RobotContainer {
 
   public void createFrontUsbCamera(){
     UsbCamera frontUsbCamera = new UsbCamera("frontUsbCamObject", 1);
+    frontUsbCamera.setResolution(cameraResolution, cameraResolution); //set the cam res in the Constants, I set it 720 :) -Noah
     CameraServer.startAutomaticCapture(frontUsbCamera);
   }
 
@@ -146,12 +147,12 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> throwAndPark = PathPlanner.loadPathGroup("Over and Back", new PathConstraints(1, 2));
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
-  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(2, 1.5));
+  final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(1.5, 1), new PathConstraints(3, 3), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
   final List<PathPlannerTrajectory> placeCubeGrabConePark = PathPlanner.loadPathGroup("Place Cube Grab Cone Park",new PathConstraints(2, 2));
-  final List<PathPlannerTrajectory> placeConePark = PathPlanner.loadPathGroup("Place Cone Park", new PathConstraints(1.7, 1.8), new PathConstraints(1.7, 1.8));
+  final List<PathPlannerTrajectory> placeConePark = PathPlanner.loadPathGroup("Place Cone Park", new PathConstraints(1.25, 1.25), new PathConstraints(1.25, 1.25));
   //Auto builder, use this to turn trajectories into actual paths
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -189,20 +190,21 @@ public class RobotContainer {
     configureButtonBindings();
     configureAllMotors();
   }
+  //new Trigger(m_operatorController.rightTrigger(0.1))
 
   public void configureAutons(){
     // eventMap.put("firesol", m_fireFlipperAuton);
     // eventMap.put("grabcube", m_grabCubeAuton);
     // eventMap.put("armlow", m_armToLowAuton);
 
-    autonChooser.setDefaultOption("Do nothing", new InstantCommand());
-    autonChooser.addOption("Over and Park", throwAndParkCommand);
-    autonChooser.addOption("Drive Grab Place", driveGrabPlaceCommand);
+    autonChooser.setDefaultOption("Do nothing", new InstantCommand()); //This stuff names the autons
+    autonChooser.addOption("Over and Park", throwAndParkCommand);      //that go into the driver station
+    autonChooser.addOption("Drive Grab Place", driveGrabPlaceCommand); //stuff. -Noah
     autonChooser.addOption("Park on Table", parkCommand);
     autonChooser.addOption("Bump Side", bumpSideCommand);
     autonChooser.addOption("Place Two High", placeTwoHighCommand);
     autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
-    autonChooser.addOption("Place Cone Park", grabConeAndParkCommand);
+    autonChooser.addOption("Place Cone Park AND Grab", grabConeAndParkCommand);
     autonChooser.addOption("Place Cube Park", placeCubeGrabConeParkCommand);
     autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);
     SmartDashboard.putData(autonChooser);
@@ -231,7 +233,7 @@ public class RobotContainer {
       .onTrue(turnPurpleTimer);
 
     new Trigger(m_driverController.povUp())
-      .onTrue(new InstantCommand(m_ledSubsystem::enabledAnim, m_ledSubsystem));
+      .onTrue(new InstantCommand(m_ledSubsystem::/*enabledAnim*/allRainbow, m_ledSubsystem));
 
     new Trigger(m_driverController.povDown())
       .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));
@@ -259,11 +261,16 @@ public class RobotContainer {
     new Trigger(m_operatorController.povLeft())
       .onTrue(new InstantCommand(m_ledSubsystem::allYellow));
     new Trigger(m_operatorController.povUp())
+      .onTrue(new InstantCommand(m_ledSubsystem::incrementColor));
+      new Trigger(m_operatorController.povDown())
+      .onTrue(new InstantCommand(m_ledSubsystem::deincrementColor));
+    /* Re enable after rainbow rumble
+    new Trigger(m_operatorController.povUp())
       .onTrue(new InstantCommand(m_ledSubsystem::enabledAnim, m_ledSubsystem));
     new Trigger(m_operatorController.povDown())
       .onTrue(new InstantCommand(m_ledSubsystem::allRainbow, m_ledSubsystem));
       //.onTrue(new InstantCommand(this::printComments));
-
+    */
 
     //left trigger toggles the wrist solenoid
     new Trigger(m_operatorController.button(5))

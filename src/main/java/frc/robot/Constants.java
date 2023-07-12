@@ -20,21 +20,20 @@ public final class Constants {
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12; 
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13;
     public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(25.92); // 25.92 for practice bot 11.953 for new
-
-    public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 21; 
-    public static final int BACK_LEFT_MODULE_STEER_MOTOR = 22; 
+    public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 21;  
+    public static final int BACK_LEFT_MODULE_STEER_MOTOR = 22;  
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23;
     public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(57.21); // 57.21 for practice bot 252.333 for new
-
-    public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 31;
-    public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 32;
+                                                                
+    public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 31;  
+    public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 32;  
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 33;
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(98.7); // 159.61 for practice bot -87.515 for new
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(159.61); // 159.61 for practice bot -87.515 for new
 
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
-    public static double MAX_VOLTAGE = 12;
+    public static double MAX_VOLTAGE = 12; //unhalfed this lol that worked B)
     public static double FINE_TUNE_VOLTAGE = 4;
     public static double ARM_HIGH_VOLTAGE = 10.5;
 
@@ -52,9 +51,9 @@ public final class Constants {
     public static final double armkI = 0;
     public static final double armkD = 0;
 
-    public static final double armHighTarget = 99.95; // 99.95 for practice bot
-    public static final double armMidTarget = 85; // 85.98 for practice bot
-    public static final double armLowTarget = 30.5; // 33 for practice bot
+    public static final double armHighTarget = 99.95; // 99.95 for practice bot, 99.95 for main.
+    public static final double armMidTarget = 85.98; // 85.98 for practice bot, 85 for main
+    public static final double armLowTarget = 33; // 33 for practice bot, 30.5 for main
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
@@ -82,8 +81,8 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = 55.6; // 2.38 //practice -148
-    public static final double gripCubeTarget = 40; //1.55 //practice -89
+    public static final double gripConeTarget = -148; // 2.38 //practice -148 // 55.6 for main
+    public static final double gripCubeTarget = -89; //1.55 //practice -89 // 40 for main
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -113,13 +112,13 @@ public final static double unpitchkD = 0;
 
 public static final double unpitchTolerance = 5.4;
 
-public static final double unpitchMaxTime = 5;
+public static final double unpitchMaxTime = 6;
 
 public static final double unpitchLevelTime = 0.05;
 
 //====OTHER CONSTANTS==============================================================================================
 
-    public static final int LED_CANDLE_ID = 51; //plz change later, not actual value, thx :)
+    public static final int LED_CANDLE_ID = 51; //plz change later, not actual value, thx :) (THIS STAYED THE ACTUAL VALUE LESS GO!!)
     public static final double gripTriggerDeadzone = 0.05;
     public static final int numLEDs = 312;
     public static final double aimToPlaceDeadzone = 0.1;
@@ -128,4 +127,8 @@ public static final double unpitchLevelTime = 0.05;
     public static final double playerStationDistanceDeadzone = 50;
 
     public static final double playerStationAreaTarget = 2.6;
+
+    public static final int cameraResolution = 720; //in case field blames the camera for loss data packets, lower this or say "we are only sending 518,400 pixels, not that many!!"
+    //^btw thats 1:1 resolution
+
 }

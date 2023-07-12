@@ -18,6 +18,7 @@ public class LedSubsystem extends SubsystemBase {
     
     //define candle
     CANdle candle1 = new CANdle(LED_CANDLE_ID);
+    int colorNum = 1;
     //create animations
     RainbowAnimation rainbowAnimation;
     StrobeAnimation strobeAnimation;
@@ -111,12 +112,46 @@ public class LedSubsystem extends SubsystemBase {
 
     }
 
-	
+	public void incrementColor(){
+        colorNum += 1;
+        rainbowRumbleColor();
+        //really bad if statement tree
+    }
+	public void deincrementColor(){
+        colorNum -= 1;
+        rainbowRumbleColor();
+        //really bad if statement tree
+    }
+
+    public void rainbowRumbleColor(){
+        if(colorNum > 6)
+        {
+            colorNum = 1;
+        }
+        if(colorNum < 1)
+        {
+            colorNum = 6;
+        }
+
+        if(colorNum == 1){allRed();}
+        if(colorNum == 2){allYellow();}
+        if(colorNum == 3){allOrange();}
+        if(colorNum == 4){allGreen();}
+        if(colorNum == 5){allBlue();}
+        if(colorNum == 6){allPink();}
+    }
+
     public void allPurple(){
         candle1.clearAnimation(0);
         candle1.clearAnimation(1);
         candle1.clearAnimation(2); 
         setAllLights(191,0,191,1);
+    }
+    public void allPink(){
+        candle1.clearAnimation(0);
+        candle1.clearAnimation(1);
+        candle1.clearAnimation(2); 
+        setAllLights(242,179,255,0.5);
     }
 
 	
@@ -149,6 +184,10 @@ public class LedSubsystem extends SubsystemBase {
     public void allWhite(){
         setAllLights(255,255,255,0.5);
     }	
+    public void allOrange(){
+        setAllLights(128,42,0,0.5);
+    }
+    //*Red, *Yellow, *Orange, *Green, *Blue, *Purple
 
     public void allOff(){
         setAllLights(0,0,0,0);
@@ -204,6 +243,7 @@ public class LedSubsystem extends SubsystemBase {
         candle1.animate(leftSideAnim, 0);
         candle1.animate(rightSideAnim, 1);
         candle1.animate(backStripAnim, 2);
+        allRainbow(); //COMMENT OUT AFTER RAINBOW RUMBLE!!
     }
 
     public void distanceLights(CameraSubsystem cameraSubsystem){

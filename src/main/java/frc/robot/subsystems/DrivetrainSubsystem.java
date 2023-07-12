@@ -19,10 +19,19 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.Constants.*;
+
+//To any unsuspecting soul found within the labriynth of DriveTrainSubsystem and they
+//dare to believe they want to switch the code to the practice bot, adhere my warning.
+//Its not here lol, check Constants for the Steer_Offset. Also how the heck do you
+//spell "labriynth"? "labrinth"? 
+
+//-Noah (the COOLER cooler one)
 
 public class DrivetrainSubsystem extends SubsystemBase {  
         public enum drivetrainStates{NORMAL, ARM_UP, FINE_TUNE};
@@ -285,6 +294,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
         @Override
         public void periodic() {
                 states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+
+                //Shuffleboard.putNumber("front left",m_frontLeftModule.getPosition());
+                //SmartDashboard.putNumber("front left", m_frontLeftModule.getPosition());
+
                 SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
                 m_odometry.update(
                         getGyroscopeRotation(),
@@ -293,6 +306,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                                 m_frontRightModule.getPosition(), 
                                 m_backLeftModule.getPosition(), 
                                 m_backRightModule.getPosition()
+                                
                         }
                 );
         }
