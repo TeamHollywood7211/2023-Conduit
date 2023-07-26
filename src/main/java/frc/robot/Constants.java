@@ -14,21 +14,21 @@ public final class Constants {
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1;
     public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 2;
     public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 3;
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(85.25+90); // 85.25 for practice bot 177.626 for new
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(117.626); // 85.25 for practice bot 177.626 for new
 
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 11; 
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 12; 
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 13;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(10.458); // 25.92 for practice bot 11.953 for new
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(11.953); // 25.92 for practice bot 11.953 for new
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 21;  
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 22;  
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(254); // 57.21 for practice bot 252.333 for new
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(252.333); // 57.21 for practice bot 252.333 for new
                                                                 
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 31;  
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 32;  
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 33;
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(275.097); // 159.61 for practice bot -87.515 for new
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-87.515); // 159.61 for practice bot -87.515 for new
 
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
@@ -52,8 +52,8 @@ public final class Constants {
     public static final double armkD = 0;
 
     public static final double armHighTarget = 99.95; // 99.95 for practice bot, 99.95 for main.
-    public static final double armMidTarget = 85.98; // 85.98 for practice bot, 85 for main
-    public static final double armLowTarget = 33; // 33 for practice bot, 30.5 for main
+    public static final double armMidTarget = 85; // 85.98 for practice bot, 85 for main
+    public static final double armLowTarget = 30.5; // 33 for practice bot, 30.5 for main
     public static final double armStoredTarget = 0;
 
     public static final int ARM_MOTOR_ID = 41;
@@ -81,8 +81,8 @@ public final class Constants {
     public static final double gripkI = 0;
     public static final double gripkD = 0;
 
-    public static final double gripConeTarget = -148; // 2.38 //practice -148 // 55.6 for main
-    public static final double gripCubeTarget = -89; //1.55 //practice -89 // 40 for main
+    public static final double gripConeTarget = 55.6; // 2.38 //practice -148 // 55.6 for main
+    public static final double gripCubeTarget = 40; //1.55 //practice -89 // 40 for main
     public static final double gripOutTarget = 0;
 
     public static final int GRIP_WHEELS_MOTOR_CURRENT_LIMIT = 20;
@@ -106,7 +106,7 @@ public final class Constants {
 
 //====ANTI TIP CONSTANTS===========================================================================================
 
-public final static double unpitchkP = 0.026; //0.027;
+public final static double unpitchkP = 0.027; //0.027;
 public final static double unpitchkI = 0;
 public final static double unpitchkD = 0;
 
@@ -128,7 +128,10 @@ public static final double unpitchLevelTime = 0.05;
 
     public static final double playerStationAreaTarget = 2.6;
 
-    public static final int cameraResolution = 720; //in case field blames the camera for loss data packets, lower this or say "we are only sending 518,400 pixels, not that many!!"
+    public static final int cameraResolution = 480; //in case field blames the camera for loss data packets, lower this or say "we are only sending cameraResolution^2 pixels, not that many!!"
     //^btw thats 1:1 resolution
 
 }
+
+
+

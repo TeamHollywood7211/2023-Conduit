@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import static frc.robot.Constants.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax.*;
@@ -142,7 +143,7 @@ public class ArmSubsystem extends SubsystemBase {
   public void periodic() {
     
     // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("Arm Pos", getArmPos());
+     
 
     //gets the constants from the dashboard
     // newArmkP = SmartDashboard.getNumber("arm P", armkP);

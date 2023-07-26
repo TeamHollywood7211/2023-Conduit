@@ -76,6 +76,7 @@ public class RobotContainer {
     CameraServer.startAutomaticCapture(frontUsbCamera);
   }
 
+
   private final CounterweightSubsystem m_counterweightSubsystem = new CounterweightSubsystem();
   public final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final ArmSubsystem m_armSubsystem = new ArmSubsystem();
@@ -198,15 +199,15 @@ public class RobotContainer {
     // eventMap.put("armlow", m_armToLowAuton);
 
     autonChooser.setDefaultOption("Do nothing", new InstantCommand()); //This stuff names the autons
-    autonChooser.addOption("Over and Park", throwAndParkCommand);      //that go into the driver station
+    //autonChooser.addOption("Over and Park", throwAndParkCommand);      //that go into the driver station
     autonChooser.addOption("Drive Grab Place", driveGrabPlaceCommand); //stuff. -Noah
-    autonChooser.addOption("Park on Table", parkCommand);
+   // autonChooser.addOption("Park on Table", parkCommand);
     autonChooser.addOption("Bump Side", bumpSideCommand);
-    autonChooser.addOption("Place Two High", placeTwoHighCommand);
+    autonChooser.addOption("Clean Side", placeTwoHighCommand);
     autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
     autonChooser.addOption("Place Cone Park AND Grab", grabConeAndParkCommand);
     autonChooser.addOption("Place Cube Park", placeCubeGrabConeParkCommand);
-    autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);
+    //autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);
     SmartDashboard.putData(autonChooser);
   }
 
