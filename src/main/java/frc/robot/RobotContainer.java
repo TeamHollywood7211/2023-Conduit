@@ -149,12 +149,15 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> driveGrabPlace = PathPlanner.loadPathGroup("Drive Grab Place", new PathConstraints(2, 2), new PathConstraints(2, 2));
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(1.5, 1), new PathConstraints(3, 3), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1));
+  final List<PathPlannerTrajectory> bump2H = PathPlanner.loadPathGroup("Bump 2H", new PathConstraints(1.5, 1), new PathConstraints(3, 3), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
+  final List<PathPlannerTrajectory> charge6HCone = PathPlanner.loadPathGroup("Charge 6H Cone", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
   final List<PathPlannerTrajectory> placeCubeGrabConePark = PathPlanner.loadPathGroup("Place Cube Grab Cone Park",new PathConstraints(2, 2));
+  final List<PathPlannerTrajectory> armTest = PathPlanner.loadPathGroup("Arm Test",new PathConstraints(0.01, 0.01));
   final List<PathPlannerTrajectory> placeConePark = PathPlanner.loadPathGroup("Place Cone Park", new PathConstraints(1.25, 1.25), new PathConstraints(1.25, 1.25));
-  //Auto builder, use this to turn trajectories into actual paths
+  //Auto builder, use this to turn trajectories into actual paths             2, 2
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
     m_drivetrainSubsystem::resetPose2d, 
@@ -176,7 +179,10 @@ public class RobotContainer {
   private Command dukesOfHazardCommand = stateAutoBuilder.fullAuto(dukesOfHazard);
   private Command grabConeAndParkCommand = stateAutoBuilder.fullAuto(oneHighConeAndPark);
   private Command placeCubeGrabConeParkCommand = stateAutoBuilder.fullAuto(placeCubeGrabConePark);
+  private Command charge6HConeCommand = stateAutoBuilder.fullAuto(charge6HCone);
   private Command placeConeParkCommand = stateAutoBuilder.fullAuto(placeConePark);
+  private Command armTestCommand = stateAutoBuilder.fullAuto(armTest);
+  private Command bump2HCommand = stateAutoBuilder.fullAuto(bump2H);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -202,12 +208,15 @@ public class RobotContainer {
     //autonChooser.addOption("Over and Park", throwAndParkCommand);      //that go into the driver station
     autonChooser.addOption("Drive Grab Place", driveGrabPlaceCommand); //stuff. -Noah
    // autonChooser.addOption("Park on Table", parkCommand);
-    autonChooser.addOption("Bump Side", bumpSideCommand);
-    autonChooser.addOption("Clean Side", placeTwoHighCommand);
-    autonChooser.addOption("Dukes of Hazard", dukesOfHazardCommand);
-    autonChooser.addOption("Place Cone Park AND Grab", grabConeAndParkCommand);
-    autonChooser.addOption("Place Cube Park", placeCubeGrabConeParkCommand);
-    //autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);
+    //autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);1
+    autonChooser.addOption("Bump 1H1L", bumpSideCommand);
+    autonChooser.addOption("Bump 2H", bump2HCommand);
+    autonChooser.addOption("Clean 2.5H", placeTwoHighCommand);
+    autonChooser.addOption("Clean Dukes", dukesOfHazardCommand);
+    autonChooser.addOption("Charge 4H Cube", grabConeAndParkCommand);
+    autonChooser.addOption("Charge 5H Cube", placeCubeGrabConeParkCommand);
+    autonChooser.addOption("Charge 6H Cube", charge6HConeCommand);
+    autonChooser.addOption("ARM TEST (DO NOT RUN FOR MATCHES :) )", armTestCommand);
     SmartDashboard.putData(autonChooser);
   }
 

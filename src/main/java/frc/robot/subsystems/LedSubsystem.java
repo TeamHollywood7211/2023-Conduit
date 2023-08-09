@@ -42,7 +42,7 @@ public class LedSubsystem extends SubsystemBase {
         config.brightnessScalar = 0.5; // dim the LEDs to half brightness during init
         candle1.configAllSettings(config);
 
-        rainbowAnimation = new RainbowAnimation(1, 1, 128);
+        rainbowAnimation = new RainbowAnimation(1, 0.25, 128);
         rainbowAnimation.setNumLed(numLEDs);
 
         strobeAnimation = new StrobeAnimation(255, 0, 0);

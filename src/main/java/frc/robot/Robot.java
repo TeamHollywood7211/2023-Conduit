@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import java.util.function.DoubleToIntFunction;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -30,8 +33,11 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     // m_robotContainer.setLimelightSetting();
+    SmartDashboard.putNumber("Camera Resolution", 240);
     UsbCamera frontUsbCamera = CameraServer.startAutomaticCapture();
-    frontUsbCamera.setResolution(240, 240);
+    //double cameraRes = SmartDashboard.getNumber("putNumber", 240);
+    int cameraRes = 240;
+    frontUsbCamera.setResolution(cameraRes, cameraRes);
   }
 
   /*

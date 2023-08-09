@@ -86,9 +86,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                 ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("Drivetrain");
 
                 m_frontLeftModule = new MkSwerveModuleBuilder(moduleConfig)
-                        .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
+                        /* .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
-                                .withPosition(0, 0))
+                                .withPosition(0, 0))*/
                         .withGearRatio(SdsModuleConfigurations.MK4I_L1)
                         .withDriveMotor(MotorType.NEO, FRONT_LEFT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, FRONT_LEFT_MODULE_STEER_MOTOR)
@@ -97,9 +97,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .build();
                 
                 m_frontRightModule = new MkSwerveModuleBuilder(moduleConfig)
-                        .withLayout(shuffleboardTab.getLayout("Front Right Module", BuiltInLayouts.kList)
+                        /*.withLayout(shuffleboardTab.getLayout("Front Right Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
-                                .withPosition(0, 0))
+                                .withPosition(0, 0))*/
                         .withGearRatio(SdsModuleConfigurations.MK4I_L1)
                         .withDriveMotor(MotorType.NEO, FRONT_RIGHT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, FRONT_RIGHT_MODULE_STEER_MOTOR)
@@ -108,9 +108,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .build();
                 
                 m_backLeftModule = new MkSwerveModuleBuilder(moduleConfig)
-                        .withLayout(shuffleboardTab.getLayout("Back Left Module", BuiltInLayouts.kList)
+                        /* .withLayout(shuffleboardTab.getLayout("Back Left Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
-                                .withPosition(0, 0))
+                                .withPosition(0, 0))*/
                         .withGearRatio(SdsModuleConfigurations.MK4I_L1)
                         .withDriveMotor(MotorType.NEO, BACK_LEFT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, BACK_LEFT_MODULE_STEER_MOTOR)
@@ -119,9 +119,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         .build();
                 
                 m_backRightModule = new MkSwerveModuleBuilder(moduleConfig)
-                        .withLayout(shuffleboardTab.getLayout("Back Right Module", BuiltInLayouts.kList)
+                        /* .withLayout(shuffleboardTab.getLayout("Back Right Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
-                                .withPosition(0, 0))
+                                .withPosition(0, 0))*/
                         .withGearRatio(SdsModuleConfigurations.MK4I_L1)
                         .withDriveMotor(MotorType.NEO, BACK_RIGHT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, BACK_RIGHT_MODULE_STEER_MOTOR)
