@@ -3,12 +3,12 @@
     {
       "anchorPoint": {
         "x": 1.941633356950925,
-        "y": 2.21
+        "y": 3.3
       },
       "prevControl": null,
       "nextControl": {
         "x": 3.883845194811385,
-        "y": 2.21
+        "y": 3.3
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -29,12 +29,12 @@
     },
     {
       "anchorPoint": {
-        "x": 4.062671916813028,
-        "y": 2.21
+        "x": 3.9,
+        "y": 3.333774724421487
       },
       "prevControl": {
-        "x": 4.534807297174016,
-        "y": 2.215265697899818
+        "x": 4.372135380360987,
+        "y": 3.339040422321305
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -44,7 +44,6 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "zerogyro",
           "unpitch",
           "xstance"
         ],
@@ -56,7 +55,7 @@
   ],
   "markers": [
     {
-      "position": 0.5636363636364652,
+      "position": 0.2363636363635637,
       "names": [
         "armwristhome"
       ]

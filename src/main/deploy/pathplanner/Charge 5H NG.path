@@ -1,0 +1,98 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 2.4385252561974324,
+        "y": 2.744902835777235
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.134591378187497,
+        "y": 2.7354049020894244
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "grabcube",
+          "armhigh"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 0.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.9161389033678544,
+        "y": 2.7354049020894253
+      },
+      "prevControl": {
+        "x": 2.182081046626549,
+        "y": 2.7354049020894253
+      },
+      "nextControl": {
+        "x": 2.182081046626549,
+        "y": 2.7354049020894253
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "extendboth",
+          "placehighshort",
+          "retractboth"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 1.5
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.9107049778080607,
+        "y": 2.763898703152856
+      },
+      "prevControl": {
+        "x": 5.914768985936077,
+        "y": 2.811388371591909
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "zerogyro",
+          "unpitch",
+          "xstance"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 1.2121212121212683,
+      "names": [
+        "extendwrist"
+      ]
+    },
+    {
+      "position": 1.5636363636364652,
+      "names": [
+        "armwristhome"
+      ]
+    }
+  ]
+}
