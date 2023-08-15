@@ -29,83 +29,6 @@
     },
     {
       "anchorPoint": {
-        "x": 5.407307957473058,
-        "y": 2.21
-      },
-      "prevControl": {
-        "x": 4.202285773048552,
-        "y": 2.1604785403661158
-      },
-      "nextControl": {
-        "x": 6.140624612076291,
-        "y": 2.2401363008741058
-      },
-      "holonomicAngle": 180.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.05,
-        "y": 2.21
-      },
-      "prevControl": {
-        "x": 6.014840982313543,
-        "y": 2.220045433624702
-      },
-      "nextControl": {
-        "x": 6.085159017686457,
-        "y": 2.1999545663752977
-      },
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.893056155780559,
-        "y": 2.21
-      },
-      "prevControl": {
-        "x": 6.601738580664204,
-        "y": 2.21
-      },
-      "nextControl": {
-        "x": 7.261875451754583,
-        "y": 2.21
-      },
-      "holonomicAngle": 0.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": true,
-      "stopEvent": {
-        "names": [
-          "grabcone"
-        ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
         "x": 4.062671916813028,
         "y": 2.21
       },
@@ -133,13 +56,13 @@
   ],
   "markers": [
     {
-      "position": 1.2727272727272938,
+      "position": 0.2727272727272938,
       "names": [
         "extendwrist"
       ]
     },
     {
-      "position": 3.563636363636465,
+      "position": 0.5636363636364652,
       "names": [
         "armwristhome"
       ]

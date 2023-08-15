@@ -89,7 +89,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         /* .withLayout(shuffleboardTab.getLayout("Front Left Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
                                 .withPosition(0, 0))*/
-                        .withGearRatio(SdsModuleConfigurations.MK4I_L1)
+                        .withGearRatio(SdsModuleConfigurations.MK4I_L2)
                         .withDriveMotor(MotorType.NEO, FRONT_LEFT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, FRONT_LEFT_MODULE_STEER_MOTOR)
                         .withSteerEncoderPort(FRONT_LEFT_MODULE_STEER_ENCODER)
@@ -100,7 +100,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         /*.withLayout(shuffleboardTab.getLayout("Front Right Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
                                 .withPosition(0, 0))*/
-                        .withGearRatio(SdsModuleConfigurations.MK4I_L1)
+                        .withGearRatio(SdsModuleConfigurations.MK4I_L2)
                         .withDriveMotor(MotorType.NEO, FRONT_RIGHT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, FRONT_RIGHT_MODULE_STEER_MOTOR)
                         .withSteerEncoderPort(FRONT_RIGHT_MODULE_STEER_ENCODER)
@@ -111,7 +111,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         /* .withLayout(shuffleboardTab.getLayout("Back Left Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
                                 .withPosition(0, 0))*/
-                        .withGearRatio(SdsModuleConfigurations.MK4I_L1)
+                        .withGearRatio(SdsModuleConfigurations.MK4I_L2)
                         .withDriveMotor(MotorType.NEO, BACK_LEFT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, BACK_LEFT_MODULE_STEER_MOTOR)
                         .withSteerEncoderPort(BACK_LEFT_MODULE_STEER_ENCODER)
@@ -122,7 +122,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
                         /* .withLayout(shuffleboardTab.getLayout("Back Right Module", BuiltInLayouts.kList)
                                 .withSize(2, 4)
                                 .withPosition(0, 0))*/
-                        .withGearRatio(SdsModuleConfigurations.MK4I_L1)
+                        .withGearRatio(SdsModuleConfigurations.MK4I_L2)
                         .withDriveMotor(MotorType.NEO, BACK_RIGHT_MODULE_DRIVE_MOTOR)
                         .withSteerMotor(MotorType.NEO, BACK_RIGHT_MODULE_STEER_MOTOR)
                         .withSteerEncoderPort(BACK_RIGHT_MODULE_STEER_ENCODER)

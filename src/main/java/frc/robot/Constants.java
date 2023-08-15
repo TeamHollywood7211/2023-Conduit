@@ -3,6 +3,19 @@ package frc.robot;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 public final class Constants {
+
+
+
+/* 
+//======Bot Dependent Auto Stuff========
+teamNumber = 7211;
+if(teamNumber == 7211)
+{
+
+}*/
+
+
+
 //========DRIVETRAIN CONSTANTS=======================================================================================
 
     public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.6604;//26.0
@@ -37,7 +50,7 @@ public final class Constants {
     public static double FINE_TUNE_VOLTAGE = 4;
     public static double ARM_HIGH_VOLTAGE = 10.5;
 
-    public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L1.getDriveReduction() * SdsModuleConfigurations.MK4I_L1.getWheelDiameter() * Math.PI;
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 5880.0 / 60.0 *SdsModuleConfigurations.MK4I_L2.getDriveReduction() * SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
     public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
     public static final double AUTON_TRANSLATE_P = 1;

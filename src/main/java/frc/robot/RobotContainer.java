@@ -157,6 +157,8 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> placeCubeGrabConePark = PathPlanner.loadPathGroup("Place Cube Grab Cone Park",new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> armTest = PathPlanner.loadPathGroup("Arm Test",new PathConstraints(0.01, 0.01));
   final List<PathPlannerTrajectory> placeConePark = PathPlanner.loadPathGroup("Place Cone Park", new PathConstraints(1.25, 1.25), new PathConstraints(1.25, 1.25));
+  final List<PathPlannerTrajectory> clean3H = PathPlanner.loadPathGroup("Place Three High", new PathConstraints(3.5, 3.5), new PathConstraints(3.5, 3.5), new PathConstraints(2.75, 2.75));
+  
   //Auto builder, use this to turn trajectories into actual paths             2, 2
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -183,6 +185,7 @@ public class RobotContainer {
   private Command placeConeParkCommand = stateAutoBuilder.fullAuto(placeConePark);
   private Command armTestCommand = stateAutoBuilder.fullAuto(armTest);
   private Command bump2HCommand = stateAutoBuilder.fullAuto(bump2H);
+  private Command clean3HCommand = stateAutoBuilder.fullAuto(clean3H);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -212,10 +215,12 @@ public class RobotContainer {
     autonChooser.addOption("Bump 1H1L", bumpSideCommand);
     autonChooser.addOption("Bump 2H", bump2HCommand);
     autonChooser.addOption("Clean 2.5H", placeTwoHighCommand);
+    autonChooser.addOption("Clean 3H", clean3HCommand);
     autonChooser.addOption("Clean Dukes", dukesOfHazardCommand);
     autonChooser.addOption("Charge 4H Cube", grabConeAndParkCommand);
     autonChooser.addOption("Charge 5H Cube", placeCubeGrabConeParkCommand);
     autonChooser.addOption("Charge 6H Cube", charge6HConeCommand);
+    
     autonChooser.addOption("ARM TEST (DO NOT RUN FOR MATCHES :) )", armTestCommand);
     SmartDashboard.putData(autonChooser);
   }
