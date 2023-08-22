@@ -243,7 +243,7 @@ public class LedSubsystem extends SubsystemBase {
         candle1.animate(leftSideAnim, 0);
         candle1.animate(rightSideAnim, 1);
         candle1.animate(backStripAnim, 2);
-        allRainbow(); //COMMENT OUT AFTER RAINBOW RUMBLE!!
+        //allRainbow(); //COMMENT OUT AFTER RAINBOW RUMBLE!!
     }
 
     public void distanceLights(CameraSubsystem cameraSubsystem){

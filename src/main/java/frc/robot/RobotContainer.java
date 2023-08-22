@@ -215,7 +215,7 @@ public class RobotContainer {
     autonChooser.addOption("Bump 1H1L", bumpSideCommand);
     autonChooser.addOption("Bump 2H", bump2HCommand);
     autonChooser.addOption("Clean 2.5H", placeTwoHighCommand);
-    autonChooser.addOption("Clean 3H", clean3HCommand);
+    autonChooser.addOption("Clean 2.5H+", clean3HCommand);
     autonChooser.addOption("Clean Dukes", dukesOfHazardCommand);
     autonChooser.addOption("Charge 4H Cube", grabConeAndParkCommand);
     autonChooser.addOption("Charge 5H Cube", placeCubeGrabConeParkCommand);
@@ -248,7 +248,7 @@ public class RobotContainer {
       .onTrue(turnPurpleTimer);
 
     new Trigger(m_driverController.povUp())
-      .onTrue(new InstantCommand(m_ledSubsystem::/*enabledAnim*/allRainbow, m_ledSubsystem));
+      .onTrue(new InstantCommand(m_ledSubsystem::enabledAnim, m_ledSubsystem));
 
     new Trigger(m_driverController.povDown())
       .onTrue(new InstantCommand(m_ledSubsystem::allOff, m_ledSubsystem));

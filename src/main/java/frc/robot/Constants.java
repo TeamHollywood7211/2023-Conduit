@@ -11,7 +11,7 @@ public final class Constants {
 
 //======Bot Dependent Auto Stuff========
     //////////////////////////////////UNCOMMENT FOR 7211//////////////////////////////////
-    /* 
+    
     //wheel offsets
         public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(85.25); // 85.25 for practice bot 177.626 for new
         public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(25.92); // 25.92 for practice bot 11.953 for new
@@ -26,12 +26,12 @@ public final class Constants {
     //grip constants
         public static final double gripConeTarget = 55.6; // 2.38 //practice -148 // 55.6 for main
         public static final double gripCubeTarget = 40; //1.55 //practice -89 // 40 for main
-        */
+    
       //////////////////////////////////UNCOMMENT FOR 9991//////////////////////////////////
-        public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(177.626); // 85.25 for practice bot 177.626 for new
-        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(10.458); // 25.92 for practice bot 11.953 for new
-        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(254); // 57.21 for practice bot 252.333 for new
-        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(275.097); // 159.61 for practice bot -87.515 for new
+    /*     public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(177.626); // 85.25 for practice bot 177.626 for new
+        public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(11.953); // 25.92 for practice bot 11.953 for new
+        public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(252.333); // 57.21 for practice bot 252.333 for new
+        public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(272.485); // 159.61 for practice bot -87.515 for new
     
 
     //arm constants
@@ -39,9 +39,12 @@ public final class Constants {
         public static final double armMidTarget = 85; // 85.98 for practice bot, 85 for main
         public static final double armLowTarget = 33; // 33 for practice bot, 30.5 for main
     //grip constants
-        public static final double gripConeTarget = -148; // 2.38 //practice -148 // 55.6 for main
-        public static final double gripCubeTarget = -89; //1.55 //practice -89 // 40 for main
-//========DRIVETRAIN CONSTANTS=======================================================================================
+        public static final double gripConeTarget = 55.6; // 2.38 //practice -148 // 55.6 for main
+        public static final double gripCubeTarget = 40; //1.55 //practice -89 // 40 for main
+*/
+    //////////////////////////////////END OF BOT DEPENDENT CONSTANTS//////////////////////////////////
+
+        //========DRIVETRAIN CONSTANTS=======================================================================================
 
     public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.6604;//26.0
         //The left-to-right distance between the drivetrain wheels should be measured from center to center.
@@ -71,7 +74,7 @@ public final class Constants {
     public static final int DRIVE_MOTOR_CURRENT_LIMIT = 40;
     public static final int STEER_MOTOR_CURRENT_LIMIT = 20;
     public static final int NOMINAL_DRIVE_VOLTAGE = 12;
-    public static double MAX_VOLTAGE = 12; //unhalfed this lol that worked B)
+    public static double MAX_VOLTAGE = 12; //half this to change bot speed to "demo" mode
     public static double FINE_TUNE_VOLTAGE = 4;
     public static double ARM_HIGH_VOLTAGE = 10.5;
 
