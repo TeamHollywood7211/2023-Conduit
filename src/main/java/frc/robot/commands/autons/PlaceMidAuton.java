@@ -52,7 +52,7 @@ public class PlaceMidAuton extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(time.get() > 1.75){
+    if(time.get() > 1.5){
       
       return true;
     }

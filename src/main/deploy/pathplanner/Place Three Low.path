@@ -56,12 +56,12 @@
         "y": 4.331057761641589
       },
       "prevControl": {
-        "x": 5.673902972267959,
-        "y": 5.961409401148748
+        "x": 5.85139858058709,
+        "y": 6.040415229046119
       },
       "nextControl": {
-        "x": 1.9338836091340372,
-        "y": 4.301717583890494
+        "x": 1.9338851328179132,
+        "y": 4.30171415059759
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -107,16 +107,16 @@
     },
     {
       "anchorPoint": {
-        "x": 3.88,
-        "y": 4.55
+        "x": 4.2811243916326704,
+        "y": 4.672983374402768
       },
       "prevControl": {
-        "x": 5.426104977598458,
-        "y": 4.5653079700752315
+        "x": 5.827229369231127,
+        "y": 4.6882913444779994
       },
       "nextControl": {
-        "x": 2.920708697531138,
-        "y": 4.5405020663121896
+        "x": 3.3218330891638086,
+        "y": 4.6634854407149575
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -134,14 +134,17 @@
     },
     {
       "anchorPoint": {
-        "x": 1.94,
-        "y": 3.4
+        "x": 1.978294896760734,
+        "y": 4.316445555968035
       },
       "prevControl": {
-        "x": 2.3208699408851814,
-        "y": 3.6998104765440303
+        "x": 2.6573971554391864,
+        "y": 4.349688323875372
       },
-      "nextControl": null,
+      "nextControl": {
+        "x": 1.2991926380822814,
+        "y": 4.283202788060698
+      },
       "holonomicAngle": 180.0,
       "isReversal": false,
       "velOverride": null,
@@ -149,11 +152,32 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "extendwrist",
-          "wait0.5sec",
-          "placehighshort"
+          "placehighshort",
+          "retractwrist"
         ],
         "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.136517674744751,
+        "y": 4.601924759405074
+      },
+      "prevControl": {
+        "x": 3.25724172815867,
+        "y": 4.430637237342851
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
         "waitBehavior": "none",
         "waitTime": 0
       }
