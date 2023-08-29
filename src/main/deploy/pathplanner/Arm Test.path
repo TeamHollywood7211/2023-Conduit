@@ -18,9 +18,7 @@
       "stopEvent": {
         "names": [
           "grabcone",
-          "placehigh",
-          "retractarm",
-          "armwristhome"
+          "placemid"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "minimum",
@@ -29,12 +27,12 @@
     },
     {
       "anchorPoint": {
-        "x": 1.94,
-        "y": 5.07
+        "x": 4.290622325320481,
+        "y": 5.081394522978619
       },
       "prevControl": {
-        "x": 1.9326182242108072,
-        "y": 5.070110653041819
+        "x": 4.283240549531288,
+        "y": 5.081505176020438
       },
       "nextControl": null,
       "holonomicAngle": 180.0,

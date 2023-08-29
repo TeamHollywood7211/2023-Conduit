@@ -33,6 +33,7 @@ import frc.robot.commands.autons.ExtendBothAuton;
 import frc.robot.commands.autons.FireFlipperAuton;
 import frc.robot.commands.autons.PlaceHighAuton;
 import frc.robot.commands.autons.PlaceHighShortAuton;
+import frc.robot.commands.autons.PlaceMidAuton;
 import frc.robot.commands.autons.RetractBothAuton;
 import frc.robot.commands.autons.UntipRobotAuton;
 import frc.robot.commands.autons.XStanceAuton;
@@ -107,6 +108,7 @@ public class RobotContainer {
   private ArmHomeAuton m_armHomeAuton = new ArmHomeAuton(m_armSubsystem, m_solenoidSubsystem);
   private PlaceHighAuton m_placeHighAuton = new PlaceHighAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private PlaceHighShortAuton m_placeHighShortAuton = new PlaceHighShortAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
+  private PlaceMidAuton m_placeMidAuton = new PlaceMidAuton(m_solenoidSubsystem, m_gripSubsystem, m_armSubsystem);
   private UntipRobotAuton m_untipRobotAuton = new UntipRobotAuton(m_drivetrainSubsystem, m_ledSubsystem);
   private XStanceAuton m_xStanceAuton = new XStanceAuton(m_drivetrainSubsystem);
   private TurnPurpleTimer turnPurpleTimer = new TurnPurpleTimer(m_ledSubsystem);
@@ -135,6 +137,7 @@ public class RobotContainer {
     Map.entry("wait0.5sec", new WaitCommand(0.5)),
     Map.entry("armslightup", new InstantCommand(m_armSubsystem::setArmJustAboveLow, m_armSubsystem)),
     Map.entry("placehigh", m_placeHighAuton),
+    Map.entry("placemid", m_placeMidAuton),    
     Map.entry("placehighshort", m_placeHighShortAuton),
     Map.entry("zerogyro", new InstantCommand(m_drivetrainSubsystem::zeroGyroscope)),
     Map.entry("unpitch", m_untipRobotAuton),
@@ -158,7 +161,7 @@ public class RobotContainer {
   final List<PathPlannerTrajectory> armTest = PathPlanner.loadPathGroup("Arm Test",new PathConstraints(0.01, 0.01));
   final List<PathPlannerTrajectory> placeConePark = PathPlanner.loadPathGroup("Place Cone Park", new PathConstraints(1.25, 1.25), new PathConstraints(1.25, 1.25));
   final List<PathPlannerTrajectory> clean3H = PathPlanner.loadPathGroup("Place Three High", new PathConstraints(3.5, 3.5), new PathConstraints(3.5, 3.5), new PathConstraints(2.75, 2.75));
-  
+  final List<PathPlannerTrajectory> clean3M = PathPlanner.loadPathGroup("Place Three Mid", new PathConstraints(3.5, 3.5), new PathConstraints(3.5, 3.5), new PathConstraints(2.75, 2.75));  
   //Auto builder, use this to turn trajectories into actual paths             2, 2
   SwerveAutoBuilder stateAutoBuilder = new SwerveAutoBuilder(
     m_drivetrainSubsystem::getPose2d, 
@@ -186,6 +189,7 @@ public class RobotContainer {
   private Command armTestCommand = stateAutoBuilder.fullAuto(armTest);
   private Command bump2HCommand = stateAutoBuilder.fullAuto(bump2H);
   private Command clean3HCommand = stateAutoBuilder.fullAuto(clean3H);
+  private Command clean3MCommand = stateAutoBuilder.fullAuto(clean3M);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -216,6 +220,7 @@ public class RobotContainer {
     autonChooser.addOption("Bump 2H", bump2HCommand);
     autonChooser.addOption("Clean 2.5H", placeTwoHighCommand);
     autonChooser.addOption("Clean 3H", clean3HCommand);
+    autonChooser.addOption("Clean 3M", clean3MCommand);
     autonChooser.addOption("Clean Dukes", dukesOfHazardCommand);
     autonChooser.addOption("Charge 4H Cube", grabConeAndParkCommand);
     autonChooser.addOption("Charge 5H Cube", placeCubeGrabConeParkCommand);

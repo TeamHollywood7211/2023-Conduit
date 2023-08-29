@@ -1,0 +1,220 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.9351347707434756,
+        "y": 5.071896589290809
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.017899211153873,
+        "y": 4.350053629017212
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "grabcone",
+          "placemid"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 0.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.462932177049189,
+        "y": 5.28085113042264
+      },
+      "prevControl": {
+        "x": 7.446020234160491,
+        "y": 6.335028903818156
+      },
+      "nextControl": {
+        "x": 7.491425978112621,
+        "y": 3.5047375308020756
+      },
+      "holonomicAngle": -108.41239332306225,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 2.0,
+        "y": 4.331057761641589
+      },
+      "prevControl": {
+        "x": 5.85139858058709,
+        "y": 6.040415229046119
+      },
+      "nextControl": {
+        "x": 1.9338851328179132,
+        "y": 4.30171415059759
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "placehighshort",
+          "retractwirst"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "minimum",
+        "waitTime": 0.25
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 7.149500365351442,
+        "y": 3.409758193923971
+      },
+      "prevControl": {
+        "x": 6.256694598697255,
+        "y": 5.83173128431565
+      },
+      "nextControl": {
+        "x": 7.161814848513158,
+        "y": 3.3763518832193173
+      },
+      "holonomicAngle": -90.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "grabcone"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 4.2811243916326704,
+        "y": 4.672983374402768
+      },
+      "prevControl": {
+        "x": 5.827229369231127,
+        "y": 4.6882913444779994
+      },
+      "nextControl": {
+        "x": 3.3218330891638086,
+        "y": 4.6634854407149575
+      },
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "armmid"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.9161389033678544,
+        "y": 3.8561610772510644
+      },
+      "prevControl": {
+        "x": 2.5952411620463076,
+        "y": 3.889403845158401
+      },
+      "nextControl": null,
+      "holonomicAngle": 180.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "placehighshort",
+          "retractwrist"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "maxVelocity": 3.0,
+  "maxAcceleration": 2.0,
+  "isReversed": null,
+  "markers": [
+    {
+      "position": 0.7030303030303086,
+      "names": [
+        "armlow"
+      ]
+    },
+    {
+      "position": 1.1,
+      "names": [
+        "grabcube"
+      ]
+    },
+    {
+      "position": 2.418181818181972,
+      "names": [
+        "armlow"
+      ]
+    },
+    {
+      "position": 1.5999999999999894,
+      "names": [
+        "armmid"
+      ]
+    },
+    {
+      "position": 1.7212121212121354,
+      "names": [
+        "extendwrist"
+      ]
+    },
+    {
+      "position": 0.41212121212124253,
+      "names": [
+        "armwristhome"
+      ]
+    },
+    {
+      "position": 0.78,
+      "names": [
+        "extendwrist"
+      ]
+    },
+    {
+      "position": 3.5151515151515755,
+      "names": [
+        "retractwrist"
+      ]
+    },
+    {
+      "position": 3.8787878787878434,
+      "names": [
+        "armmid"
+      ]
+    }
+  ]
+}
