@@ -117,7 +117,7 @@ public class RobotContainer {
   private ExtendBothAuton extendBothAuton = new ExtendBothAuton(m_solenoidSubsystem);
 
   public HashMap<String, Command> eventMap = new HashMap<>(Map.ofEntries(
-    Map.entry("firesol", m_fireFlipperAuton),
+    Map.entry("firesol", m_fireFlipperAuton), //obsolete, flipper gone :(
     Map.entry("grabcube", new InstantCommand(m_gripSubsystem::setGripCube, m_gripSubsystem)),
     Map.entry("grabcone", new InstantCommand(m_gripSubsystem::setGripCone, m_gripSubsystem)),
     Map.entry("grabconeloose", new InstantCommand(m_gripSubsystem::setGripConeLoose)),
