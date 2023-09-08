@@ -135,6 +135,7 @@ public class RobotContainer {
     Map.entry("wait1sec", new WaitCommand(1)),
     Map.entry("wait0.75sec", new WaitCommand(0.75)),
     Map.entry("wait0.5sec", new WaitCommand(0.5)),
+    Map.entry("wait0.25sec", new WaitCommand(0.25)), //Noah made auto command >B3
     Map.entry("armslightup", new InstantCommand(m_armSubsystem::setArmJustAboveLow, m_armSubsystem)),
     Map.entry("placehigh", m_placeHighAuton),
     Map.entry("placemid", m_placeMidAuton),    
@@ -153,6 +154,7 @@ public class RobotContainer {
   final PathPlannerTrajectory park = PathPlanner.loadPath("Park", new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> bumpSide = PathPlanner.loadPathGroup("Bump Side", new PathConstraints(1.5, 1), new PathConstraints(3, 3), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1));
   final List<PathPlannerTrajectory> bump2H = PathPlanner.loadPathGroup("Bump 2H", new PathConstraints(1.5, 1), new PathConstraints(3, 3), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1), new PathConstraints(1.5, 1));
+  final List<PathPlannerTrajectory> bump2HP = PathPlanner.loadPathGroup("Bump 2HP", new PathConstraints(2.5,2.5));
   final List<PathPlannerTrajectory> placeTwoHigh = PathPlanner.loadPathGroup("Place Two High", new PathConstraints(3, 3), new PathConstraints(3, 3), new PathConstraints(1, 1));
   final List<PathPlannerTrajectory> dukesOfHazard = PathPlanner.loadPathGroup("Dukes of Hazard", new PathConstraints(3.4, 3.25), new PathConstraints(2, 2));
   final List<PathPlannerTrajectory> oneHighConeAndPark = PathPlanner.loadPathGroup("Grab Cone and Park", new PathConstraints(1.3, 1.8), new PathConstraints(2, 2.5));
@@ -190,6 +192,7 @@ public class RobotContainer {
   private Command placeConeParkCommand = stateAutoBuilder.fullAuto(placeConePark);
   private Command armTestCommand = stateAutoBuilder.fullAuto(armTest);
   private Command bump2HCommand = stateAutoBuilder.fullAuto(bump2H);
+  private Command bump2HPCommand = stateAutoBuilder.fullAuto(bump2HP);
   private Command clean3HCommand = stateAutoBuilder.fullAuto(clean3H);
   private Command clean3MCommand = stateAutoBuilder.fullAuto(clean3M);
   private Command clean3LCommand = stateAutoBuilder.fullAuto(clean3L);
@@ -221,8 +224,9 @@ public class RobotContainer {
     //autonChooser.addOption("Place Cone Park No Grab", placeConeParkCommand);1
     autonChooser.addOption("Bump 1H1L", bumpSideCommand);
     autonChooser.addOption("Bump 2H", bump2HCommand);
+    autonChooser.addOption("Bump 2H Plus", bump2HPCommand);
     autonChooser.addOption("Clean 2.5H", placeTwoHighCommand);
-    autonChooser.addOption("Clean 3L", clean3LCommand);
+    //autonChooser.addOption("Clean 3L", clean3LCommand);
     autonChooser.addOption("Clean 3H", clean3HCommand);
     autonChooser.addOption("Clean 3M", clean3MCommand);
     autonChooser.addOption("Clean Dukes", dukesOfHazardCommand);

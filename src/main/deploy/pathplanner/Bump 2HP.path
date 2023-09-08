@@ -142,7 +142,10 @@
         "x": 3.28958058617539,
         "y": 0.6458594907711135
       },
-      "nextControl": null,
+      "nextControl": {
+        "x": 4.03041941382461,
+        "y": 0.607867756019874
+      },
       "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
@@ -153,6 +156,30 @@
           "zerogyro"
         ],
         "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.785764682640477,
+        "y": 2.066869432884166
+      },
+      "prevControl": {
+        "x": 6.534542983615882,
+        "y": 1.9070010789594227
+      },
+      "nextControl": null,
+      "holonomicAngle": 20.0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "grabcone"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
@@ -199,9 +226,21 @@
       ]
     },
     {
-      "position": 3.563636363636175,
+      "position": 3.2,
       "names": [
         "placehigh"
+      ]
+    },
+    {
+      "position": 5.585454545454552,
+      "names": [
+        "armlow"
+      ]
+    },
+    {
+      "position": 5.716363636363503,
+      "names": [
+        "extendwrist"
       ]
     }
   ]
