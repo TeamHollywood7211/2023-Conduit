@@ -22,7 +22,7 @@ public final class Constants {
     //arm constants
         public static final double armHighTarget = 99.95; // 99.95 for practice bot, 99.95 for main.
         public static final double armMidTarget = 85; // 85.98 for practice bot, 85 for main
-        public static final double armLowTarget = 30.5; // 33 for practice bot, 30.5 for main
+        public static final double armLowTarget = 28; // 33 for practice bot, 30.5 for main
     //grip constants
         public static final double gripConeTarget = 55.6; // 2.38 //practice -148 // 55.6 for main
         public static final double gripCubeTarget = 40; //1.55 //practice -89 // 40 for main
