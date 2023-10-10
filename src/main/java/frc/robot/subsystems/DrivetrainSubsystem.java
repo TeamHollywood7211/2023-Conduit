@@ -193,6 +193,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
          */
         public void zeroGyroscope() {
                 m_gyro.zeroYaw();
+                
+        }
+        public void ReverseZeroGyroscope() {
+                m_gyro.setAngleAdjustment(180);
+                m_gyro.zeroYaw();
+                
         }
 
         public void calibrateGyro(){
