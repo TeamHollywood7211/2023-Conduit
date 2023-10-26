@@ -230,10 +230,10 @@ public class RobotContainer {
     autonChooser.addOption("Clean 3H", clean3HCommand);
     autonChooser.addOption("Clean 3M", clean3MCommand);
     autonChooser.addOption("Clean Dukes", dukesOfHazardCommand);
-    autonChooser.addOption("Charge 4H Cube", grabConeAndParkCommand);
-    autonChooser.addOption("Charge 5H Cube", placeCubeGrabConeParkCommand);
-    autonChooser.addOption("Charge 6H Cube", charge6HConeCommand);
-    
+    autonChooser.addOption("Charge 4H NG", grabConeAndParkCommand);
+    autonChooser.addOption("Charge 5H NG", placeCubeGrabConeParkCommand);
+    autonChooser.addOption("Charge 6H NG", charge6HConeCommand);
+      
     autonChooser.addOption("ARM TEST (DO NOT RUN FOR MATCHES :) )", armTestCommand);
     SmartDashboard.putData(autonChooser);
   }
