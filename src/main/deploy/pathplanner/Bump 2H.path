@@ -125,8 +125,8 @@
       "stopEvent": {
         "names": [
           "placehighshort",
-          "retractarm",
-          "retractwrist"
+          "retractwrist",
+          "retractarm"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "after",
@@ -199,7 +199,7 @@
       ]
     },
     {
-      "position": 3.563636363636175,
+      "position": 3.64,
       "names": [
         "placehigh"
       ]
